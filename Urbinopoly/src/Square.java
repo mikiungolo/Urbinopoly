@@ -24,7 +24,4 @@ public abstract class Square {
     public void setBusy(boolean isBusy) {
         this.isBusy = isBusy;
     }
-
-   
-    
 }
