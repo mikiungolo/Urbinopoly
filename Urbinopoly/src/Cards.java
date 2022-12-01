@@ -24,6 +24,6 @@ public class Cards extends Square{
         this.deck = deck;
     }
     
-    // aggiungi una carta nel deck 
+    // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr) 
     
 }
