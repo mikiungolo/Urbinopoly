@@ -1,14 +1,11 @@
-import java.util.List;
-
-import Cards.Card.TypeCard;
-
+// Creazione deck Proprietà
 public class Probability extends Cards{
 
     public Probability() {
         super(Card.TypeCard.PROBABILITY.name(), false);
 
         // Movimenti
-        super.add(new Card(Card.TypeCard.PROBABILITY, "Ritornate al vicolo corto."));
+        super.add(new Card(Card.TypeCard.PROBABILITY, "Ritornate a Piazza Della Repubblica."));
         super.add(new Card(Card.TypeCard.PROBABILITY, "Andate fino al via!"));
         // Riscossioni
         super.add(new Card(Card.TypeCard.PROBABILITY, "Avete vinto un premio di consolazione alla lotteria di Merano: ritirate 250 euro."));
@@ -21,4 +18,7 @@ public class Probability extends Cards{
         // Prigione
         super.add(new Card(Card.TypeCard.PROBABILITY, "Uscite gratis di prigione, se ci siete: potete conservare questo cartoncino sino al momento di servirvene (non si sa mai!) oppure venderlo."));
         super.add(new Card(Card.TypeCard.PROBABILITY, "Andate in prigione direttamente e senza passare dal via."));
+
+        shuffle();
+    }
 }

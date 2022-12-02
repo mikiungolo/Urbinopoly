@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Gestione di un mazzo di carte 
@@ -38,5 +39,9 @@ public class Cards extends Square{
     // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr) 
     public void add(Card card){
         deck.add(card);
+    }
+
+    public void shuffle(){
+        Collections.shuffle(deck);
     }
 }
