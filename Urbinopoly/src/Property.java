@@ -6,8 +6,10 @@ public class Property extends Square {
 
     // stato delle proprietà
     private String owner; // nome proprietario
+
     private boolean isOwner; // ha un proprietario?
     private boolean isMortaged; // è ipotecata?
+
     private final int price; // prezzo di compera
     private final int[] gain; // indice ricavi
 
@@ -21,7 +23,7 @@ public class Property extends Square {
         this.gain = gain;
     }
 
-    // utility getter e setter
+    // gestione proprietario
     public boolean isOwner() {
         return isOwner;
     }
@@ -34,13 +36,20 @@ public class Property extends Square {
         this.isOwner = isOwner;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    // si rilascia una proprietà quando un Player perde
+    public void releaseProperty() {
+        this.owner = "";
+        this.isOwner = false;
+        this.isMortaged = false;
+    }
+
     // gestione acquisti
     public int getPrice() {
         return price;
-    }
-
-    public void buy() {
-
     }
 
     // gestione ricavi
@@ -65,5 +74,9 @@ public class Property extends Square {
     public double removeMortage() {
         this.setMortaged(false);
         return (double) getPrice() / 2 * FEE;
+    }
+
+    public static double getFee() {
+        return FEE;
     }
 }

@@ -1,9 +1,9 @@
 // Classe astratta per la creazione dei quadrati
 public abstract class Square {
     // Campi Square
-    private final String name;
+    private final String name; // nome quadrato
 
-    private boolean isBusy;
+    private boolean isBusy; // è nel quadrato?
 
     // Costruttore della classe
     public Square(String name, boolean isBusy) {
