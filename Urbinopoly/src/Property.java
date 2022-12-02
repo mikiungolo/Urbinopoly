@@ -1,10 +1,17 @@
 // modellazione di una proprietà
 public class Property extends Square {
 
+    // definizione tipi di proprietà
+    public enum TypeProperty {
+        LAND, STATION, SERVICE
+    };
+
     // moltiplicatore tassa per disipotecare
     private static final double FEE = 1.1;
 
     // stato delle proprietà
+    private TypeProperty type;
+
     private String owner; // nome proprietario
 
     private boolean isOwner; // ha un proprietario?
@@ -14,13 +21,14 @@ public class Property extends Square {
     private final int[] gain; // indice ricavi
 
     // costruttore della classe
-    public Property(String name, int price, int[] gain) {
+    public Property(String name, int price, int[] gain, Property.TypeProperty t) {
         super(name, false);
         this.owner = "";
         this.isOwner = false;
         this.isMortaged = false;
         this.price = price;
         this.gain = gain;
+        this.type = t;
     }
 
     // gestione proprietario
@@ -57,6 +65,11 @@ public class Property extends Square {
         return gain;
     }
 
+    // controllato dalle sub-classes
+    public int getRent(int qnt) {
+        return 0;
+    };
+
     // gestione ipoteca
     public boolean isMortaged() {
         return isMortaged;
@@ -76,7 +89,7 @@ public class Property extends Square {
         return (double) getPrice() / 2 * FEE;
     }
 
-    public static double getFee() {
-        return FEE;
+    public TypeProperty getType() {
+        return type;
     }
 }
