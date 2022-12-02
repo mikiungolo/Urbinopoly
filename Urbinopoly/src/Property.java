@@ -1,4 +1,4 @@
-// modellazione i una proprietà
+// modellazione di una proprietà
 public class Property extends Square {
 
     // moltiplicatore tassa per disipotecare
