@@ -3,18 +3,30 @@ public class Land extends Property {
 
     // definizione dei diversi Urbinopoly
     public enum ColorUrbinopoly {
-        MARRONE,
-        CELESTE,
-        ROSA,
-        ARANCIONE,
-        ROSSO,
-        GIALLO,
-        VERDE,
-        BLU
-    }
+        MARRONE(2),
+        CELESTE(3),
+        ROSA(3),
+        ARANCIONE(3),
+        ROSSO(3),
+        GIALLO(3),
+        VERDE(3),
+        BLU(2);
+
+        // numero terreni dello stesso colore
+        private final int nLandsColor;
+
+        // costruttore
+        private ColorUrbinopoly(int nLandsColor) {
+            this.nLandsColor = nLandsColor;
+        }
+
+        public int getnLandsColor() {
+            return nLandsColor;
+        }
+    };
 
     // costante bonus dovuta al monopolio
-    private static final int BONUS_URBINOPOLY = 0;;
+    private static final int BONUS_URBINOPOLY = 0;
 
     // stato di un Terreno
     private final ColorUrbinopoly color;
@@ -55,6 +67,10 @@ public class Land extends Property {
         return this.urbinopoly;
     }
 
+    public static int getBonusUrbinopoly() {
+        return BONUS_URBINOPOLY;
+    }
+
     public void setUrbinopoly(boolean urbinopoly) {
         this.urbinopoly = urbinopoly;
     }
@@ -70,8 +86,11 @@ public class Land extends Property {
 
     // rimozione di una casa
     public int removeHouse() {
-        this.nHouse--;
-        return (this.priceHouse / 2);
+        if (this.nHouse > 0) {
+            this.nHouse--;
+            return (this.priceHouse / 2);
+        } else
+            return 0;
     }
 
     // ritorna affitto
@@ -80,7 +99,7 @@ public class Land extends Property {
         if (nHouse == 0 && (!urbinopoly)) {
             return super.getGain()[nHouse];
         } else if (nHouse == 0 && urbinopoly) {
-            return super.getGain()[nHouse] * BONUS_URBINOPOLY;
+            return super.getGain()[nHouse] * getBonusUrbinopoly();
         } else {
             return super.getGain()[nHouse];
         }
