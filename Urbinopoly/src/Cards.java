@@ -1,23 +1,33 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 // Gestione di un mazzo di carte 
 public class Cards extends Square{
-    // definizione dei 2 tipi di carte
-    public enum Card{
-        PROBABILITIES, 
-        UNEXPECTED;
+    // Modellazione della carta
+    static class Card{
+        // Definizione tipi di carte 
+        public enum TypeCard{UNEXPECTED, PROBABILITY};
 
-        // private final String message;
-        // private final String name;
-        
-        // private Card(String message, String name) {
-        //     this.message = message;
-        //     this.name = name;
-        // }
+        private final TypeCard type;
+        private final String message;
+
+         // Costruttore Card
+        public Card(Cards.Card.TypeCard type, String message) {
+            this.type = type;
+            this.message = message;
+        }
+
+        // Metodi Getter
+        public TypeCard getType() {
+            return type;
+        }
+
+        public String getMessage() {
+            return message;
+        }
     }
-    
-    private List<Card> deck = new LinkedList<>();
+    // L'outer class (Cards) è una lista di Card
+    private List<Card> deck = new ArrayList<>();
 
     public Cards(String name, boolean isBusy, List<Cards.Card> deck) {
         super(name, isBusy);
@@ -25,5 +35,7 @@ public class Cards extends Square{
     }
     
     // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr) 
-    
+    public void add(Card card){
+        deck.add(card);
+    }
 }
