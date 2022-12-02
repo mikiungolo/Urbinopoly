@@ -6,6 +6,7 @@ public class Station extends Property {
         super(name, price, gain, TypeProperty.STATION);
     }
 
+    // ritorna affitto
     @Override
     public int getRent(int nStation) {
         return super.getGain()[nStation];
