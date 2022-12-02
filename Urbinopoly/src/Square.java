@@ -4,8 +4,8 @@ public abstract class Square {
     private final String name;
 
     private boolean isBusy;
-    
-     // Costruttore della classe
+
+    // Costruttore della classe
     public Square(String name, boolean isBusy) {
         this.name = name;
         this.isBusy = isBusy;
@@ -25,6 +25,4 @@ public abstract class Square {
         this.isBusy = isBusy;
     }
 
-   
-    
 }
