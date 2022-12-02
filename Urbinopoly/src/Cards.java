@@ -26,12 +26,13 @@ public class Cards extends Square{
             return message;
         }
     }
+    
     // L'outer class (Cards) è una lista di Card
-    private List<Card> deck = new ArrayList<>();
+    private List<Card> deck;
 
-    public Cards(String name, boolean isBusy, List<Cards.Card> deck) {
+    public Cards(String name, boolean isBusy) {
         super(name, isBusy);
-        this.deck = deck;
+        this.deck = new ArrayList<>();
     }
     
     // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr) 
