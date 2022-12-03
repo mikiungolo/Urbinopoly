@@ -45,7 +45,7 @@ public abstract class Square {
     public static class Parking extends Square {
         // costruttore della classe
         public Parking() {
-            super("Parking");
+            super("Parcheggio Mercatale");
         }
     }
 

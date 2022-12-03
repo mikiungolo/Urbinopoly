@@ -5,7 +5,7 @@ import java.util.List;
 // Gestione di un mazzo di carte 
 public class Cards {
     // Modellazione della carta
-    public class Card extends Square {
+    public static class Card extends Square {
 
         // Definizione tipi di carte tramite enum
         public enum TypeCard {
