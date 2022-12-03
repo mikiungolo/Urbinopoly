@@ -3,13 +3,16 @@ import java.util.Collections;
 import java.util.List;
 
 // Gestione di un mazzo di carte 
-public class Cards implements CardApi{
+public class Cards {
     // Modellazione della carta
-    static class Card extends Square{
+    static class Card extends Square {
 
-        // Definizione tipi di carte 
-        public enum TypeCard{UNEXPECTED, PROBABILITY};
+        // Definizione tipi di carte tramite enum
+        public enum TypeCard {
+            UNEXPECTED, PROBABILITY
+        };
 
+        // dichiarazione attributi della classe Card
         private final TypeCard type;
         private final String message;
 
@@ -30,34 +33,56 @@ public class Cards implements CardApi{
         }
     }
 
-    // L'outer class (Cards) è una lista di Card
+    // L'outer class (Cards) è una lista di Card per composizione
     private List<Card> deck;
-
+    // numero carte pescate da un mazzo di carte
     private int nCardTaken;
 
     // Costruttore Cards
     public Cards(String name, boolean isBusy) {
-        this.deck = new ArrayList<>();
         this.nCardTaken = 0;
+        this.deck = new ArrayList<>();
     }
-    
-    // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr) 
-    public void add(Card card){
+
+    // getter and setter
+    public int getnCardTaken() {
+        return nCardTaken;
+    }
+
+    public void setnCardTaken(int nCardTaken) {
+        this.nCardTaken = nCardTaken;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
+    }
+
+    // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr)
+    public void add(Card card) {
         deck.add(card);
     }
 
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(deck);
     }
 
-    @Override
-    public Cards.Card randomEvent(Cards m) {
-        if(this.nCardTaken > 9){
-            shuffle();
-            this.nCardTaken = 0;
-        }
-        this.nCardTaken++;
-        return this.deck.get(0);
+    // Interfaccia funzionale per estrazione di un carta
+    @FunctionalInterface
+    public interface CardApi {
+        Cards.Card randomEvent(Cards m);
     }
 
+    // espressione lambda per estrazione di una carta dal mazzo
+    CardApi evento = m -> {
+        if (m.getnCardTaken() > 10) {
+            m.setnCardTaken(0);
+            m.shuffle();
+        }
+        m.setnCardTaken(m.getnCardTaken() + 1);
+        return m.getDeck().get(0);
+    };
+
+    public CardApi getEvento() {
+        return evento;
+    }
 }
