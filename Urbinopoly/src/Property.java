@@ -22,7 +22,7 @@ public class Property extends Square {
 
     // costruttore della classe
     public Property(String name, int price, int[] gain, Property.TypeProperty t) {
-        super(name, false);
+        super(name);
         this.owner = "";
         this.isOwner = false;
         this.isMortaged = false;

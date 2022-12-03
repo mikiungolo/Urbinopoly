@@ -5,7 +5,7 @@ import java.util.List;
 // Gestione di un mazzo di carte 
 public class Cards {
     // Modellazione della carta
-    static class Card extends Square {
+    public class Card extends Square {
 
         // Definizione tipi di carte tramite enum
         public enum TypeCard {
@@ -17,8 +17,8 @@ public class Cards {
         private final String message;
 
         // Costruttore Card
-        public Card(String name, boolean isBusy, Cards.Card.TypeCard type, String message) {
-            super(name, isBusy);
+        public Card(String name, Cards.Card.TypeCard type, String message) {
+            super(name);
             this.type = type;
             this.message = message;
         }
@@ -39,7 +39,7 @@ public class Cards {
     private int nCardTaken;
 
     // Costruttore Cards
-    public Cards(String name, boolean isBusy) {
+    public Cards(String name) {
         this.nCardTaken = 0;
         this.deck = new ArrayList<>();
     }
