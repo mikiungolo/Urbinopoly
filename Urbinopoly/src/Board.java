@@ -1,5 +1,3 @@
-import Cards.Card;
-
 // modellazione del tabellone di gioco
 public class Board {
     // definizione di costanti per la costruzione del tabellone
