@@ -1,5 +1,3 @@
-import Cards.Card;
-
 // modellazione del tabellone di gioco
 public class Board {
     // definizione di costanti per la costruzione del tabellone
@@ -62,9 +60,23 @@ public class Board {
         this.unex = new UnexpectedDeck();
     }
 
+    // quadrato di partenza
+    public Square init() {
+        return squares[GO];
+    }
+
     // manipolazione del quadrato corrente
     public Square getSquare(int index) {
         return squares[index];
+    }
+
+    /*
+     * Il tabellone richiede una modellazione accurata di tutte
+     * quelle fasi in cui l'azione verificata è automatica ed
+     * unidirezionale, pertanto tale classe tutela tutte le possibilità
+     */
+    public Class<? extends Square> getIstance(int position) {
+        return null;
     }
 
     /*
