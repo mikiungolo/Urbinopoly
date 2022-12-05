@@ -3,26 +3,14 @@ public abstract class Square {
     // Campi Square
     private final String name; // nome quadrato
 
-    private boolean isBusy; // è nel quadrato?
-
     // Costruttore della classe
     public Square(String name) {
         this.name = name;
-        this.isBusy = false;
     }
 
     // Metodi Getter
     public String getName() {
         return name;
-    }
-
-    public boolean isBusy() {
-        return isBusy;
-    }
-
-    // Metodo Setter
-    public void setBusy(boolean isBusy) {
-        this.isBusy = isBusy;
     }
 
     // creazione inner class Go
