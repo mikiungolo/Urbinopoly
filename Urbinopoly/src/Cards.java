@@ -5,20 +5,39 @@ import java.util.List;
 // Gestione di un mazzo di carte 
 public class Cards {
     // Modellazione della carta
-    public static class Card extends Square {
+    public static class Card {
 
         // Definizione tipi di carte tramite enum
         public enum TypeCard {
             UNEXPECTED, PROBABILITY
         };
 
+        // quadrato Probability che indica il mazzo da cui pescare
+        public static class Probability extends Square {
+
+            // costruttore
+            public Probability() {
+                super(Cards.Card.TypeCard.PROBABILITY.name());
+            }
+
+        }
+
+        // quadrato Unexpected che indica il mazzo da cui pescare
+        public static class Unexpected extends Square {
+
+            // costruttore
+            public Unexpected() {
+                super(Cards.Card.TypeCard.UNEXPECTED.name());
+            }
+
+        }
+
         // dichiarazione attributi della classe Card
         private final TypeCard type;
         private final String message;
 
         // Costruttore Card
-        public Card(String name, Cards.Card.TypeCard type, String message) {
-            super(name);
+        public Card(Cards.Card.TypeCard type, String message) {
             this.type = type;
             this.message = message;
         }
