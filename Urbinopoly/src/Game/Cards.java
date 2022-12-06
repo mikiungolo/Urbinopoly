@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 // Gestione di un mazzo di carte 
-public class Cards {
+public class Cards implements CardsApi {
     // Modellazione della carta
     public static class Card {
 
@@ -77,31 +77,23 @@ public class Cards {
     }
 
     // aggiungi una carta nel deck (metodo da usare nel costruttore di Prob e impr)
+    @Override
     public void add(Card card) {
         deck.add(card);
     }
 
+    @Override
     public void shuffle() {
         Collections.shuffle(deck);
     }
 
-    // Interfaccia funzionale per estrazione di un carta
-    @FunctionalInterface
-    public interface CardApi {
-        Cards.Card randomEvent(Cards m);
-    }
-
-    // espressione lambda per estrazione di una carta dal mazzo
-    CardApi evento = m -> {
+    @Override
+    public Cards.Card randomEvent(Cards m) {
         if (m.getnCardTaken() > 10) {
             m.setnCardTaken(0);
             m.shuffle();
         }
         m.setnCardTaken(m.getnCardTaken() + 1);
-        return m.getDeck().get(0);
-    };
-
-    public CardApi getEvento() {
-        return evento;
+        return m.getDeck().get(m.getnCardTaken() - 1);
     }
 }
