@@ -12,7 +12,7 @@ public class ProbabilityDeck extends Cards {
                                 "Andate fino al via!"));
                 // Riscossioni
                 super.add(new Card(Card.TypeCard.PROBABILITY,
-                                "Avete vinto un premio di consolazione alla lotteria di Merano: ritirate 250 euro."));
+                                "Avete vinto un premio di consolazione alla lotteria : ritirate 250 euro."));
 
                 super.add(new Card(Card.TypeCard.PROBABILITY,
                                 "Avete ceduto delle azioni: ricavate 125 euro."));
