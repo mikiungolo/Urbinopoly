@@ -14,13 +14,11 @@ public class PropertyTest {
     }
 
     @Test
-    public void testReleaseProperty() {
-
-    }
-
-    @Test
     public void testRemoveMortage() {
-        p.releaseProperty();
+        p.setMortaged(true);
+        assertEquals(true, p.isMortaged());
+        assertEquals(100 / 2 * 1.1, p.removeMortage(), 0);
+        assertEquals(false, p.isMortaged());
 
     }
 }

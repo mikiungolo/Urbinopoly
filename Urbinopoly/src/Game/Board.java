@@ -15,8 +15,8 @@ public class Board {
     // costruttore tabellone
     public Board() {
         squares[GO] = new Square.Go();
-        squares[1] = new Land("Vicolo Ducale", 60, new int[] { 2, 10, 30, 90, 160, 250 }, Land.ColorUrbinopoly.MARRONE,
-                50);
+        squares[1] = new Land("Vicolo Ducale", 60, new int[] { 2, 10, 30, 90, 160, 250 },
+                Land.ColorUrbinopoly.MARRONE, 50);
         squares[2] = new Cards.Card.Probability();
         squares[3] = new Land("Vicolo Nuova Luce", 60, new int[] { 4, 20, 60, 180, 320, 450 },
                 Land.ColorUrbinopoly.MARRONE, 50);
@@ -82,14 +82,23 @@ public class Board {
         this.unex = new UnexpectedDeck();
     }
 
+    // getter
+    public ProbabilityDeck getProb() {
+        return prob;
+    }
+
+    public UnexpectedDeck getUnex() {
+        return unex;
+    }
+
     // quadrato di partenza
     public Square go() {
         return squares[GO];
     }
 
     // manipolazione del quadrato corrente
-    public Square getSquare(int index) {
-        return squares[index];
+    public Square getSquare(int position) {
+        return squares[position];
     }
 
     /*
@@ -97,21 +106,4 @@ public class Board {
      * quelle fasi in cui l'azione verificata è automatica ed
      * unidirezionale, pertanto tale classe tutela tutte le possibilità
      */
-    public Class<? extends Square> getIstance(int position) {
-        return null;
-    }
-
-    /*
-     * comunicazione automatizzata tra quadrato e mazzo
-     * se il giocatore si trova in determinate caselle
-     * sarà pescata una carta del relativo mazzo
-     */
-    public Cards.Card takeCard(int position) {
-        if (getSquare(position) instanceof Cards.Card.Probability) {
-            return prob.randomEvent(prob);
-        } else if (getSquare(position) instanceof Cards.Card.Unexpected) {
-            return unex.randomEvent(unex);
-        }
-        return null;
-    }
 }

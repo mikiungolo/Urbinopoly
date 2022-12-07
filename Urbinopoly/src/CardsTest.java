@@ -1,7 +1,5 @@
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -11,16 +9,13 @@ public class CardsTest {
 
     @Test
     public void testGetEvento() {
-
-        // Cards.CardApi corr = null;
-        // Cards.CardApi prec = null;
-        // for(int i = 0; i <= 20; i++){
-        //     corr = p.getEvento();
-        //     assertFalse(null, corr.equals(prec));
-        //     prec = corr;
-        // }
-
-
+        Cards.Card corr = new Cards.Card(null, null);
+        Cards.Card prec = new Cards.Card(null, null);
+        for (int i = 0; i < 20; i++) {
+            corr = p.takeCard(p);
+            assertNotEquals(corr, prec);
+            prec = corr;
+        }
     }
 
 }
