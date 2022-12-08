@@ -6,6 +6,7 @@ public class Player {
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
+    private final static int EXIT_PAYMENT = 125;
 
     // Campi della classe
     private final String name;
@@ -14,6 +15,7 @@ public class Player {
     private int escapeAttempts;
     private boolean passedGo;
     private boolean bankrupt;
+    private boolean isInPrison;
     // Campi di tipo lista della classe
     private List<Cards> cards;
     private List<Property> properties;
@@ -26,6 +28,7 @@ public class Player {
         this.escapeAttempts = 0;
         this.passedGo = false;
         this.bankrupt = false;
+        this.isInPrison = false;
         // Composizione
         this.cards = new LinkedList<>();
         this.properties = new LinkedList<>();
@@ -73,17 +76,47 @@ public class Player {
         return escapeAttempts;
     }
 
+    public boolean isInPrison() {
+        return isInPrison;
+    }
+
+    public void setInPrison(boolean isInPrison) {
+        this.isInPrison = isInPrison;
+    }
+
     // Porta il giocatore in prigione
     public void goToPrison() {
         if (this.position == Board.GO_TO_PRISON) {
             moveTo(Board.PRISON);
+            setInPrison(true);
         }
     }
 
-    // Fa uscire il giocatore di prigione
-    public void exitToPrison() {
-
+    // Controlla se il giocatore ha effettuato i tentativi di evasione dalla prigione
+    public void exitPrisonForEscapeAttempt() {
+        if(this.escapeAttempts == 3) {
+            setInPrison(false);
+            this.escapeAttempts = 0;
+        } else {
+            countTurnInPrison();
+        }
+        
     }
+
+    // Conta i turni in prigione
+    private void countTurnInPrison() {
+        this.escapeAttempts++;
+    }
+
+    // 
+
+    // public void exitToPrison(){
+    //     if(this.pay == true){
+    //         manageBalance(-EXIT_PAYMENT);
+    //     }else if(this.hasCard == true){
+    //         this.cards.remove();
+    //     }
+    // }
 
     // Metodo Getter
     public List<Cards> getCards() {
