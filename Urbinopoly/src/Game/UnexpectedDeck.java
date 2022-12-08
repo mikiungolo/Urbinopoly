@@ -1,75 +1,42 @@
 public class UnexpectedDeck extends Cards {
 
     // costruttore classe
-    public UnexpectedDeck() {
+    public UnexpectedDeck(Board b) {
 
         // Movimenti
         super.add(new Card("Avete vinto un contest in Via della Casciotta. Correte a vedere cosa vi spetta!",
-                Card.ActionId.ID_CASCIOTTA));
+                Card.ActionId.ID_MOVE_TO, b.getPositionSquare("Via della Casciotta")));
 
         super.add(new Card("Fate 3 passi indietro (con tanti auguri).",
-                Card.ActionId.ID_UNDER_3));
+                Card.ActionId.ID_MOVE, -3));
 
         // Riscossioni
         super.add(new Card("Maturano le cedole delle vostre cartelle di rendita, ritirate 375 euro.",
-                Card.ActionId.ID_INCOME));
+                Card.ActionId.ID_BALANCE, 375));
 
         super.add(new Card("Avete vinto un terno al lotto: ritirate 250 euro.",
-                Card.ActionId.ID_LOTTO));
+                Card.ActionId.ID_BALANCE, 250));
 
         // Pagamenti
         super.add(new Card("Matrimonio in famiglia: spese impreviste 375 euro.",
-                Card.ActionId.ID_MARRIAGE));
+                Card.ActionId.ID_BALANCE, -375));
 
         super.add(new Card(
-                "Dovete pagare un contributo di miglioria stradale, 100 per ogni casa, 250 euro per ogni albergo che possedete.",
-                Card.ActionId.ID_WAY));
+                "Dovete pagare un contributo di miglioria stradale, 100 per ogni casa.",
+                Card.ActionId.ID_BALANCE, 100));
 
         // Multa
         super.add(new Card("Multa di 40 euro per aver guidato senza patente.",
-                Card.ActionId.ID_DRIVE));
+                Card.ActionId.ID_BALANCE, -40));
 
         // Prigione
         super.add(new Card(
                 "Uscite gratis di prigione, se ci siete: Potete conservare questo cartoncino sino al momento di servirvene (non si sa mai!).",
-                Card.ActionId.ID_FREE_PRISON));
+                Card.ActionId.ID_FREE_PRISON, 0));
 
         super.add(new Card("Andate in prigione direttamente e senza passare dal via.",
-                Card.ActionId.ID_GO_PRISON));
+                Card.ActionId.ID_MOVE_TO, b.getPositionSquare("PRISON")));
 
         shuffle();
-    }
-
-    // azioni delle carte probabilità
-    public void exeUnex(Player p) {
-        switch (super.takeCard(this).getId()) {
-            case ID_CASCIOTTA -> {
-
-            }
-            case ID_UNDER_3 -> {
-
-            }
-            case ID_INCOME -> {
-
-            }
-            case ID_LOTTO -> {
-
-            }
-            case ID_MARRIAGE -> {
-
-            }
-            case ID_WAY -> {
-
-            }
-            case ID_DRIVE -> {
-
-            }
-            case ID_FREE_PRISON -> {
-
-            }
-            case ID_GO_PRISON -> {
-
-            }
-        }
     }
 }

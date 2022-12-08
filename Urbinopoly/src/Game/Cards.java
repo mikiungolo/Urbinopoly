@@ -28,19 +28,19 @@ public class Cards implements CardsApi {
 
         // definizione del codice id di una carta
         public enum ActionId {
-            ID_REPUBBLICA, ID_GO, ID_LOTTERY, ID_ACTION, ID_ASSICURATION, ID_CAUSE, ID_FINE,
-            ID_UNDER_3, ID_INCOME, ID_LOTTO, ID_MARRIAGE, ID_WAY, ID_DRIVE, ID_CASCIOTTA,
-            ID_FREE_PRISON, ID_GO_PRISON;
+            ID_MOVE_TO, ID_MOVE, ID_BALANCE, ID_FREE_PRISON
         }
 
         // dichiarazione attributi della classe Card
         private final String message;
         private final ActionId id;
+        private final int action;
 
         // Costruttore Card
-        public Card(String message, ActionId id) {
+        public Card(String message, ActionId id, int act) {
             this.message = message;
             this.id = id;
+            this.action = act;
         }
 
         public String getMessage() {
@@ -49,6 +49,10 @@ public class Cards implements CardsApi {
 
         public ActionId getId() {
             return id;
+        }
+
+        public int getAction() {
+            return action;
         }
     }
 

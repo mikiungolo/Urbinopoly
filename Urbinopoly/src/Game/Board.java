@@ -1,3 +1,5 @@
+import java.util.stream.IntStream;
+
 // modellazione del tabellone di gioco
 public class Board {
     // definizione di costanti per la costruzione del tabellone
@@ -78,8 +80,8 @@ public class Board {
                 Land.ColorUrbinopoly.BLU, 200);
 
         // creazione dei mazzi Probabilità e Imprevisti come parte del tabellone
-        this.prob = new ProbabilityDeck();
-        this.unex = new UnexpectedDeck();
+        this.prob = new ProbabilityDeck(this);
+        this.unex = new UnexpectedDeck(this);
     }
 
     // getter
@@ -99,6 +101,13 @@ public class Board {
     // manipolazione del quadrato corrente
     public Square getSquare(int position) {
         return squares[position];
+    }
+
+    public int getPositionSquare(String name) {
+        return IntStream.range(GO, N_SQAURES)
+                .filter(pos -> name.equals(getSquare(pos).getName()))
+                .findFirst()
+                .orElse(-1);
     }
 
     /*
