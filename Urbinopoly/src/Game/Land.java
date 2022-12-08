@@ -39,7 +39,7 @@ public class Land extends Property {
     // costruttore
     public Land(String name, int price, int[] gain, Land.ColorUrbinopoly color,
             int priceHouse) {
-        super(name, price, gain, TypeProperty.LAND);
+        super(name, price, gain, Type.LAND);
         this.color = color;
         this.priceHouse = priceHouse;
         this.nHouse = 0;

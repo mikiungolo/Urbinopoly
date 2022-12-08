@@ -4,8 +4,8 @@ public class Taxes<T> extends Square {
     // Definizione della costante per le tasse
     private final T rate;
 
-    public Taxes(String name, T rate) {
-        super(name);
+    public Taxes(String name, T rate, Type t) {
+        super(name, t);
         this.rate = rate;
     }
 
