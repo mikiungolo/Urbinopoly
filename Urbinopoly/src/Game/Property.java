@@ -1,10 +1,16 @@
 // modellazione di una proprietà
 public class Property extends Square {
 
+    // definizione tipi di proprietà
+    public enum TypeProperty {
+        LAND, STATION, SERVICE
+    };
+
     // moltiplicatore tassa per disipotecare
     private static final double FEE = 1.1;
 
     // stato delle proprietà
+    private TypeProperty type;
 
     private String owner; // nome proprietario
 
@@ -15,13 +21,14 @@ public class Property extends Square {
     private final int[] gain; // indice ricavi
 
     // costruttore della classe
-    public Property(String name, int price, int[] gain, Type t) {
-        super(name, t);
+    public Property(String name, int price, int[] gain, Property.TypeProperty t) {
+        super(name);
         this.owner = "";
         this.isOwner = false;
         this.isMortaged = false;
         this.price = price;
         this.gain = gain;
+        this.type = t;
     }
 
     // gestione proprietario
@@ -41,7 +48,7 @@ public class Property extends Square {
         return owner;
     }
 
-    // si rilascia una proprietà quando un Player perde
+    // si rilascia una proprietà quando un Player perde o ipoteca
     public void releaseProperty() {
         this.owner = "";
         this.isOwner = false;
@@ -51,6 +58,12 @@ public class Property extends Square {
     // gestione acquisti
     public int getPrice() {
         return price;
+    }
+
+    public int buyProperty(Player p){
+        setOwner(p.getName());
+        setOwner(true);
+        return getPrice();
     }
 
     // gestione ricavi
@@ -72,13 +85,17 @@ public class Property extends Square {
         this.isMortaged = isMortaged;
     }
 
-    public double mortage() {
+    public int mortage() {
         this.setMortaged(true);
-        return (double) getPrice() / 2;
+        return getPrice() / 2;
     }
 
-    public double removeMortage() {
+    public int removeMortage() {
         this.setMortaged(false);
-        return (double) getPrice() / 2 * FEE;
+        return  (int) ((int) getPrice() / 2 * FEE);
+    }
+
+    public TypeProperty getType() {
+        return type;
     }
 }
