@@ -4,8 +4,6 @@ import java.util.List;
 public class Player {
     // Budget assegnato inizialmente ad ogni singolo giocatore
     private final static int INITIAL_BUDGET = 2000;
-    // Numero di quadrati che compongono il tabellone
-    private final static int NUM_SQUARES = 40;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
 
@@ -34,66 +32,109 @@ public class Player {
         this.properties = new LinkedList<>();
     }
 
-    // Metodi Getter
+
+    // Metodo Getter
     public String getName() {
         return name;
     }
 
+
+    // METODI RELATIVI AL MOVIMENTO
+    // Metodo Getter
     public int getPosition() {
         return position;
     }
 
-    public int getBalance() {
-        return balance;
-    }
-
-    public int getEscapeAttempts() {
-        return escapeAttempts;
-    }
-
-
-    public List<Cards> getCards() {
-        return cards;
-    }
-
-
-    public List<Property> getProperties() {
-        return properties;
-    }
-    
-
-    public boolean isPassedGo() {
-        return passedGo;
-    }
-
-    public void setPassedGo(boolean passedGo) {
-        this.passedGo = passedGo;
-    }
-
-    public boolean isBankrupt() {
-        return bankrupt;
-    }
-
-    public void setBankrupt(boolean bankrupt) {
-        this.bankrupt = bankrupt;
-    }
-
-
-    // Metodi della classe
-    // Permette di far muovere il giocatore in base alla somma estratta dai dadi
+    // Permette di far muovere il giocatore dalla posizione corrente
     public void move(int addition) {
         this.position += addition;
-        if(this.position >= NUM_SQUARES){
-            this.position %= NUM_SQUARES;
+        if(this.position >= Board.N_SQAURES){
+            this.position %= Board.N_SQAURES;
             setPassedGo(true);
             manageBalance(COLLECTION);
 
         }
     }
 
-    // Permette di spostarti direttamente nella casella indicata dalla carta estratta
-    public void moveTo(int i){
-        this.position = i;
+    // Permette di spostarti direttamente nella casella indicata 
+    public void moveTo(int pos){
+        this.position = pos;
+    }
+
+     // Metodi Getter e Setter
+     public boolean isPassedGo() {
+        return passedGo;
+    }
+
+    public void setPassedGo(boolean passedGo) {
+        this.passedGo = passedGo;
+    }
+   
+
+    // METODI RELATIVI ALLA PRIGIONE
+    // Metodo Getter
+    public int getEscapeAttempts() {
+        return escapeAttempts;
+    }
+
+    // Porta il giocatore in prigione
+    public void goToPrison(){
+        if(this.position == Board.GO_TO_PRISON){
+            moveTo(Board.PRISON);
+        }
+    }
+
+    // Fa uscire il giocatore di prigione
+    public void exitToPrison(){
+
+    }
+
+
+    // Metodo Getter
+    public List<Cards> getCards() {
+        return cards;
+    }
+
+
+    // METODI RELATIVI ALLA PROPRIETA'
+    // Metodo Getter
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    // Aggiunge proprietà in caso di acquisto
+    public void addProperty(Property p){
+        this.properties.add(p);
+        manageBalance(-p.buyProperty(this));
+    }
+
+    // Rimuove le proprietà e le carte se il giocatore perde
+    public void losePlayer(){
+        if(isBankrupt()){
+            for (Property p : properties) {
+                this.properties.remove(p);
+            }
+            for (Cards c : cards) {
+                this.cards.remove(c);
+            }
+        }
+    }
+    
+    // imposta ipoteca
+    public void mortageProp(Property p){
+        manageBalance(p.mortage());
+    }
+
+    // rimozione ipoteca 
+    public void removeMortageProp(Property p){
+        manageBalance(-p.removeMortage());
+    }
+
+ 
+    // METODI RELATIVI AL BILANCIO DEL GIOCATORE
+    // Metodo Getter
+    public int getBalance() {
+        return balance;
     }
 
     // Aggiorna il bilancio di ciascun giocatore 
@@ -104,17 +145,14 @@ public class Player {
         }
     }
 
-    // Aggiunge proprietà in caso di acquisto
-    public void addProperty(Property p){
-        this.properties.add(p);
+    // Metodi Getter e Setter
+    public boolean isBankrupt() {
+        return bankrupt;
     }
 
-    public void goToPrison(){
-
+    public void setBankrupt(boolean bankrupt) {
+        this.bankrupt = bankrupt;
     }
-
-    public void exitToPrison(){
-
-    }
+ 
        
 }
