@@ -3,7 +3,7 @@ public class Service extends Property {
 
     // costruttore
     public Service(String name, int price, int[] gain) {
-        super(name, price, gain, TypeProperty.SERVICE);
+        super(name, price, gain, Type.SERVICE);
     }
 
     // seguirà al guadagno di un servizio il moltiplicatore dei dadi

@@ -20,7 +20,7 @@ public class Board {
         squares[2] = new Cards.Card.Probability();
         squares[3] = new Land("Vicolo Nuova Luce", 60, new int[] { 4, 20, 60, 180, 320, 450 },
                 Land.ColorUrbinopoly.MARRONE, 50);
-        squares[4] = new Taxes<Double>("Income Tax", 1.1);
+        squares[4] = new Taxes<Double>("Income Tax", 1.1, Square.Type.INCOME_TAX);
         squares[5] = new Station("Adriabus 30", 200, new int[] { 25, 50, 100, 200 });
         squares[6] = new Land("Corso Reactive", 100, new int[] { 6, 30, 90, 270, 400, 550 },
                 Land.ColorUrbinopoly.CELESTE, 50);
@@ -73,7 +73,7 @@ public class Board {
         squares[36] = new Cards.Card.Unexpected();
         squares[37] = new Land("Fortezza Albornoz", 350, new int[] { 35, 175, 500, 1100, 1300, 1500 },
                 Land.ColorUrbinopoly.BLU, 200);
-        squares[38] = new Taxes<Integer>("Luxury Tax", 200);
+        squares[38] = new Taxes<Integer>("Luxury Tax", 200, Square.Type.LUXURY_TAX);
         squares[39] = new Land("Piazza della Repubblica", 400, new int[] { 50, 200, 600, 1400, 1700, 2000 },
                 Land.ColorUrbinopoly.BLU, 200);
 
@@ -103,7 +103,15 @@ public class Board {
 
     /*
      * Il tabellone richiede una modellazione accurata di tutte
-     * quelle fasi in cui l'azione verificata è automatica ed
-     * unidirezionale, pertanto tale classe tutela tutte le possibilità
+     * le azioni che si possono verificare qualora si entra in
+     * una casella probabilità o imprevisti
      */
+    // public void takeCard(Player p){
+    // switch (getSquare(p.getPosition()).getNature()) {
+    // case PROBABILITY -> getProb().exeProb(p);
+    // case UNEXPECTED -> getUnex().exeUnex(p);
+    // default -> null;
+    // }
+    // }
+
 }

@@ -1,31 +1,18 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 // Gestione di un mazzo di carte 
 public class Cards implements CardsApi {
     // Modellazione della carta
     public static class Card {
 
-        // Definizione tipi di carte tramite enum
-        public enum TypeCard {
-            UNEXPECTED, PROBABILITY
-        };
-
-        // Ogni carta ha un codice a cui corrisponde un'azione
-        public enum ActionID {
-            MOVEMENT,
-            BALANCE,
-            PRISON;
-        }
-
         // quadrato Probability che indica il mazzo da cui pescare
         public static class Probability extends Square {
 
             // costruttore
             public Probability() {
-                super(Cards.Card.TypeCard.PROBABILITY.name());
+                super(Type.PROBABILITY.name(), Type.PROBABILITY);
             }
 
         }
@@ -35,46 +22,33 @@ public class Cards implements CardsApi {
 
             // costruttore
             public Unexpected() {
-                super(Cards.Card.TypeCard.UNEXPECTED.name());
+                super(Type.UNEXPECTED.name(), Type.UNEXPECTED);
             }
         }
 
+        // definizione del codice id di una carta
+        public enum ActionId {
+            ID_REPUBBLICA, ID_GO, ID_LOTTERY, ID_ACTION, ID_ASSICURATION, ID_CAUSE, ID_FINE,
+            ID_UNDER_3, ID_INCOME, ID_LOTTO, ID_MARRIAGE, ID_WAY, ID_DRIVE, ID_CASCIOTTA,
+            ID_FREE_PRISON, ID_GO_PRISON;
+        }
+
         // dichiarazione attributi della classe Card
-        private final TypeCard type;
         private final String message;
-        private final ActionID nature;
-        private final Optional<Integer> action;
+        private final ActionId id;
 
         // Costruttore Card
-        public Card(Cards.Card.TypeCard type, Cards.Card.ActionID a, int action, String message) {
-            this.type = type;
+        public Card(String message, ActionId id) {
             this.message = message;
-            this.nature = a;
-            this.action = Optional.ofNullable(action);
-        }
-
-        public Card(Cards.Card.TypeCard type, Cards.Card.ActionID a, String message) {
-            this.type = type;
-            this.message = message;
-            this.nature = a;
-            this.action = Optional.empty();
-        }
-
-        // Metodi Getter
-        public TypeCard getType() {
-            return type;
+            this.id = id;
         }
 
         public String getMessage() {
             return message;
         }
 
-        public ActionID getNature() {
-            return nature;
-        }
-
-        public Optional<Integer> getAction() {
-            return action;
+        public ActionId getId() {
+            return id;
         }
     }
 
@@ -84,7 +58,7 @@ public class Cards implements CardsApi {
     private int nCardTaken;
 
     // Costruttore Cards
-    public Cards(String name) {
+    public Cards() {
         this.nCardTaken = 0;
         this.deck = new ArrayList<>();
     }
