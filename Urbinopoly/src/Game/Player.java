@@ -6,7 +6,7 @@ public class Player {
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
-    private final static int EXIT_PAYMENT = 125;
+    private final static int EXIT_PRISON_PAYMENT = 125;
 
     // Campi della classe
     private final String name;
@@ -52,7 +52,6 @@ public class Player {
             this.position %= Board.N_SQAURES;
             setPassedGo(true);
             manageBalance(COLLECTION);
-
         }
     }
 
@@ -85,22 +84,23 @@ public class Player {
     }
 
     // Porta il giocatore in prigione
-    public void goToPrison() {
-        if (this.position == Board.GO_TO_PRISON) {
-            moveTo(Board.PRISON);
-            setInPrison(true);
-        }
-    }
+    // public void goToPrison() {
+    // if (this.position == Board.GO_TO_PRISON) {
+    // moveTo(Board.PRISON);
+    // setInPrison(true);
+    // }
+    // }
 
-    // Controlla se il giocatore ha effettuato i tentativi di evasione dalla prigione
+    // Controlla se il giocatore ha effettuato i tentativi di evasione dalla
+    // prigione
     public void exitPrisonForEscapeAttempt() {
-        if(this.escapeAttempts == 3) {
+        if (getEscapeAttempts() == 3) {
             setInPrison(false);
             this.escapeAttempts = 0;
         } else {
             countTurnInPrison();
         }
-        
+
     }
 
     // Conta i turni in prigione
@@ -108,14 +108,14 @@ public class Player {
         this.escapeAttempts++;
     }
 
-    // 
+    //
 
     // public void exitToPrison(){
-    //     if(this.pay == true){
-    //         manageBalance(-EXIT_PAYMENT);
-    //     }else if(this.hasCard == true){
-    //         this.cards.remove();
-    //     }
+    // if(this.pay == true){
+    // manageBalance(-EXIT_PAYMENT);
+    // }else if(this.hasCard == true){
+    // this.cards.remove();
+    // }
     // }
 
     // Metodo Getter
@@ -135,18 +135,6 @@ public class Player {
         manageBalance(-p.buyProperty(this));
     }
 
-    // Rimuove le proprietà e le carte se il giocatore perde
-    public void losePlayer() {
-        if (isBankrupt()) {
-            for (Property p : properties) {
-                this.properties.remove(p);
-            }
-            for (Cards c : cards) {
-                this.cards.remove(c);
-            }
-        }
-    }
-
     // imposta ipoteca
     public void mortageProp(Property p) {
         manageBalance(p.mortage());
@@ -156,6 +144,12 @@ public class Player {
     public void removeMortageProp(Property p) {
         manageBalance(-p.removeMortage());
     }
+
+    // numero case/hotel
+
+    // controllo monopolio
+
+    //
 
     // METODI RELATIVI AL BILANCIO DEL GIOCATORE
     // Metodo Getter
@@ -180,4 +174,59 @@ public class Player {
         this.bankrupt = bankrupt;
     }
 
+    // Rimuove le proprietà e le carte se il giocatore perde
+    public void losePlayer() {
+        if (isBankrupt()) {
+            properties.stream().forEach(properties::remove);
+            cards.stream().forEach(cards::remove);
+        }
+    }
+
+    /*
+     * il player è responsabile di tutte le azioni
+     * che si verificano durante il corso della partita
+     * che dovranno essere gestite a seconda dei casi
+     */
+    public void doAction(Board b) {
+        switch (b.getSquare(this.getPosition()).getNature()) {
+            case GO -> {
+
+            }
+            case GO_TO_PRISON -> {
+                this.moveTo(Board.PRISON);
+                this.setInPrison(true);
+            }
+            case INCOME_TAX -> {
+                manageBalance(b.getSquare(4).getRate());
+            }
+            case LAND -> {
+
+            }
+            case LUXURY_TAX -> {
+
+            }
+            case PARKING -> {
+
+            }
+            case PRISON -> {
+
+            }
+            case PROBABILITY -> {
+
+            }
+            case SERVICE -> {
+
+            }
+            case STATION -> {
+
+            }
+            case UNEXPECTED -> {
+
+            }
+            default -> {
+
+            }
+
+        }
+    }
 }
