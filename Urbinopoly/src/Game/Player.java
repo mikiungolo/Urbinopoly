@@ -1,23 +1,28 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Player {
     // Budget assegnato inizialmente ad ogni singolo giocatore
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
-    private final static int EXIT_PRISON_PAYMENT = 125;
+    private final static int EXIT_PRISON_CAUTION = 125;
 
     // Campi della classe
     private final String name;
     private int position;
     private int balance;
     private int escapeAttempts;
+    private int nService;
+    private int nStation;
+    private int nHouseLand;
     private boolean passedGo;
     private boolean bankrupt;
     private boolean isInPrison;
     // Campi di tipo lista della classe
-    private List<Cards> cards;
+    private Optional<List<Cards>> cards;
     private List<Property> properties;
 
     // Costruttore classe
@@ -26,11 +31,14 @@ public class Player {
         this.position = position;
         this.balance = INITIAL_BUDGET;
         this.escapeAttempts = 0;
+        this.nHouseLand = 0;
+        this.nService = 0;
+        this.nStation = 0;
         this.passedGo = false;
         this.bankrupt = false;
         this.isInPrison = false;
         // Composizione
-        this.cards = new LinkedList<>();
+        this.cards = Optional.empty();
         this.properties = new LinkedList<>();
     }
 
@@ -83,14 +91,6 @@ public class Player {
         this.isInPrison = isInPrison;
     }
 
-    // Porta il giocatore in prigione
-    // public void goToPrison() {
-    // if (this.position == Board.GO_TO_PRISON) {
-    // moveTo(Board.PRISON);
-    // setInPrison(true);
-    // }
-    // }
-
     // Controlla se il giocatore ha effettuato i tentativi di evasione dalla
     // prigione
     public void exitPrisonForEscapeAttempt() {
@@ -100,7 +100,6 @@ public class Player {
         } else {
             countTurnInPrison();
         }
-
     }
 
     // Conta i turni in prigione
@@ -108,31 +107,58 @@ public class Player {
         this.escapeAttempts++;
     }
 
-    //
+    // Uscita di prigione
 
-    // public void exitToPrison(){
-    // if(this.pay == true){
-    // manageBalance(-EXIT_PAYMENT);
-    // }else if(this.hasCard == true){
-    // this.cards.remove();
-    // }
-    // }
+    // mediante cauzione
+    public void exitPrisonToCaution() {
+        setInPrison(false);
+        manageBalance(-EXIT_PRISON_CAUTION);
+    }
 
-    // Metodo Getter
-    public List<Cards> getCards() {
+    // mediante carta trovata
+    public void exitPrisonToCard() {
+        /*
+         * se ci sono carte sono carte FREE_PRISON
+         * ovvero le uniche che un giocatore
+         * potrebbe conservare
+         */
+        cards.ifPresent(cards -> cards.remove(0));
+        setInPrison(false);
+    }
+
+    // Metodo relativi alle carte
+    public Optional<List<Cards>> getCards() {
         return cards;
     }
 
     // METODI RELATIVI ALLA PROPRIETA'
-    // Metodo Getter
+    // Metodi Getter
     public List<Property> getProperties() {
         return properties;
+    }
+
+    public int getnService() {
+        return nService;
+    }
+
+    public int getnStation() {
+        return nStation;
+    }
+
+    public int getnHouseLand() {
+        return nHouseLand;
     }
 
     // Aggiunge proprietà in caso di acquisto
     public void addProperty(Property p) {
         this.properties.add(p);
         manageBalance(-p.buyProperty(this));
+        if (p instanceof Land)
+            controlUrbinopoly((Land) p);
+        else if (p instanceof Station)
+            this.nStation++;
+        else
+            this.nService++;
     }
 
     // imposta ipoteca
@@ -145,10 +171,18 @@ public class Player {
         manageBalance(-p.removeMortage());
     }
 
-    // numero case/hotel
-
     // controllo monopolio
-
+    private void controlUrbinopoly(Land p) {
+        if (!p.isUrbinopoly()) {
+            List<Property> urbinopoly = properties.stream().filter(x -> x instanceof Land)
+                    .filter(x -> ((Land) x).getColor().equals(p.getColor()))
+                    .collect(Collectors.toList());
+            if (urbinopoly.size() == p.getColor().getnLandsColor()) {
+                urbinopoly.stream()
+                        .forEach(x -> ((Land) x).setUrbinopoly(true));
+            }
+        }
+    }
     //
 
     // METODI RELATIVI AL BILANCIO DEL GIOCATORE
@@ -177,8 +211,9 @@ public class Player {
     // Rimuove le proprietà e le carte se il giocatore perde
     public void losePlayer() {
         if (isBankrupt()) {
-            properties.stream().forEach(properties::remove);
-            cards.stream().forEach(cards::remove);
+            properties.stream().forEach(p -> p.releaseProperty());
+            properties.clear();
+            cards.ifPresent(cards -> cards.clear());
         }
     }
 
@@ -187,46 +222,48 @@ public class Player {
      * che si verificano durante il corso della partita
      * che dovranno essere gestite a seconda dei casi
      */
-    public void doAction(Board b) {
-        switch (b.getSquare(this.getPosition()).getNature()) {
-            case GO -> {
+    // public void doAction(Board b) {
+    // Square current = b.getSquare(this.getPosition());
+    // switch (current.getNature()) {
+    // case GO -> {
 
-            }
-            case GO_TO_PRISON -> {
-                this.moveTo(Board.PRISON);
-                this.setInPrison(true);
-            }
-            case INCOME_TAX -> {
-                manageBalance(b.getSquare(4).getRate());
-            }
-            case LAND -> {
+    // }
+    // case GO_TO_PRISON -> {
+    // this.moveTo(Board.PRISON);
+    // this.setInPrison(true);
+    // }
+    // case INCOME_TAX -> {
+    // manageBalance((int) (-((Taxes<Double>) current).getRate() *
+    // this.getBalance()));
+    // }
+    // case LAND -> {
+    // if()
+    // }
+    // case LUXURY_TAX -> {
 
-            }
-            case LUXURY_TAX -> {
+    // }
+    // case PARKING -> {
 
-            }
-            case PARKING -> {
+    // }
+    // case PRISON -> {
 
-            }
-            case PRISON -> {
+    // }
+    // case PROBABILITY -> {
 
-            }
-            case PROBABILITY -> {
+    // }
+    // case SERVICE -> {
 
-            }
-            case SERVICE -> {
+    // }
+    // case STATION -> {
 
-            }
-            case STATION -> {
+    // }
+    // case UNEXPECTED -> {
 
-            }
-            case UNEXPECTED -> {
+    // }
+    // default -> {
 
-            }
-            default -> {
+    // }
 
-            }
-
-        }
-    }
+    // }
+    // }
 }

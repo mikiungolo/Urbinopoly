@@ -54,6 +54,21 @@ public class Cards implements CardsApi {
         public int getAction() {
             return action;
         }
+
+        // controllo uguaglianza carte
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Card other = (Card) obj;
+            if (id != other.id)
+                return false;
+            return true;
+        }
     }
 
     // L'outer class (Cards) è una lista di Card per composizione
