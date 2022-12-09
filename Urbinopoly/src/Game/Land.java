@@ -26,7 +26,7 @@ public class Land extends Property {
     };
 
     // costante bonus dovuta al monopolio
-    private static final int BONUS_URBINOPOLY = 0;
+    private static final int BONUS_URBINOPOLY = 2;
 
     // stato di un Terreno
     private final ColorUrbinopoly color;

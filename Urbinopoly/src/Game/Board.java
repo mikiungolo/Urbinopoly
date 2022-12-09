@@ -22,7 +22,7 @@ public class Board {
         squares[2] = new Cards.Card.Probability();
         squares[3] = new Land("Vicolo Nuova Luce", 60, new int[] { 4, 20, 60, 180, 320, 450 },
                 Land.ColorUrbinopoly.MARRONE, 50);
-        squares[4] = new Taxes<Double>("Income Tax", 1.1, Square.Type.INCOME_TAX);
+        squares[4] = new Taxes<Double>("Income Tax", 0.1, Square.Type.INCOME_TAX);
         squares[5] = new Station("Adriabus 30", 200, new int[] { 25, 50, 100, 200 });
         squares[6] = new Land("Corso Reactive", 100, new int[] { 6, 30, 90, 270, 400, 550 },
                 Land.ColorUrbinopoly.CELESTE, 50);
