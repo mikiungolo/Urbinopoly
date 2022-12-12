@@ -5,10 +5,14 @@ public class Urbinopoly {
     private Players players;
     private DiceApi dice;
 
-    public Urbinopoly() {
+    private boolean inTurn;
+
+    public Urbinopoly(Players players) {
         this.board = new Board();
-        this.players = new Players(null);
+        this.players = players;
         this.dice = new Dice();
+
+        this.inTurn = true;
     }
 
     // getter
@@ -24,49 +28,91 @@ public class Urbinopoly {
         return dice;
     }
 
-    // Inizio del primo turno un Player casuale
-    public void doAction() {
-        Square current = b.getSquare(this.getPosition());
-        switch (current.getNature()) {
-        case GO -> {
+    /* gestione di un turno generalizzato */
+    public void turn(Player p) {
+        inTurn = true;
+        do {
+            dice.roll();
+            p.move(dice.getTotalValue());
+            doAction(p);
+            // ci deve essere l'attesa del player per la fine del turno
+            // in modo taleche inTurn si setti falsa e il turno termini
+        } while (inTurn);
+    }
 
-        }
-        case GO_TO_PRISON -> {
-        this.moveTo(Board.PRISON);
-        this.setInPrison(true);
-        }
-        case INCOME_TAX -> {
-        manageBalance((int) (-((Taxes<Double>) current).getRate() *
-        this.getBalance()));
-        }
-        case LAND -> {
-        if()
-        }
-        case LUXURY_TAX -> {
+    /*
+     * azioni che si verificano all'acquisizione
+     * del player corrente in corrispondenza
+     * del suo posizionamento sul tabellone
+     */
+    private void doAction(Player p) {
+        Square currentSquare = getBoard().getSquare(p.getPosition());
 
-        }
-        case PARKING -> {
+        switch (currentSquare.getNature()) {
+            case GO_TO_PRISON -> {
+                p.moveTo(Board.PRISON);
+                p.setInPrison(true);
+            }
+            case INCOME_TAX -> {
+                taxAction(currentSquare, p);
+            }
+            case LAND -> {
+                propertyAction(p, currentSquare, ((Land) currentSquare).getRent());
+            }
+            case LUXURY_TAX -> {
+                taxAction(currentSquare, p);
+            }
+            case PRISON -> {
 
+            }
+            case PROBABILITY -> {
+                cardAction(getBoard().getProb().takeCard(), p);
+            }
+            case SERVICE -> {
+                propertyAction(p, currentSquare,
+                        ((Service) currentSquare).getRent(((Service) currentSquare).getOwner().get().getnService(), 0));
+            }
+            case STATION -> {
+                propertyAction(p, currentSquare,
+                        ((Station) currentSquare).getRent(((Station) currentSquare).getOwner().get().getnStation()));
+            }
+            case UNEXPECTED -> {
+                cardAction(getBoard().getUnex().takeCard(), p);
+            }
+            default -> {
+            }
         }
-        case PRISON -> {
+    }
 
+    // azioni carte
+    private void cardAction(Cards.Card c, Player p) {
+        switch (c.getId()) {
+            case ID_BALANCE -> {
+                p.manageBalance(c.getAction());
+            }
+            case ID_MOVE -> {
+                p.move(c.getAction());
+            }
+            case ID_MOVE_TO -> {
+                p.moveTo(c.getAction());
+            }
+            case ID_FREE_PRISON -> {
+                p.addCard(c);
+            }
         }
-        case PROBABILITY -> {
+    }
 
-        }
-        case SERVICE -> {
+    // azioni tasse
+    private void taxAction(Square s, Player p) {
+        p.manageBalance(-(int) ((Taxes<?>) s).getRate() * p.getBalance());
 
-        }
-        case STATION -> {
+    }
 
-        }
-        case UNEXPECTED -> {
-
-        }
-        default -> {
-
-        }
-
+    // azioni proprietà
+    private void propertyAction(Player p, Square s, int amount) {
+        if (((Property) s).isOwner() && !p.getProperties().contains(s)) {
+            p.manageBalance(-amount);
+            ((Property) s).getOwner().get().manageBalance(amount);
         }
     }
 }

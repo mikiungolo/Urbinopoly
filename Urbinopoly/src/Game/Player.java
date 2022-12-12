@@ -22,7 +22,7 @@ public class Player {
     private boolean bankrupt;
     private boolean isInPrison;
     // Campi di tipo lista della classe
-    private Optional<List<Cards>> cards;
+    private Optional<List<Cards.Card>> cards;
     private List<Property> properties;
 
     // Costruttore classe
@@ -127,8 +127,12 @@ public class Player {
     }
 
     // Metodo relativi alle carte
-    public Optional<List<Cards>> getCards() {
+    public Optional<List<Cards.Card>> getCards() {
         return cards;
+    }
+
+    public void addCard(Cards.Card c) {
+        cards.get().add(c);
     }
 
     // METODI RELATIVI ALLA PROPRIETA'

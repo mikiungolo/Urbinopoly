@@ -94,8 +94,7 @@ public class Land extends Property {
     }
 
     // ritorna affitto
-    @Override
-    public int getRent(int qnt) {
+    public int getRent() {
         if (nHouse == 0 && (!urbinopoly)) {
             return super.getGain()[nHouse];
         } else if (nHouse == 0 && urbinopoly) {

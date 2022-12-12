@@ -111,16 +111,8 @@ public class Board {
     }
 
     /*
-     * Il tabellone richiede una modellazione accurata di tutte
+     * Il tabellone richiede una modellazione di tutte
      * le azioni che si possono verificare qualora si entra in
      * una casella probabilità o imprevisti
      */
-    // public void takeCard(Player p){
-    // switch (getSquare(p.getPosition()).getNature()) {
-    // case PROBABILITY -> getProb().exeProb(p);
-    // case UNEXPECTED -> getUnex().exeUnex(p);
-    // default -> null;
-    // }
-    // }
-
 }

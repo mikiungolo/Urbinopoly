@@ -6,9 +6,8 @@ public class Service extends Property {
         super(name, price, gain, Type.SERVICE);
     }
 
-    // seguirà al guadagno di un servizio il moltiplicatore dei dadi
-    @Override
-    public int getRent(int nService) {
-        return super.getGain()[nService];
+    // n-servizi * valore dei dadi
+    public int getRent(int nService, int valueDice) {
+        return super.getGain()[nService] * valueDice;
     }
 }

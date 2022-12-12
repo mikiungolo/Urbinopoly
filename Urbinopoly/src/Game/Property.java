@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 // modellazione di una proprietà
 public class Property extends Square {
 
@@ -6,7 +8,7 @@ public class Property extends Square {
 
     // stato delle proprietà
 
-    private String owner; // nome proprietario
+    private Optional<Player> owner; // Player proprietario
 
     private boolean isOwner; // ha un proprietario?
     private boolean isMortaged; // è ipotecata?
@@ -17,7 +19,7 @@ public class Property extends Square {
     // costruttore della classe
     public Property(String name, int price, int[] gain, Type t) {
         super(name, t);
-        this.owner = "";
+        this.owner = Optional.empty();
         this.isOwner = false;
         this.isMortaged = false;
         this.price = price;
@@ -29,21 +31,21 @@ public class Property extends Square {
         return isOwner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwner(Player owner) {
+        this.owner = Optional.ofNullable(owner);
     }
 
     public void setOwner(boolean isOwner) {
         this.isOwner = isOwner;
     }
 
-    public String getOwner() {
-        return owner;
+    public Optional<Player> getOwner() {
+        return this.owner;
     }
 
     // si rilascia una proprietà quando un Player perde
     public void releaseProperty() {
-        this.owner = "";
+        this.owner = Optional.empty();
         this.isOwner = false;
         this.isMortaged = false;
     }
@@ -59,15 +61,10 @@ public class Property extends Square {
     }
 
     public int buyProperty(Player p) {
-        setOwner(p.getName());
+        setOwner(p);
         setOwner(true);
         return getPrice();
     }
-
-    // controllato dalle sub-classes
-    public int getRent(int qnt) {
-        return 0;
-    };
 
     // gestione ipoteca
     public boolean isMortaged() {
