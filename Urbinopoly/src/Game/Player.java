@@ -26,9 +26,9 @@ public class Player {
     private List<Property> properties;
 
     // Costruttore classe
-    public Player(String name, int position) {
+    public Player(String name) {
         this.name = name;
-        this.position = position;
+        this.position = Board.GO;
         this.balance = INITIAL_BUDGET;
         this.escapeAttempts = 0;
         this.nHouseLand = 0;
@@ -79,8 +79,13 @@ public class Player {
 
     // METODI RELATIVI ALLA PRIGIONE
     // Metodo Getter
+
     public int getEscapeAttempts() {
         return escapeAttempts;
+    }
+
+    public static int getExitPrisonCaution() {
+        return EXIT_PRISON_CAUTION;
     }
 
     public boolean isInPrison() {
@@ -118,12 +123,11 @@ public class Player {
     // mediante carta trovata
     public void exitPrisonToCard() {
         /*
-         * se ci sono carte sono carte FREE_PRISON
-         * ovvero le uniche che un giocatore
-         * potrebbe conservare
+         * se ci sono carte sono esclusivamente carte
+         * FREE_PRISON, ovvero le uniche che un
+         * giocatore può e deve conservare
          */
-        cards.ifPresent(cards -> cards.remove(0));
-        setInPrison(false);
+        cards.ifPresent(cards -> removeCard());
     }
 
     // Metodo relativi alle carte
@@ -133,6 +137,11 @@ public class Player {
 
     public void addCard(Cards.Card c) {
         cards.get().add(c);
+    }
+
+    private void removeCard() {
+        cards.get().remove(0);
+        setInPrison(false);
     }
 
     // METODI RELATIVI ALLA PROPRIETA'

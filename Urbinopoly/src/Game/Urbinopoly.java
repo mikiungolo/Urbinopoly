@@ -1,9 +1,9 @@
 // classe per la gestione dell'intero gioco
 public class Urbinopoly {
     // composizione
-    private Board board;
-    private Players players;
-    private DiceApi dice;
+    private final Board board;
+    private final Players players;
+    private final DiceApi dice;
 
     private boolean inTurn;
 
@@ -43,7 +43,9 @@ public class Urbinopoly {
     /*
      * azioni che si verificano all'acquisizione
      * del player corrente in corrispondenza
-     * del suo posizionamento sul tabellone
+     * del suo posizionamento sul tabellone.
+     * Tali azioni sono automatiche poichè esenti da
+     * ogni decisione dei Players
      */
     private void doAction(Player p) {
         Square currentSquare = getBoard().getSquare(p.getPosition());
@@ -52,6 +54,8 @@ public class Urbinopoly {
             case GO_TO_PRISON -> {
                 p.moveTo(Board.PRISON);
                 p.setInPrison(true);
+                // si inziano a contare i turni in prigione
+                p.exitPrisonForEscapeAttempt();
             }
             case INCOME_TAX -> {
                 taxAction(currentSquare, p);
@@ -63,7 +67,10 @@ public class Urbinopoly {
                 taxAction(currentSquare, p);
             }
             case PRISON -> {
-
+                // si iniziano a contare i turni in prigione
+                p.exitPrisonForEscapeAttempt();
+                if (p.getEscapeAttempts() > 1)
+                    prisonAction(p);
             }
             case PROBABILITY -> {
                 cardAction(getBoard().getProb().takeCard(), p);
@@ -105,14 +112,33 @@ public class Urbinopoly {
     // azioni tasse
     private void taxAction(Square s, Player p) {
         p.manageBalance(-(int) ((Taxes<?>) s).getRate() * p.getBalance());
-
     }
 
     // azioni proprietà
     private void propertyAction(Player p, Square s, int amount) {
-        if (((Property) s).isOwner() && !p.getProperties().contains(s)) {
+        /*
+         * per avvenire un pagamento/riscossione la proprietà
+         * fissata deve avere un proprietario diverso da quello
+         * corrente che non è in prigione.
+         */
+        if (((Property) s).isOwner() && !p.getProperties().contains(s) &&
+                !((Property) s).getOwner().get().isInPrison()) {
             p.manageBalance(-amount);
             ((Property) s).getOwner().get().manageBalance(amount);
         }
     }
+
+    // azione prigione
+    private void prisonAction(Player p) {
+        /*
+         * Quando il Player è in prigione può decidere
+         * se scagionarsi prematuramente pagando una
+         * cauzione o utilizzando carte speciali
+         */
+        if (p.getBalance() > Player.getExitPrisonCaution()) {
+            p.exitPrisonToCaution();
+        } else
+            p.exitPrisonToCard();
+    }
+
 }
