@@ -33,13 +33,20 @@ public class Urbinopoly {
     public void turn(Player p) {
         // se è l'unico Player in gioco ha vinto
         winner();
+
         inTurn = true;
         do {
+            playerAction(p);
+
             dice.roll();
             p.move(dice.getTotalValue());
+
             doAction(p);
             // controllo sconfitta del Player con eventuale rimozione
             getPlayers().remove(p);
+
+            // il Player vorrebbe rifare una sua azione personale (?)
+            // playerAction(p);
 
             /*
              * fin tanto che il player lanciando i dadi riceve facciate
@@ -92,8 +99,8 @@ public class Urbinopoly {
             case PRISON -> {
                 // si iniziano a contare i turni in prigione
                 p.exitPrisonForEscapeAttempt();
-                if (p.getEscapeAttempts() > 1)
-                    prisonAction(p);
+                // if (p.getEscapeAttempts() > 1)
+                // prisonAction(p);
             }
             case PROBABILITY -> {
                 cardAction(getBoard().getProb().takeCard(), p);
@@ -145,7 +152,7 @@ public class Urbinopoly {
          * fissata deve avere un proprietario diverso da quello
          * corrente che non è in prigione.
          */
-        if (((Property) s).isOwner() && !p.getProperties().contains(s) &&
+        if (((Property) s).isOwner() && !p.controlOwned((Property) s) &&
                 !((Property) s).getOwner().get().isInPrison()) {
             p.manageBalance(-amount);
             ((Property) s).getOwner().get().manageBalance(amount);
@@ -165,4 +172,23 @@ public class Urbinopoly {
             p.exitPrisonToCard();
     }
 
+    /*
+     * Modellazione di tutte quelle le azioni in cui
+     * è il Player, a determinate condizioni,
+     * il protagonista dell'evolversi
+     * della partita di gioco
+     */
+    public void playerAction(Player p) {
+        // se il player è in prigione decide come e se uscire
+        if (p.isInPrison()) {
+            prisonAction(p);
+        }
+        /*
+         * in ogni turno il player può prendere decisioni
+         * sulle sue proprietà a condizioni soddisfatte
+         */
+        // qui ci deve essere l'attivazione a condizioni valide
+        // di tutti i metodi creati: manipulate property..come fare?
+
+    }
 }

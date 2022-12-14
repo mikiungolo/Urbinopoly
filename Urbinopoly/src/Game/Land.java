@@ -28,6 +28,12 @@ public class Land extends Property {
     // costante bonus dovuta al monopolio
     private static final int BONUS_URBINOPOLY = 2;
 
+    /*
+     * numero massimo di case in un terreno;
+     * 5 case indicano la presenza di un Hotel
+     */
+    private static final int MAX_HOUSE = 5;
+
     // stato di un Terreno
     private final ColorUrbinopoly color;
 
@@ -77,11 +83,11 @@ public class Land extends Property {
 
     // costruzione di una casa
     public int buildHouse() {
-        if (urbinopoly) {
+        if (getnHouse() < MAX_HOUSE) {
             this.nHouse++;
-            return this.priceHouse;
-        } else
-            return 0;
+            return -this.priceHouse;
+        }
+        return 0;
     }
 
     // rimozione di una casa

@@ -158,6 +158,7 @@ public class Player {
          * giocatore può e deve conservare
          */
         cards.ifPresent(cards -> removeCard());
+        setInPrison(false);
     }
 
     // Metodo relativi alle carte
@@ -171,7 +172,6 @@ public class Player {
 
     private void removeCard() {
         cards.get().remove(0);
-        setInPrison(false);
     }
 
     // METODI RELATIVI ALLA PROPRIETA'
@@ -204,14 +204,25 @@ public class Player {
             this.nService++;
     }
 
-    // imposta ipoteca
-    public void mortageProp(Property p) {
-        manageBalance(p.mortage());
+    // controllo proprietario di una proprietà
+    public boolean controlOwned(Property p) {
+        return (getProperties().contains(p));
     }
 
-    // rimozione ipoteca
-    public void removeMortageProp(Property p) {
-        manageBalance(-p.removeMortage());
+    /*
+     * Aggiunge o rimuove, a seconda della condition
+     * data in input, case o hotel controllando che
+     * il PLayer sia l'effettivo proprietario
+     */
+    // codition add = l.isUrbinopoly();
+    // condition remove = l.getNHouse>0;
+    // condition mortage = !p.isMortage();
+    // condition dis-mortage = p.isMortage
+    // l'amount è il corrispettivo delle azioni in Land, e Property
+    public void manipulateProperty(Property p, boolean condition, int amount) {
+        if (controlOwned(p) && condition) {
+            manageBalance(amount);
+        }
     }
 
     // controllo monopolio
