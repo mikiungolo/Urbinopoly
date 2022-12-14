@@ -6,6 +6,7 @@ public class Urbinopoly {
     private final DiceApi dice;
 
     private boolean inTurn;
+    private boolean endGame;
 
     public Urbinopoly(Players players) {
         this.board = new Board();
@@ -30,14 +31,26 @@ public class Urbinopoly {
 
     /* gestione di un turno generalizzato */
     public void turn(Player p) {
+        // se è l'unico Player in gioco ha vinto
+        winner();
         inTurn = true;
         do {
             dice.roll();
             p.move(dice.getTotalValue());
             doAction(p);
+            // controllo sconfitta del Player con eventuale rimozione
+            getPlayers().remove(p);
+
             // ci deve essere l'attesa del player per la fine del turno
-            // in modo taleche inTurn si setti falsa e il turno termini
+            // in modo tale che inTurn si setti falsa e il turno termini
+
         } while (inTurn);
+    }
+
+    private void winner() {
+        if (getPlayers().getInGame().size() == 1) {
+            this.endGame = true;
+        }
     }
 
     /*
@@ -87,6 +100,7 @@ public class Urbinopoly {
                 cardAction(getBoard().getUnex().takeCard(), p);
             }
             default -> {
+                return;
             }
         }
     }
