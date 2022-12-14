@@ -8,19 +8,26 @@ public class Player {
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
+    // Cauzione per la fuoruscita dalla prigione
     private final static int EXIT_PRISON_CAUTION = 125;
+    // Round consecutivi per la carcerazione
+    private final static int ROUND_GO_PRISON = 3;
 
     // Campi della classe
     private final String name;
+
     private int position;
     private int balance;
     private int escapeAttempts;
     private int nService;
     private int nStation;
     private int nHouseLand;
+    private int consecutiveRound;
+
     private boolean passedGo;
     private boolean bankrupt;
     private boolean isInPrison;
+
     // Campi di tipo lista della classe
     private Optional<List<Cards.Card>> cards;
     private List<Property> properties;
@@ -79,6 +86,29 @@ public class Player {
 
     // METODI RELATIVI ALLA PRIGIONE
     // Metodo Getter
+
+    public int getConsecutiveRound() {
+        return consecutiveRound;
+    }
+
+    public void setConsecutiveRound(int round) {
+        this.consecutiveRound = round;
+    }
+
+    public void countConsecutiveRound() {
+        this.consecutiveRound++;
+    }
+
+    public boolean goPrisonForTripleTurn() {
+        countConsecutiveRound();
+        if (getConsecutiveRound() == ROUND_GO_PRISON) {
+            moveTo(Board.PRISON);
+            // reset turni consecutivi
+            setConsecutiveRound(0);
+            return true;
+        }
+        return false;
+    }
 
     public int getEscapeAttempts() {
         return escapeAttempts;
@@ -223,10 +253,8 @@ public class Player {
 
     // Rimuove le proprietà e le carte se il giocatore perde
     public void losePlayer() {
-        if (isBankrupt()) {
-            properties.stream().forEach(p -> p.releaseProperty());
-            properties.clear();
-            cards.ifPresent(cards -> cards.clear());
-        }
+        properties.stream().forEach(p -> p.releaseProperty());
+        properties.clear();
+        cards.ifPresent(cards -> cards.clear());
     }
 }

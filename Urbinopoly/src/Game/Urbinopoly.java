@@ -41,6 +41,16 @@ public class Urbinopoly {
             // controllo sconfitta del Player con eventuale rimozione
             getPlayers().remove(p);
 
+            /*
+             * fin tanto che il player lanciando i dadi riceve facciate
+             * uguali deve giocare un ulteriore turno, altrimenti toccato
+             * il limite dei massimi turni consecutivi finirà in prigione.
+             * Tale operazione avviene in chiamata ricorsiva.
+             */
+            if (!p.goPrisonForTripleTurn()) {
+                turn(p);
+            }
+
             // ci deve essere l'attesa del player per la fine del turno
             // in modo tale che inTurn si setti falsa e il turno termini
 
