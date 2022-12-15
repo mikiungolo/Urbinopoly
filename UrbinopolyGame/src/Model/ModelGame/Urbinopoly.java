@@ -40,13 +40,17 @@ public class Urbinopoly {
     }
 
     /* gestione di un turno generalizzato */
-    public void turn(Player p) {
+    public void turn(Player p /* int option, int decision */) {
         // se è l'unico Player in gioco ha vinto
         winner();
 
         inTurn = true;
+
+        // la decisione (come la prop in questione) non può essere presa prima del
+        // turno. Sistemare!!!
         do {
-            playerAction(p);
+            // if (decision > 0 && decision <= 4)
+            // playerAction(p, decision);
 
             dice.roll();
             p.move(dice.getTotalValue());
@@ -85,7 +89,7 @@ public class Urbinopoly {
      * del player corrente in corrispondenza
      * del suo posizionamento sul tabellone.
      * Tali azioni sono automatiche poichè esenti da
-     * ogni decisione dei Players
+     * ogni optione dei Players
      */
     private void doAction(Player p) {
         Square currentSquare = getBoard().getSquare(p.getPosition());
@@ -170,16 +174,19 @@ public class Urbinopoly {
     }
 
     // azione prigione
-    private void prisonAction(Player p) {
+    private void prisonAction(Player p, int option) {
         /*
          * Quando il Player è in prigione può decidere
          * se scagionarsi prematuramente pagando una
          * cauzione o utilizzando carte speciali
          */
-        if (p.getBalance() > Player.getExitPrisonCaution()) {
-            p.exitPrisonToCaution();
-        } else
-            p.exitPrisonToCard();
+        switch (option) {
+            case 1 -> {
+                if (p.getBalance() > Player.getExitPrisonCaution())
+                    p.exitPrisonToCaution();
+            }
+            case 2 -> p.exitPrisonToCard();
+        }
     }
 
     /*
@@ -188,17 +195,35 @@ public class Urbinopoly {
      * il protagonista dell'evolversi
      * della partita di gioco
      */
-    public void playerAction(Player p) {
+    public void playerAction(Player p, Property prop, int option) {
         // se il player è in prigione decide come e se uscire
         if (p.isInPrison()) {
-            prisonAction(p);
+            prisonAction(p, option);
+        } else {
+            /*
+             * in ogni turno il player può prendere optioni
+             * sulle sue proprietà a condizioni soddisfatte
+             */
+            switch (option) {
+                case 1 -> {
+                    // opzione di ipoteca
+                    p.manipulateProperty(prop, !prop.isMortaged(), prop.mortage());
+                }
+                case 2 -> {
+                    // opzione di rimozione ipoteca
+                    p.manipulateProperty(prop, prop.isMortaged(), prop.removeMortage());
+                }
+                case 3 -> {
+                    // opzione di costruzione casa
+                    Land l = (Land) prop;
+                    p.manipulateProperty(l, l.build(), l.buildHouse());
+                }
+                case 4 -> {
+                    Land l = (Land) prop;
+                    p.manipulateProperty(l, l.remove(), l.removeHouse());
+                }
+            }
         }
-        /*
-         * in ogni turno il player può prendere decisioni
-         * sulle sue proprietà a condizioni soddisfatte
-         */
-        // qui ci deve essere l'attivazione a condizioni valide
-        // di tutti i metodi creati: manipulate property..come fare?
 
     }
 }

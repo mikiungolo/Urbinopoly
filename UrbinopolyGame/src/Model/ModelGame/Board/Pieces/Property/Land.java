@@ -84,21 +84,25 @@ public class Land extends Property {
     }
 
     // costruzione di una casa
+
+    public boolean build() {
+        return getnHouse() < MAX_HOUSE;
+    }
+
     public int buildHouse() {
-        if (getnHouse() < MAX_HOUSE) {
-            this.nHouse++;
-            return -this.priceHouse;
-        }
-        return 0;
+        this.nHouse++;
+        return -this.priceHouse;
     }
 
     // rimozione di una casa
+
+    public boolean remove() {
+        return getnHouse() > 0;
+    }
+
     public int removeHouse() {
-        if (this.nHouse > 0) {
-            this.nHouse--;
-            return (this.priceHouse / 2);
-        } else
-            return 0;
+        this.nHouse--;
+        return (this.priceHouse / 2);
     }
 
     // ritorna affitto

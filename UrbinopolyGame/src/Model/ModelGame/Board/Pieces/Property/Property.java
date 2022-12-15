@@ -87,6 +87,6 @@ public class Property extends Square {
 
     public int removeMortage() {
         this.setMortaged(false);
-        return (int) (getPrice() / 2 * FEE);
+        return -((int) (getPrice() / 2 * FEE));
     }
 }
