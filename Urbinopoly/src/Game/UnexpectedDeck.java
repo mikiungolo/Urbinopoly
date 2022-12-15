@@ -39,4 +39,8 @@ public class UnexpectedDeck extends Cards {
 
         shuffle();
     }
+
+    public Cards.Card takeCard() {
+        return super.takeCard(this);
+    }
 }

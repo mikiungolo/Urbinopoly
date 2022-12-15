@@ -39,12 +39,7 @@ public class ProbabilityDeck extends Cards {
         shuffle();
     }
 
-    // azioni delle carte probabilità
-    // public void exeProb(Player p) {
-    // switch (super.takeCard(this).getId()) {
-    // case ID_MOVE_TO -> {
-
-    // }
-    // }
-    // }
+    public Cards.Card takeCard() {
+        return super.takeCard(this);
+    }
 }

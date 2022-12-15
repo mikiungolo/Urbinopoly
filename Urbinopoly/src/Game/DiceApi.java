@@ -1,8 +1,9 @@
 // Interfaccia per implementazione dadi
 public interface DiceApi {
 
-    public int roll();
+    public void roll();
 
     public boolean isDouble();
 
+    public int getTotalValue();
 }
