@@ -1,4 +1,9 @@
+package ModelGame.Board.Pieces.Property;
+
 import java.util.Optional;
+
+import ModelGame.Board.Pieces.Square;
+import ModelGame.Player.Player;
 
 // modellazione di una proprietà
 public class Property extends Square {

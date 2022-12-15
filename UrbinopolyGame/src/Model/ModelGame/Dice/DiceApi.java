@@ -1,3 +1,5 @@
+package ModelGame.Dice;
+
 // Interfaccia per implementazione dadi
 public interface DiceApi {
 

@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces;
+
 // Classe astratta per la creazione dei quadrati
 public abstract class Square {
 
@@ -64,6 +66,25 @@ public abstract class Square {
         // costruttore della classe
         public GoToPrison() {
             super(Type.GO_TO_PRISON.name(), Type.GO_TO_PRISON);
+        }
+    }
+
+    // quadrato Probability che indica il mazzo da cui pescare
+    public static class Probability extends Square {
+
+        // costruttore
+        public Probability() {
+            super(Type.PROBABILITY.name(), Type.PROBABILITY);
+        }
+
+    }
+
+    // quadrato Unexpected che indica il mazzo da cui pescare
+    public static class Unexpected extends Square {
+
+        // costruttore
+        public Unexpected() {
+            super(Type.UNEXPECTED.name(), Type.UNEXPECTED);
         }
     }
 }

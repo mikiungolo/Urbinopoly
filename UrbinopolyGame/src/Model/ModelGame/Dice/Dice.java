@@ -1,3 +1,5 @@
+package ModelGame.Dice;
+
 import java.util.Random;
 
 // creazione della classe per la creazione dei dadi 

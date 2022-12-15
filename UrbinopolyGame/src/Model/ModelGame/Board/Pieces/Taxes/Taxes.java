@@ -1,3 +1,7 @@
+package ModelGame.Board.Pieces.Taxes;
+
+import ModelGame.Board.Pieces.Square;
+
 // classe generalizzata che permette di definire diverse tipolgie di tasse
 public class Taxes<T> extends Square {
 

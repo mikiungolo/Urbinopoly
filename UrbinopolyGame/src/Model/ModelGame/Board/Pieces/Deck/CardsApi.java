@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces.Deck;
+
 // Interfaccia pubblica relative ai mazzi di carte
 public interface CardsApi {
     // seleziona un evento estraendo una carta dal mazzo

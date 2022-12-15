@@ -1,10 +1,15 @@
+package ModelTest;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import ModelGame.Board.Pieces.Property.Property;
+import ModelGame.Board.Pieces.Square.Type;
+
 public class PropertyTest {
-    Property p = new Property("Malato", 100, new int[] { 10, 20, 30, 40, 50, 60 }, Property.TypeProperty.LAND);
+    Property p = new Property("Malato", 100, new int[] { 10, 20, 30, 40, 50, 60 }, Type.LAND);
 
     @Test
     public void testMortage() {

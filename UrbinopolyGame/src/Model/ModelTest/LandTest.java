@@ -1,6 +1,10 @@
+package ModelTest;
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import ModelGame.Board.Pieces.Property.Land;
 
 public class LandTest {
 

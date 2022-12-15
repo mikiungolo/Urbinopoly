@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "UrbinopolyGame/src/Model",
+        "Urbinopoly/src/ModelTest",
+        "Urbinopoly/src/Model",
+        "Urbinopoly/src/Game",
+        "UrbinopolyGame"
+    ]
+}

@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces.Deck;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,25 +8,6 @@ import java.util.List;
 public class Cards implements CardsApi {
     // Modellazione della carta
     public static class Card {
-
-        // quadrato Probability che indica il mazzo da cui pescare
-        public static class Probability extends Square {
-
-            // costruttore
-            public Probability() {
-                super(Type.PROBABILITY.name(), Type.PROBABILITY);
-            }
-
-        }
-
-        // quadrato Unexpected che indica il mazzo da cui pescare
-        public static class Unexpected extends Square {
-
-            // costruttore
-            public Unexpected() {
-                super(Type.UNEXPECTED.name(), Type.UNEXPECTED);
-            }
-        }
 
         // definizione del codice id di una carta
         public enum ActionId {

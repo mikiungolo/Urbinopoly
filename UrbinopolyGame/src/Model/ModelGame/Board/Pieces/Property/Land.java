@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces.Property;
+
 // mdoellazione di una Proprietà Terreno
 public class Land extends Property {
 

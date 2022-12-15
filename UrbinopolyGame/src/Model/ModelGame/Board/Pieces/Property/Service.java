@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces.Property;
+
 // Modellazione di una proprietà Servizio
 public class Service extends Property {
 

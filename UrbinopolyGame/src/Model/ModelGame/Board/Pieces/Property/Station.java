@@ -1,3 +1,5 @@
+package ModelGame.Board.Pieces.Property;
+
 // modellazione di una proprietà Stazione
 public class Station extends Property {
 

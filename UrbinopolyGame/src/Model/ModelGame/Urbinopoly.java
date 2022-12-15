@@ -1,3 +1,13 @@
+package ModelGame;
+
+import ModelGame.Board.Board;
+import ModelGame.Board.Pieces.Square;
+import ModelGame.Board.Pieces.Deck.Cards;
+import ModelGame.Board.Pieces.Property.*;
+import ModelGame.Board.Pieces.Taxes.Taxes;
+import ModelGame.Dice.*;
+import ModelGame.Player.*;
+
 // classe per la gestione dell'intero gioco
 public class Urbinopoly {
     // composizione

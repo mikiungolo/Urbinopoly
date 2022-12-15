@@ -1,7 +1,13 @@
+package ModelGame.Player;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import ModelGame.Board.Board;
+import ModelGame.Board.Pieces.Deck.Cards;
+import ModelGame.Board.Pieces.Property.*;
 
 public class Player {
     // Budget assegnato inizialmente ad ogni singolo giocatore
