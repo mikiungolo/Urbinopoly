@@ -35,7 +35,7 @@ public class Board {
                 squares[6] = new Land("Corso Reactive", 100, new int[] { 6, 30, 90, 270, 400, 550 },
                                 Land.ColorUrbinopoly.CELESTE, 50);
                 squares[7] = new Square.Unexpected();
-                squares[8] = new Land("Corso Gimnasim", 100, new int[] { 6, 30, 90, 270, 400, 550 },
+                squares[8] = new Land("Corso Gimnasium", 100, new int[] { 6, 30, 90, 270, 400, 550 },
                                 Land.ColorUrbinopoly.CELESTE, 50);
                 squares[9] = new Land("Corso MadPlanet", 120, new int[] { 8, 40, 100, 300, 450, 600 },
                                 Land.ColorUrbinopoly.CELESTE, 50);

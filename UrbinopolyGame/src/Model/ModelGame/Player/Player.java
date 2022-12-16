@@ -2,11 +2,10 @@ package ModelGame.Player;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ModelGame.Board.Board;
-import ModelGame.Board.Pieces.Deck.Cards;
+import ModelGame.Board.Pieces.Deck.Card;
 import ModelGame.Board.Pieces.Property.*;
 
 public class Player {
@@ -35,7 +34,7 @@ public class Player {
     private boolean isInPrison;
 
     // Campi di tipo lista della classe
-    private Optional<List<Cards.Card>> cards;
+    private List<Card> cards;
     private List<Property> properties;
 
     // Costruttore classe
@@ -51,7 +50,7 @@ public class Player {
         this.bankrupt = false;
         this.isInPrison = false;
         // Composizione
-        this.cards = Optional.empty();
+        this.cards = new LinkedList<>();
         this.properties = new LinkedList<>();
     }
 
@@ -149,7 +148,6 @@ public class Player {
     }
 
     // Uscita di prigione
-
     // mediante cauzione
     public void exitPrisonToCaution() {
         setInPrison(false);
@@ -163,21 +161,13 @@ public class Player {
          * FREE_PRISON, ovvero le uniche che un
          * giocatore può e deve conservare
          */
-        cards.ifPresent(cards -> removeCard());
+        cards.remove(0);
         setInPrison(false);
     }
 
     // Metodo relativi alle carte
-    public Optional<List<Cards.Card>> getCards() {
+    public List<Card> getCards() {
         return cards;
-    }
-
-    public void addCard(Cards.Card c) {
-        cards.get().add(c);
-    }
-
-    private void removeCard() {
-        cards.get().remove(0);
     }
 
     // METODI RELATIVI ALLA PROPRIETA'
@@ -272,6 +262,6 @@ public class Player {
     public void losePlayer() {
         properties.stream().forEach(p -> p.releaseProperty());
         properties.clear();
-        cards.ifPresent(cards -> cards.clear());
+        cards.clear();
     }
 }

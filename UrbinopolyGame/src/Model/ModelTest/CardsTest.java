@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
 import ModelGame.Board.Board;
-import ModelGame.Board.Pieces.Deck.Cards;
+import ModelGame.Board.Pieces.Deck.Card;
 import ModelGame.Board.Pieces.Deck.ProbabilityDeck;
 
 public class CardsTest {
@@ -14,13 +14,15 @@ public class CardsTest {
 
     @Test
     public void testGetEvento() {
-        Cards.Card corr = new Cards.Card(null, null, 0);
-        Cards.Card prec = new Cards.Card(null, null, 0);
+        Card corr = p.takeCard();
+        Card prec = null;
+        assertNotEquals(corr, prec);
+        prec = corr;
+
         for (int i = 0; i < 20; i++) {
-            corr = p.takeCard(p);
+            corr = p.takeCard();
             assertNotEquals(corr, prec);
             prec = corr;
         }
     }
-
 }

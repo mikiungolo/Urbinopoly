@@ -2,7 +2,7 @@ package ModelGame;
 
 import ModelGame.Board.Board;
 import ModelGame.Board.Pieces.Square;
-import ModelGame.Board.Pieces.Deck.Cards;
+import ModelGame.Board.Pieces.Deck.Card;
 import ModelGame.Board.Pieces.Property.*;
 import ModelGame.Board.Pieces.Taxes.Taxes;
 import ModelGame.Dice.*;
@@ -91,7 +91,7 @@ public class Urbinopoly {
      * Tali azioni sono automatiche poichè esenti da
      * ogni optione dei Players
      */
-    private void doAction(Player p) {
+    public void doAction(Player p) {
         Square currentSquare = getBoard().getSquare(p.getPosition());
 
         switch (currentSquare.getNature()) {
@@ -102,13 +102,13 @@ public class Urbinopoly {
                 p.exitPrisonForEscapeAttempt();
             }
             case INCOME_TAX -> {
-                taxAction(currentSquare, p);
+                IncomeAction(currentSquare, p);
             }
             case LAND -> {
                 propertyAction(p, currentSquare, ((Land) currentSquare).getRent());
             }
             case LUXURY_TAX -> {
-                taxAction(currentSquare, p);
+                LuxuryAction(currentSquare, p);
             }
             case PRISON -> {
                 // si iniziano a contare i turni in prigione
@@ -137,7 +137,7 @@ public class Urbinopoly {
     }
 
     // azioni carte
-    private void cardAction(Cards.Card c, Player p) {
+    private void cardAction(Card c, Player p) {
         switch (c.getId()) {
             case ID_BALANCE -> {
                 p.manageBalance(c.getAction());
@@ -149,14 +149,24 @@ public class Urbinopoly {
                 p.moveTo(c.getAction());
             }
             case ID_FREE_PRISON -> {
-                p.addCard(c);
+                p.getCards().add(c);
             }
         }
     }
 
+    @SuppressWarnings({ "unchecked" })
     // azioni tasse
-    private void taxAction(Square s, Player p) {
-        p.manageBalance(-(int) ((Taxes<?>) s).getRate() * p.getBalance());
+    private void IncomeAction(Square s, Player p) {
+        if (s instanceof Taxes<?>) {
+            p.manageBalance((int) ((((Taxes<Double>) s).getRate()) * p.getBalance()));
+        }
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void LuxuryAction(Square s, Player p) {
+        if (s instanceof Taxes<?>) {
+            p.manageBalance(-((Taxes<Integer>) s).getRate());
+        }
     }
 
     // azioni proprietà

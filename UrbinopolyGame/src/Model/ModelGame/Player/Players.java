@@ -26,4 +26,8 @@ public class Players {
             players.remove(p);
         }
     }
+
+    public void addPlayer(Player p) {
+        getInGame().add(p);
+    }
 }
