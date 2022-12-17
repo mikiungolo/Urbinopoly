@@ -60,7 +60,7 @@ public class UrbinopolyTest {
         // TESTO LE AZIONI DELLE TASSE
         current = p.getNextPlayer(p.getInGame().indexOf(current));
         current.moveTo(4);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             int b = current.getBalance();
             u.doAction(current);
             assertNotEquals(b, current.getBalance());
@@ -68,13 +68,17 @@ public class UrbinopolyTest {
         }
 
         current.moveTo(38);
-        for (int i = 0; i < 5; i++) {
+        current.manageBalance(2000);
+        for (int i = 0; i < 10; i++) {
             int b = current.getBalance();
             u.doAction(current);
             assertNotEquals(b, current.getBalance());
             assertEquals(b - 200, current.getBalance());
             b = current.getBalance();
         }
+
+        // TEST SULLE AZIONI DELLE PROPRIETA'
+
     }
 
     @Test

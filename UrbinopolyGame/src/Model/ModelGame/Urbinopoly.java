@@ -24,6 +24,7 @@ public class Urbinopoly {
         this.dice = new Dice();
 
         this.inTurn = true;
+        this.endGame = false;
     }
 
     // getter
@@ -39,17 +40,33 @@ public class Urbinopoly {
         return dice;
     }
 
+    // struttura dell'intero gameplay
+    public void gameplay() {
+
+        // primo turno
+        Player currentPlayer = players.getNextPlayer(-1);
+        turn(currentPlayer);
+
+        while (!endGame()) {
+            turn(players.getNextPlayer(players.getInGame().indexOf(currentPlayer)));
+        }
+
+        // il gioco deve terminare!!
+        if (endGame()) {
+
+        }
+    }
+
     /* gestione di un turno generalizzato */
     public void turn(Player p /* int option, int decision */) {
-        // se è l'unico Player in gioco ha vinto
-        winner();
 
         inTurn = true;
 
         // la decisione (come la prop in questione) non può essere presa prima del
         // turno. Sistemare!!!
+
         do {
-            // if (decision > 0 && decision <= 4)
+            // il controller deve mandarmi la decisione presa
             // playerAction(p, decision);
 
             dice.roll();
@@ -74,14 +91,15 @@ public class Urbinopoly {
 
             // ci deve essere l'attesa del player per la fine del turno
             // in modo tale che inTurn si setti falsa e il turno termini
-
+            // sempre quando il controller mi avviserà per la terminazione
         } while (inTurn);
     }
 
-    private void winner() {
+    private boolean endGame() {
         if (getPlayers().getInGame().size() == 1) {
             this.endGame = true;
         }
+        return this.endGame;
     }
 
     /*
@@ -131,7 +149,6 @@ public class Urbinopoly {
                 cardAction(getBoard().getUnex().takeCard(), p);
             }
             default -> {
-                return;
             }
         }
     }
@@ -196,6 +213,8 @@ public class Urbinopoly {
                     p.exitPrisonToCaution();
             }
             case 2 -> p.exitPrisonToCard();
+            default -> {
+            }
         }
     }
 
@@ -211,29 +230,38 @@ public class Urbinopoly {
             prisonAction(p, option);
         } else {
             /*
-             * in ogni turno il player può prendere optioni
+             * in ogni turno il player può prendere decisioni
              * sulle sue proprietà a condizioni soddisfatte
              */
             switch (option) {
                 case 1 -> {
+                    // opzione di acquisto proprietà
+                    if (p.getPosition() == getBoard().getPositionSquare(prop.getName())
+                            && !prop.isOwner()) {
+                        p.addProperty(prop);
+                    }
+                }
+                case 2 -> {
                     // opzione di ipoteca
                     p.manipulateProperty(prop, !prop.isMortaged(), prop.mortage());
                 }
-                case 2 -> {
+                case 3 -> {
                     // opzione di rimozione ipoteca
                     p.manipulateProperty(prop, prop.isMortaged(), prop.removeMortage());
                 }
-                case 3 -> {
+                case 4 -> {
                     // opzione di costruzione casa
                     Land l = (Land) prop;
                     p.manipulateProperty(l, l.build(), l.buildHouse());
                 }
-                case 4 -> {
+                case 5 -> {
+                    // opzione di rimozione casa
                     Land l = (Land) prop;
                     p.manipulateProperty(l, l.remove(), l.removeHouse());
                 }
+                default -> {
+                }
             }
         }
-
     }
 }
