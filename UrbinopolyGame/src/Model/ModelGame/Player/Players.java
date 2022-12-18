@@ -8,8 +8,15 @@ public class Players {
     private List<Player> players;
 
     // Costruttore
-    public Players(List<Player> players) {
-        this.players = new LinkedList<>(players);
+    public Players(List<String> namePlayers) {
+        this.players = new LinkedList<>();
+        buildPlayers(namePlayers);
+    }
+
+    private void buildPlayers(List<String> namePlayers) {
+        for (String name : namePlayers) {
+            players.add(new Player(name));
+        }
     }
 
     public List<Player> getInGame() {
@@ -25,9 +32,5 @@ public class Players {
             p.losePlayer();
             players.remove(p);
         }
-    }
-
-    public void addPlayer(Player p) {
-        getInGame().add(p);
     }
 }

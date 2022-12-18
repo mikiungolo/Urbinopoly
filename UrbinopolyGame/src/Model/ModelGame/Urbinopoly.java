@@ -30,7 +30,7 @@ public class Urbinopoly {
         this.endGame = false;
     }
 
-    // getter
+    // getter e setter
     public Board getBoard() {
         return board;
     }
@@ -43,15 +43,28 @@ public class Urbinopoly {
         return dice;
     }
 
+    public boolean isInTurn() {
+        return inTurn;
+    }
+
+    public void setInTurn(boolean inTurn) {
+        this.inTurn = inTurn;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
     // struttura dell'intero gameplay
     public void gameplay() {
 
-        // primo turno
-        Player currentPlayer = players.getNextPlayer(-1);
-        turn(currentPlayer);
-
+        // esecuzione dei turni
         while (!endGame()) {
-            turn(players.getNextPlayer(players.getInGame().indexOf(currentPlayer)));
+            turn(players.getNextPlayer(-1));
         }
 
         // il gioco deve terminare!!
@@ -61,41 +74,45 @@ public class Urbinopoly {
     }
 
     /* gestione di un turno generalizzato */
-    public void turn(Player p /* int option, int decision */) {
+    public void turn(Player p) {
 
-        inTurn = true;
+        setInTurn(true);
+        p.setOptionRolled(false);
 
-        // la decisione (come la prop in questione) non può essere presa prima del
-        // turno. Sistemare!!!
-
-        do {
-            // il controller deve mandarmi la decisione presa
-            // playerAction(p, decision);
-
-            dice.roll();
-            p.move(dice.getTotalValue());
-
-            doAction(p);
-            // controllo sconfitta del Player con eventuale rimozione
-            getPlayers().remove(p);
-
-            // il Player vorrebbe rifare una sua azione personale (?)
-            // playerAction(p);
+        /*
+         * fin tanto che il player corrente non ha selezionato
+         * il tiro dei dadi e non ha espresso la fine del proprio turno può continuare
+         * le proprie mosse di gioco
+         */
+        while (!p.isOptionRolled() || isInTurn()) {
 
             /*
-             * fin tanto che il player lanciando i dadi riceve facciate
-             * uguali deve giocare un ulteriore turno, altrimenti toccato
-             * il limite dei massimi turni consecutivi finirà in prigione.
-             * Tale operazione avviene in chiamata ricorsiva.
+             * nel corso del proprio turno il Player corrente può
+             * optare per tutte le opzioni a lui disponibili
              */
-            if (!p.goPrisonForTripleTurn()) {
-                turn(p);
+            playerAction(p, p.getOptionCommand());
+
+            // se indica l'opzione di tiro si esegue il giro
+            if (p.isOptionRolled()) {
+                dice.roll();
+                p.move(dice.getTotalValue());
+
+                doAction(p);
+                // controllo sconfitta del Player con eventuale rimozione
+                getPlayers().remove(p);
+
+                /*
+                 * fin tanto che il player lanciando i dadi riceve facciate
+                 * uguali deve giocare un ulteriore turno, altrimenti toccato
+                 * il limite dei massimi turni consecutivi finirà in prigione.
+                 * Tale operazione avviene in chiamata ricorsiva.
+                 */
+                if (!p.goPrisonForTripleTurn() && dice.isDouble()) {
+                    turn(p);
+                }
             }
 
-            // ci deve essere l'attesa del player per la fine del turno
-            // in modo tale che inTurn si setti falsa e il turno termini
-            // sempre quando il controller mi avviserà per la terminazione
-        } while (inTurn);
+        }
     }
 
     private boolean endGame() {
@@ -234,17 +251,19 @@ public class Urbinopoly {
      * il protagonista dell'evolversi
      * della partita di gioco
      */
-    public void playerAction(Player p, Property prop, int option) {
+    public void playerAction(Player p, int option) {
         // se il player è in prigione decide come e se uscire
         if (p.isInPrison()) {
-            prisonAction(p, option);
+            prisonAction(p, p.getOptionCommand());
         } else {
             /*
              * in ogni turno il player può prendere decisioni
              * sulle sue proprietà a condizioni soddisfatte
              */
-            switch (option) {
+
+            switch (p.getOptionCommand()) {
                 case 1 -> {
+                    Property prop = p.getProperties().get(p.getPropertySelected());
                     // opzione di acquisto proprietà
                     if (p.getPosition() == getBoard().getPositionSquare(prop.getName())
                             && !prop.isOwner()) {
@@ -253,21 +272,35 @@ public class Urbinopoly {
                 }
                 case 2 -> {
                     // opzione di ipoteca
+                    Property prop = p.getProperties().get(p.getPropertySelected());
                     p.manipulateProperty(prop, !prop.isMortaged(), prop.mortage());
                 }
                 case 3 -> {
                     // opzione di rimozione ipoteca
+                    Property prop = p.getProperties().get(p.getPropertySelected());
                     p.manipulateProperty(prop, prop.isMortaged(), prop.removeMortage());
                 }
                 case 4 -> {
                     // opzione di costruzione casa
-                    Land l = (Land) prop;
+                    Land l = (Land) p.getProperties().get(p.getPropertySelected());
+                    ;
                     p.manipulateProperty(l, l.build(), l.buildHouse());
                 }
                 case 5 -> {
                     // opzione di rimozione casa
-                    Land l = (Land) prop;
+                    Land l = (Land) p.getProperties().get(p.getPropertySelected());
+                    ;
                     p.manipulateProperty(l, l.remove(), l.removeHouse());
+                }
+                case 6 -> {
+                    // opzione di lancio dadi
+                    p.setOptionRolled(true);
+                }
+                case 7 -> {
+                    // opzione di fine turno
+                    if (p.isOptionRolled()) {
+                        setInTurn(false);
+                    }
                 }
                 default -> {
                 }

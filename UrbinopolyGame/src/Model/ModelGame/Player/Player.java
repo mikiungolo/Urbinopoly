@@ -29,10 +29,13 @@ public class Player {
     private int nStation;
     private int nHouseLand;
     private int consecutiveRound;
+    private int optionCommand;
+    private int propertySelected;
 
     private boolean passedGo;
     private boolean bankrupt;
     private boolean isInPrison;
+    private boolean optionRolled;
 
     // Campi di tipo lista della classe
     private List<Card> cards;
@@ -61,6 +64,30 @@ public class Player {
     // Metodo Getter
     public String getName() {
         return name;
+    }
+
+    public boolean isOptionRolled() {
+        return optionRolled;
+    }
+
+    public void setOptionRolled(boolean optionRolled) {
+        this.optionRolled = optionRolled;
+    }
+
+    public int getOptionCommand() {
+        return optionCommand;
+    }
+
+    public void setOptionCommand(int optionCommand) {
+        this.optionCommand = optionCommand;
+    }
+
+    public int getPropertySelected() {
+        return propertySelected;
+    }
+
+    public void setPropertySelected(int propertySelected) {
+        this.propertySelected = propertySelected;
     }
 
     // METODI RELATIVI AL MOVIMENTO
