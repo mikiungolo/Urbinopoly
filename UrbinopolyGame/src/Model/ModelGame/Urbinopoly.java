@@ -19,7 +19,7 @@ public class Urbinopoly {
     private boolean endGame;
 
     public Urbinopoly(Players players) {
-        this.board = new Board();
+        this.board = Board.getSingletonBoard();
         this.players = players;
         this.dice = new Dice();
 
@@ -107,7 +107,7 @@ public class Urbinopoly {
      * del player corrente in corrispondenza
      * del suo posizionamento sul tabellone.
      * Tali azioni sono automatiche poichè esenti da
-     * ogni optione dei Players
+     * ogni decisione dei Players
      */
     public void doAction(Player p) {
         Square currentSquare = getBoard().getSquare(p.getPosition());
@@ -219,7 +219,7 @@ public class Urbinopoly {
     }
 
     /*
-     * Modellazione di tutte quelle le azioni in cui
+     * Modellazione di tutte quelle azioni in cui
      * è il Player, a determinate condizioni,
      * il protagonista dell'evolversi
      * della partita di gioco

@@ -10,7 +10,7 @@ import ModelGame.Board.Pieces.Deck.ProbabilityDeck;
 
 public class CardsTest {
 
-    ProbabilityDeck p = new ProbabilityDeck(new Board());
+    ProbabilityDeck p = new ProbabilityDeck(Board.getSingletonBoard());
 
     @Test
     public void testGetEvento() {

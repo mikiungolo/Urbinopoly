@@ -14,7 +14,7 @@ import ModelGame.Player.Player;
 
 public class PlayerTest {
 
-    Board b = new Board();
+    Board b = Board.getSingletonBoard();
     Player p = new Player("Giovanni");
 
     @Test
