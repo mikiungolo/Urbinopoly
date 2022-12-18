@@ -7,16 +7,17 @@ import java.util.stream.Collectors;
 import ModelGame.Board.Board;
 import ModelGame.Board.Pieces.Deck.Card;
 import ModelGame.Board.Pieces.Property.*;
+import ModelGame.Player.PrisonStrategy.ExitPrisonStrategy;
 
 public class Player {
     // Budget assegnato inizialmente ad ogni singolo giocatore
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
     private final static int COLLECTION = 200;
-    // Cauzione per la fuoruscita dalla prigione
-    private final static int EXIT_PRISON_CAUTION = 125;
     // Round consecutivi per la carcerazione
     private final static int ROUND_GO_PRISON = 3;
+    // Cauzione per scarcerazione
+    private static final int EXIT_PRISON_CAUTION = -125;
 
     // Campi della classe
     private final String name;
@@ -36,6 +37,9 @@ public class Player {
     // Campi di tipo lista della classe
     private List<Card> cards;
     private List<Property> properties;
+
+    // Implementazione della strategia
+    ExitPrisonStrategy prisonStrategy;
 
     // Costruttore classe
     public Player(String name) {
@@ -119,8 +123,8 @@ public class Player {
         return escapeAttempts;
     }
 
-    public static int getExitPrisonCaution() {
-        return EXIT_PRISON_CAUTION;
+    public void setEscapeAttempts(int escapeAttempts) {
+        this.escapeAttempts = escapeAttempts;
     }
 
     public boolean isInPrison() {
@@ -131,38 +135,22 @@ public class Player {
         this.isInPrison = isInPrison;
     }
 
-    // Controlla se il giocatore ha effettuato i tentativi di evasione dalla
-    // prigione
-    public void exitPrisonForEscapeAttempt() {
-        if (getEscapeAttempts() == 3) {
-            setInPrison(false);
-            this.escapeAttempts = 0;
-        } else {
-            countTurnInPrison();
-        }
+    public static int getExitPrisonCaution() {
+        return EXIT_PRISON_CAUTION;
     }
 
-    // Conta i turni in prigione
-    private void countTurnInPrison() {
-        this.escapeAttempts++;
+    // STRATEGIA DI SCARCERAZIONE
+    public void setPrisonStrategy(ExitPrisonStrategy prisonStrategy) {
+        this.prisonStrategy = prisonStrategy;
     }
 
-    // Uscita di prigione
-    // mediante cauzione
-    public void exitPrisonToCaution() {
-        setInPrison(false);
-        manageBalance(-EXIT_PRISON_CAUTION);
+    public ExitPrisonStrategy getPrisonStrategy() {
+        return prisonStrategy;
     }
 
-    // mediante carta trovata
-    public void exitPrisonToCard() {
-        /*
-         * se ci sono carte sono esclusivamente carte
-         * FREE_PRISON, ovvero le uniche che un
-         * giocatore può e deve conservare
-         */
-        cards.remove(0);
-        setInPrison(false);
+    // esecuzione della strategia
+    public void applyStrategy() {
+        getPrisonStrategy().freePrison(this);
     }
 
     // Metodo relativi alle carte

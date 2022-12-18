@@ -7,6 +7,9 @@ import ModelGame.Board.Pieces.Property.*;
 import ModelGame.Board.Pieces.Taxes.Taxes;
 import ModelGame.Dice.*;
 import ModelGame.Player.*;
+import ModelGame.Player.PrisonStrategy.ExitForEscapeAttempt;
+import ModelGame.Player.PrisonStrategy.ExitWithCard;
+import ModelGame.Player.PrisonStrategy.ExitWithCaution;
 
 // classe per la gestione dell'intero gioco
 public class Urbinopoly {
@@ -117,7 +120,8 @@ public class Urbinopoly {
                 p.moveTo(Board.PRISON);
                 p.setInPrison(true);
                 // si inziano a contare i turni in prigione
-                p.exitPrisonForEscapeAttempt();
+                p.setPrisonStrategy(new ExitForEscapeAttempt());
+                p.applyStrategy();
             }
             case INCOME_TAX -> {
                 IncomeAction(currentSquare, p);
@@ -130,7 +134,8 @@ public class Urbinopoly {
             }
             case PRISON -> {
                 // si iniziano a contare i turni in prigione
-                p.exitPrisonForEscapeAttempt();
+                p.setPrisonStrategy(new ExitForEscapeAttempt());
+                p.applyStrategy();
                 // if (p.getEscapeAttempts() > 1)
                 // prisonAction(p);
             }
@@ -209,10 +214,15 @@ public class Urbinopoly {
          */
         switch (option) {
             case 1 -> {
-                if (p.getBalance() > Player.getExitPrisonCaution())
-                    p.exitPrisonToCaution();
+                if (p.getBalance() > Player.getExitPrisonCaution()) {
+                    p.setPrisonStrategy(new ExitWithCaution());
+                    p.applyStrategy();
+                }
             }
-            case 2 -> p.exitPrisonToCard();
+            case 2 -> {
+                p.setPrisonStrategy(new ExitWithCard());
+                p.applyStrategy();
+            }
             default -> {
             }
         }
