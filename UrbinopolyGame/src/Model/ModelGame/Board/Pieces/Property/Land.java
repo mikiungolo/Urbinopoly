@@ -86,7 +86,7 @@ public class Land extends Property {
     // costruzione di una casa
 
     public boolean build() {
-        return getnHouse() < MAX_HOUSE;
+        return getnHouse() < MAX_HOUSE && isUrbinopoly();
     }
 
     public int buildHouse() {

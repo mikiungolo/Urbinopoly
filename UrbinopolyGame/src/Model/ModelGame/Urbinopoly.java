@@ -62,9 +62,10 @@ public class Urbinopoly {
     // struttura dell'intero gameplay
     public void gameplay() {
 
+        int indexCurrentPlayer = -1;
         // esecuzione dei turni
         while (!endGame()) {
-            turn(players.getNextPlayer(-1));
+            indexCurrentPlayer = turn(players.getNextPlayer(indexCurrentPlayer));
         }
 
         // il gioco deve terminare!!
@@ -74,7 +75,7 @@ public class Urbinopoly {
     }
 
     /* gestione di un turno generalizzato */
-    public void turn(Player p) {
+    public int turn(Player p) {
 
         setInTurn(true);
         p.setOptionRolled(false);
@@ -84,7 +85,7 @@ public class Urbinopoly {
          * il tiro dei dadi e non ha espresso la fine del proprio turno può continuare
          * le proprie mosse di gioco
          */
-        while (!p.isOptionRolled() || isInTurn()) {
+        while (isInTurn()) {
 
             /*
              * nel corso del proprio turno il Player corrente può
@@ -93,7 +94,7 @@ public class Urbinopoly {
             playerAction(p, p.getOptionCommand());
 
             // se indica l'opzione di tiro si esegue il giro
-            if (p.isOptionRolled()) {
+            if (p.isOptionRolled() && !p.isInPrison()) {
                 dice.roll();
                 p.move(dice.getTotalValue());
 
@@ -111,8 +112,13 @@ public class Urbinopoly {
                     turn(p);
                 }
             }
-
         }
+        /*
+         * qui il il turno del player corrente è terminato quindi posso
+         * ritornare il suo indice in modo tale da passare
+         * al prossimo partecipante in gioco.
+         */
+        return getPlayers().getInGame().indexOf(p);
     }
 
     private boolean endGame() {
@@ -136,9 +142,6 @@ public class Urbinopoly {
             case GO_TO_PRISON -> {
                 p.moveTo(Board.PRISON);
                 p.setInPrison(true);
-                // si inziano a contare i turni in prigione
-                p.setPrisonStrategy(new ExitForEscapeAttempt());
-                p.applyStrategy();
             }
             case INCOME_TAX -> {
                 IncomeAction(currentSquare, p);
@@ -151,10 +154,8 @@ public class Urbinopoly {
             }
             case PRISON -> {
                 // si iniziano a contare i turni in prigione
-                p.setPrisonStrategy(new ExitForEscapeAttempt());
-                p.applyStrategy();
-                // if (p.getEscapeAttempts() > 1)
-                // prisonAction(p);
+                p.setInPrison(true);
+                setInTurn(false);
             }
             case PROBABILITY -> {
                 cardAction(getBoard().getProb().takeCard(), p);
@@ -240,7 +241,30 @@ public class Urbinopoly {
                 p.setPrisonStrategy(new ExitWithCard());
                 p.applyStrategy();
             }
-            default -> {
+            /*
+             * contrariamente alle due opzioni precedenti,
+             * qui il Player sarà scarcerato solo al termine
+             * della pena o se effettua una doppia facciata ai dadi
+             */
+            case 3 -> {
+                p.setPrisonStrategy(new ExitForEscapeAttempt());
+                p.applyStrategy();
+                /*
+                 * se il player dopo questa azione è ancora in prigione,
+                 * vuol dire che non è riuscito a scarcerarsi con i dadi
+                 * oppure non ha scontato i turni di pena, allora vengono
+                 * settate le condizioni per la terminazione del turno.
+                 */
+                if (p.isInPrison()) {
+                    setInTurn(false);
+                    /*
+                     * questo è un turno particolare, poichè l'unico in cui
+                     * un player non avrà al termine il comando 7 come stato interno,
+                     * per cui viene impostato senza il suo consenso in modo tale
+                     * da non causare problemi al suo prossimo turno
+                     */
+                    p.setOptionCommand(7);
+                }
             }
         }
     }
@@ -254,16 +278,16 @@ public class Urbinopoly {
     public void playerAction(Player p, int option) {
         // se il player è in prigione decide come e se uscire
         if (p.isInPrison()) {
-            prisonAction(p, p.getOptionCommand());
+            prisonAction(p, option);
         } else {
             /*
              * in ogni turno il player può prendere decisioni
              * sulle sue proprietà a condizioni soddisfatte
              */
 
-            switch (p.getOptionCommand()) {
+            switch (option) {
                 case 1 -> {
-                    Property prop = p.getProperties().get(p.getPropertySelected());
+                    Property prop = (Property) getBoard().getSquare(p.getPosition());
                     // opzione di acquisto proprietà
                     if (p.getPosition() == getBoard().getPositionSquare(prop.getName())
                             && !prop.isOwner()) {
@@ -283,13 +307,11 @@ public class Urbinopoly {
                 case 4 -> {
                     // opzione di costruzione casa
                     Land l = (Land) p.getProperties().get(p.getPropertySelected());
-                    ;
                     p.manipulateProperty(l, l.build(), l.buildHouse());
                 }
                 case 5 -> {
                     // opzione di rimozione casa
                     Land l = (Land) p.getProperties().get(p.getPropertySelected());
-                    ;
                     p.manipulateProperty(l, l.remove(), l.removeHouse());
                 }
                 case 6 -> {
