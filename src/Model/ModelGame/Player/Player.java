@@ -139,6 +139,7 @@ public class Player {
         countConsecutiveRound();
         if (getConsecutiveRound() == ROUND_GO_PRISON) {
             moveTo(Board.PRISON);
+            setInPrison(true);
             // reset turni consecutivi
             setConsecutiveRound(0);
             return true;
@@ -206,6 +207,7 @@ public class Player {
     // Aggiunge proprietà in caso di acquisto
     public void addProperty(Property p) {
         this.properties.add(p);
+        p.buyProperty(this);
         manageBalance(-p.buyProperty(this));
         if (p instanceof Land)
             controlUrbinopoly((Land) p);

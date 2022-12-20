@@ -6,7 +6,7 @@ import java.util.Random;
 public class Dice implements DiceApi {
 
     // Costante numero dadi
-    public final static int NUM_DICE = 2;
+    private final static int NUM_DICE = 2;
     // Array per rappresentare dadi
     private int[] dice = new int[NUM_DICE];
     private Random rnd;
@@ -18,14 +18,18 @@ public class Dice implements DiceApi {
         this.totalValue = 0;
     }
 
-    // Estrae 2 numeri casuali dai dadi del gioco restituendo il valore totale
+    public int[] getDice() {
+        return dice;
+    }
+
+    // Estrae 2 numeri casuali assegnandoli ai dadi
     @Override
     public void roll() {
         setDouble(false);
         setTotalValue(0);
-        for (int d : dice) {
-            d = rnd.nextInt(6) + 1;
-            this.totalValue += d;
+        for (int i = 0; i < NUM_DICE; i++) {
+            dice[i] = rnd.nextInt(6) + 1;
+            this.totalValue += dice[i];
         }
         if (dice[0] == dice[1])
             isDouble = true;

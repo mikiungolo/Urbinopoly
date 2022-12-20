@@ -1,5 +1,7 @@
 package Model.ModelGame;
 
+import java.util.Optional;
+
 import Model.ModelGame.Board.Board;
 import Model.ModelGame.Board.Pieces.Square;
 import Model.ModelGame.Board.Pieces.Deck.Card;
@@ -70,12 +72,12 @@ public class Urbinopoly {
 
         // il gioco deve terminare!!
         if (endGame()) {
-
+            System.out.println("Gioco terminato");
         }
     }
 
     /* gestione di un turno generalizzato */
-    public int turn(Player p) {
+    private int turn(Player p) {
 
         setInTurn(true);
         p.setOptionRolled(false);
@@ -86,15 +88,23 @@ public class Urbinopoly {
          * le proprie mosse di gioco
          */
         while (isInTurn()) {
-
             /*
              * nel corso del proprio turno il Player corrente può
-             * optare per tutte le opzioni a lui disponibili
+             * optare per tutte le opzioni a lui disponibili.
              */
-            playerAction(p, p.getOptionCommand());
+            if (!p.isInPrison()) {
+                if (validateCommand(p.getOptionCommand(), p)) {
+                    playerAction(p, p.getOptionCommand());
+                }
+            } else
+                playerAction(p, p.getOptionCommand());
 
-            // se indica l'opzione di tiro si esegue il giro
-            if (p.isOptionRolled() && !p.isInPrison()) {
+            /*
+             * se indica l'opzione di tiro si esegue il giro
+             * si controlla che il Player non abbia scelto la terminazione
+             * del turno e che non sia in prigione
+             */
+            if (p.isOptionRolled() && !p.isInPrison() && isInTurn()) {
                 dice.roll();
                 p.move(dice.getTotalValue());
 
@@ -108,8 +118,11 @@ public class Urbinopoly {
                  * il limite dei massimi turni consecutivi finirà in prigione.
                  * Tale operazione avviene in chiamata ricorsiva.
                  */
-                if (!p.goPrisonForTripleTurn() && dice.isDouble()) {
-                    turn(p);
+                if (dice.isDouble() && !p.isInPrison()) {
+                    if (p.goPrisonForTripleTurn())
+                        setInTurn(false);
+                    else
+                        turn(p);
                 }
             }
         }
@@ -119,6 +132,27 @@ public class Urbinopoly {
          * al prossimo partecipante in gioco.
          */
         return getPlayers().getInGame().indexOf(p);
+    }
+
+    /*
+     * all'inizio del turno i-esimo saranno valutate
+     * tutte le azioni che un player può compiere
+     */
+    public boolean validateCommand(int optionCommand, Player p) {
+        boolean isValid;
+        switch (optionCommand) {
+            case 1 -> isValid = (getBoard().getSquare(p.getPosition()) instanceof Property) ? true : false;
+            case 2,
+                    3 ->
+                isValid = (p.getProperties().isEmpty()) ? false : true;
+            case 4,
+                    5 ->
+                isValid = (p.getProperties().stream().filter(x -> x instanceof Land).count() > 0) ? true : false;
+            case 6 -> isValid = (!p.isOptionRolled()) ? true : false;
+            case 7 -> isValid = (p.isOptionRolled()) ? true : false;
+            default -> isValid = false;
+        }
+        return isValid;
     }
 
     private boolean endGame() {
@@ -147,7 +181,10 @@ public class Urbinopoly {
                 IncomeAction(currentSquare, p);
             }
             case LAND -> {
-                propertyAction(p, currentSquare, ((Land) currentSquare).getRent());
+                Optional<Player> owner = ((Land) currentSquare).getOwner();
+                if (!owner.isEmpty()) {
+                    propertyAction(p, currentSquare, ((Land) currentSquare).getRent());
+                }
             }
             case LUXURY_TAX -> {
                 LuxuryAction(currentSquare, p);
@@ -161,12 +198,18 @@ public class Urbinopoly {
                 cardAction(getBoard().getProb().takeCard(), p);
             }
             case SERVICE -> {
-                propertyAction(p, currentSquare,
-                        ((Service) currentSquare).getRent(((Service) currentSquare).getOwner().get().getnService(), 0));
+                Optional<Player> owner = ((Service) currentSquare).getOwner();
+                if (!owner.isEmpty()) {
+                    propertyAction(p, currentSquare,
+                            ((Service) currentSquare).getRent(owner.get().getnService(), getDice().getTotalValue()));
+                }
             }
             case STATION -> {
-                propertyAction(p, currentSquare,
-                        ((Station) currentSquare).getRent(((Station) currentSquare).getOwner().get().getnStation()));
+                Optional<Player> owner = ((Station) currentSquare).getOwner();
+                if (!owner.isEmpty()) {
+                    propertyAction(p, currentSquare,
+                            ((Station) currentSquare).getRent(owner.get().getnStation()));
+                }
             }
             case UNEXPECTED -> {
                 cardAction(getBoard().getUnex().takeCard(), p);
@@ -198,7 +241,7 @@ public class Urbinopoly {
     // azioni tasse
     private void IncomeAction(Square s, Player p) {
         if (s instanceof Taxes<?>) {
-            p.manageBalance((int) ((((Taxes<Double>) s).getRate()) * p.getBalance()));
+            p.manageBalance(-(int) ((((Taxes<Double>) s).getRate()) * p.getBalance()));
         }
     }
 
@@ -284,7 +327,6 @@ public class Urbinopoly {
              * in ogni turno il player può prendere decisioni
              * sulle sue proprietà a condizioni soddisfatte
              */
-
             switch (option) {
                 case 1 -> {
                     Property prop = (Property) getBoard().getSquare(p.getPosition());
@@ -306,13 +348,17 @@ public class Urbinopoly {
                 }
                 case 4 -> {
                     // opzione di costruzione casa
-                    Land l = (Land) p.getProperties().get(p.getPropertySelected());
-                    p.manipulateProperty(l, l.build(), l.buildHouse());
+                    if (p.getProperties().get(p.getPropertySelected()) instanceof Land) {
+                        Land l = (Land) p.getProperties().get(p.getPropertySelected());
+                        p.manipulateProperty(l, l.build(), l.buildHouse());
+                    }
                 }
                 case 5 -> {
                     // opzione di rimozione casa
-                    Land l = (Land) p.getProperties().get(p.getPropertySelected());
-                    p.manipulateProperty(l, l.remove(), l.removeHouse());
+                    if (p.getProperties().get(p.getPropertySelected()) instanceof Land) {
+                        Land l = (Land) p.getProperties().get(p.getPropertySelected());
+                        p.manipulateProperty(l, l.remove(), l.removeHouse());
+                    }
                 }
                 case 6 -> {
                     // opzione di lancio dadi
@@ -320,9 +366,7 @@ public class Urbinopoly {
                 }
                 case 7 -> {
                     // opzione di fine turno
-                    if (p.isOptionRolled()) {
-                        setInTurn(false);
-                    }
+                    setInTurn(false);
                 }
                 default -> {
                 }

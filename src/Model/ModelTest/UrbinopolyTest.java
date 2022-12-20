@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -132,7 +133,7 @@ public class UrbinopolyTest {
         Player current = u.getPlayers().getNextPlayer(5);
         current.moveTo(1);
 
-        // TESTO LA COMPERA E LA COSTRUZIONE DI CASE SU PROPRIETA'
+        // TESTO LA COMPERA E LA COSTRUZIONE/RIMOZIONE DI CASE SU LAND
 
         // player compra la proprietà e mi assicuro che i soldi
         // vengono scalati dal bilancio
@@ -166,8 +167,8 @@ public class UrbinopolyTest {
         /*
          * in questo caso costruisce direttamente sulla sua prima proprietà comprata
          * poichè il valore intero della proprietà selezionata è 0 dato che non viene
-         * inizializzato.
-         * Tecnicamente tale valore dovrà essere selezionato dal controller mediante
+         * inizializzato all'interno della classe Player.
+         * Tecnicamente tale valore dovrà essere indicato dal controller mediante
          * l'interfaccia utente.
          * Imposto manualmente la proprietà in cui voglio costruire
          */
@@ -183,6 +184,15 @@ public class UrbinopolyTest {
         balance = current.getBalance();
         u.doAction(current);
         assertEquals((balance - 20), current.getBalance());
+
+        // testo la rimozione di una casa
+        current = u.getPlayers().getNextPlayer(5);
+        balance = current.getBalance();
+        u.playerAction(current, 5);
+        // adesso il bilancio è aumentato avendo rimosso una casa
+        assertTrue(current.getBalance() > balance);
+        // verifico che il terreno non ha una casa costruita
+        assertEquals(0, l.getnHouse());
     }
 
     @Test
@@ -214,7 +224,7 @@ public class UrbinopolyTest {
         assertEquals(p.isMortaged(), true);
         balance = current.getBalance();
 
-        // ipoteco con la proprietà gia ipotecata
+        // ipoteco con la proprietà gia ipotecata, quindi non cambierà nulla
         u.playerAction(current, 2);
         assertTrue(balance == current.getBalance());
 
@@ -238,11 +248,94 @@ public class UrbinopolyTest {
         assertEquals(p1.isMortaged(), true);
         assertEquals(balance + 100, current.getBalance());
 
+        // rimozione ipoteca su stazione
         balance = current.getBalance();
+        u.playerAction(current, 3);
+        assertEquals((int) (balance - p1.getPrice() / 2 * 1.1), current.getBalance());
+
     }
 
     @Test
-    public void testTurn() {
+    public void simulateGamePlay() {
+        int indexCurrentPlayer = -1;
+        // esecuzione dei turni
+        while (!u.isEndGame()) {
+            indexCurrentPlayer = turn(u.getPlayers().getNextPlayer(indexCurrentPlayer));
+        }
 
+        // il gioco deve terminare!!
+        assertTrue(u.isEndGame());
+        System.out.println("Gioco terminato");
+    }
+
+    /* gestione di un turno generalizzato */
+    private int turn(Player p) {
+
+        Random rnd = new Random();
+
+        System.out.println("Turno del player " + p.getName());
+
+        u.setInTurn(true);
+        p.setOptionRolled(false);
+
+        /*
+         * fin tanto che il player corrente non ha selezionato
+         * il tiro dei dadi e non ha espresso la fine del proprio turno può continuare
+         * le proprie mosse di gioco
+         */
+        while (u.isInTurn()) {
+            if (!p.isInPrison()) {
+                do {
+                    p.setOptionCommand(rnd.nextInt(7) + 1);
+                    if (p.getOptionCommand() == 4 || p.getOptionCommand() == 5) {
+                        if (!p.getProperties().isEmpty()) {
+                            p.setPropertySelected(rnd.nextInt(p.getProperties().size()));
+                        }
+                    }
+                } while (!u.validateCommand(p.getOptionCommand(), p));
+            }
+
+            /*
+             * nel corso del proprio turno il Player corrente può
+             * optare per tutte le opzioni a lui disponibili.
+             */
+            if (!p.isInPrison()) {
+                if (u.validateCommand(p.getOptionCommand(), p)) {
+                    u.playerAction(p, p.getOptionCommand());
+                }
+            } else {
+                p.setOptionCommand(1);
+                u.playerAction(p, p.getOptionCommand());
+            }
+
+            // se indica l'opzione di tiro si esegue il giro
+            if (p.isOptionRolled() && !p.isInPrison() && u.isInTurn()) {
+                u.getDice().roll();
+                p.move(u.getDice().getTotalValue());
+
+                u.doAction(p);
+                // controllo sconfitta del Player con eventuale rimozione
+                u.getPlayers().remove(p);
+
+                /*
+                 * fin tanto che il player lanciando i dadi riceve facciate
+                 * uguali deve giocare un ulteriore turno, altrimenti toccato
+                 * il limite dei massimi turni consecutivi finirà in prigione.
+                 * Tale operazione avviene in chiamata ricorsiva.
+                 */
+                if (u.getDice().isDouble() && !p.isInPrison()) {
+                    if (p.goPrisonForTripleTurn())
+                        u.setInTurn(false);
+                    else
+                        turn(p);
+                }
+            }
+        }
+        /*
+         * qui il il turno del player corrente è terminato quindi posso
+         * ritornare il suo indice in modo tale da passare
+         * al prossimo partecipante in gioco.
+         */
+        return u.getPlayers().getInGame().indexOf(p);
     }
 }
