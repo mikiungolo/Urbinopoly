@@ -1,4 +1,4 @@
-package Model;
+package Model.ModelTest;
 
 import static org.junit.Assert.assertTrue;
 
