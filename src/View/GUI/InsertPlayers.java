@@ -34,6 +34,10 @@ public class InsertPlayers extends javax.swing.JFrame {
         this.names = names;
     }
 
+    public javax.swing.JButton getStartGamePlayerButton() {
+        return startGamePlayerButton;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,11 +181,13 @@ public class InsertPlayers extends javax.swing.JFrame {
                 .setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
                         new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
         startGamePlayerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        startGamePlayerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startGamePlayerButtonActionPerformed(evt);
-            }
-        });
+        /*
+         * startGamePlayerButton.addActionListener(new java.awt.event.ActionListener() {
+         * public void actionPerformed(java.awt.event.ActionEvent evt) {
+         * startGamePlayerButtonActionPerformed(evt);
+         * }
+         * });
+         */
         getContentPane().add(startGamePlayerButton);
         startGamePlayerButton.setBounds(570, 440, 140, 30);
 
@@ -207,7 +213,7 @@ public class InsertPlayers extends javax.swing.JFrame {
         return getNames();
     }
 
-    private BoardGui setNamesInBoardGui(List<String> name) {
+    public BoardGui setNamesInBoardGui(List<String> name) {
         BoardGui b = new BoardGui();
 
         JTextField[] a = new JTextField[4];
@@ -228,23 +234,25 @@ public class InsertPlayers extends javax.swing.JFrame {
         return b;
     }
 
-    // aggiunta listener al bottone start
-    public void addlistenerStart(ActionListener listenerNamePlayers) {
+    // aggiuta di un listener al bottone start
+    public void addStartListener(ActionListener listenerNamePlayers) {
         startGamePlayerButton.addActionListener(listenerNamePlayers);
     }
 
-    private void startGamePlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startGamePlayerButtonActionPerformed
-        if (playerNameTable.getRowCount() < 2) {
-            JOptionPane.showMessageDialog(this,
-                    "Player must be at least two!!", "Impossible",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            setNames(getNamePlayers());
-            setNamesInBoardGui(getNames()).setVisible(true);
-            this.dispose();
-        }
-    }// GEN-LAST:event_startGamePlayerButtonActionPerformed
-
+    /*
+     * private void startGamePlayerButtonActionPerformed(java.awt.event.ActionEvent
+     * evt) {// GEN-FIRST:event_startGamePlayerButtonActionPerformed
+     * if (playerNameTable.getRowCount() < 2) {
+     * JOptionPane.showMessageDialog(this,
+     * "Player must be at least two!!", "Impossible",
+     * JOptionPane.INFORMATION_MESSAGE);
+     * } else {
+     * setNames(getNamePlayers());
+     * setNamesInBoardGui(getNames()).setVisible(true);
+     * this.dispose();
+     * }
+     * }// GEN-LAST:event_startGamePlayerButtonActionPerformed
+     */
     private void addPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addPlayerButtonActionPerformed
 
         if (writeNameTextField.getText().isEmpty()) {
