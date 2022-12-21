@@ -201,14 +201,15 @@ public class Urbinopoly {
                 Optional<Player> owner = ((Service) currentSquare).getOwner();
                 if (!owner.isEmpty()) {
                     propertyAction(p, currentSquare,
-                            ((Service) currentSquare).getRent(owner.get().getnService(), getDice().getTotalValue()));
+                            ((Service) currentSquare).getRent(owner.get().getnService() - 1,
+                                    getDice().getTotalValue()));
                 }
             }
             case STATION -> {
                 Optional<Player> owner = ((Station) currentSquare).getOwner();
                 if (!owner.isEmpty()) {
                     propertyAction(p, currentSquare,
-                            ((Station) currentSquare).getRent(owner.get().getnStation()));
+                            ((Station) currentSquare).getRent(owner.get().getnStation() - 1));
                 }
             }
             case UNEXPECTED -> {
@@ -261,6 +262,7 @@ public class Urbinopoly {
          */
         if (((Property) s).isOwner() && !p.controlOwned((Property) s) &&
                 !((Property) s).getOwner().get().isInPrison()) {
+
             p.manageBalance(-amount);
             ((Property) s).getOwner().get().manageBalance(amount);
         }

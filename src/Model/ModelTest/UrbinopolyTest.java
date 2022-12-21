@@ -289,7 +289,10 @@ public class UrbinopolyTest {
                     p.setOptionCommand(rnd.nextInt(7) + 1);
                     if (p.getOptionCommand() == 4 || p.getOptionCommand() == 5) {
                         if (!p.getProperties().isEmpty()) {
-                            p.setPropertySelected(rnd.nextInt(p.getProperties().size()));
+                            do {
+                                p.setPropertySelected(rnd.nextInt(p.getProperties().size()));
+                            } while (!(p.getProperties().get(p.getPropertySelected()) instanceof Land));
+
                         }
                     }
                 } while (!u.validateCommand(p.getOptionCommand(), p));
@@ -301,19 +304,26 @@ public class UrbinopolyTest {
              */
             if (!p.isInPrison()) {
                 if (u.validateCommand(p.getOptionCommand(), p)) {
+                    System.out.println("Sono uscito all'azione del Player ");
                     u.playerAction(p, p.getOptionCommand());
+                    System.out.println("Finita azione");
                 }
             } else {
                 p.setOptionCommand(1);
                 u.playerAction(p, p.getOptionCommand());
+                if (p.getBalance() > Player.getExitPrisonCaution()) {
+                    u.getPlayers().getInGame().remove(p);
+                    u.setInTurn(false);
+                }
             }
 
             // se indica l'opzione di tiro si esegue il giro
             if (p.isOptionRolled() && !p.isInPrison() && u.isInTurn()) {
                 u.getDice().roll();
                 p.move(u.getDice().getTotalValue());
-
+                System.out.println("Uscito all'azione automatica");
                 u.doAction(p);
+                System.out.println("Finita automatica");
                 // controllo sconfitta del Player con eventuale rimozione
                 u.getPlayers().remove(p);
 

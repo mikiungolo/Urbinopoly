@@ -107,12 +107,14 @@ public class Land extends Property {
 
     // ritorna affitto
     public int getRent() {
+        int valueRent = -1;
         if (nHouse == 0 && (!urbinopoly)) {
-            return super.getGain()[nHouse];
+            valueRent = 0;
         } else if (nHouse == 0 && urbinopoly) {
             return super.getGain()[nHouse] * getBonusUrbinopoly();
         } else {
-            return super.getGain()[nHouse];
+            valueRent = nHouse;
         }
+        return super.getGain()[valueRent];
     }
 }
