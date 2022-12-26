@@ -10,11 +10,18 @@ package View.GUI;
  */
 public class StartGui extends javax.swing.JFrame {
 
+    InsertPlayers viewPlayer = new InsertPlayers();
+
     /**
      * Creates new form StartGui
      */
     public StartGui() {
         initComponents();
+    }
+
+    // getter
+    public InsertPlayers getViewPlayer() {
+        return viewPlayer;
     }
 
     /**
@@ -94,7 +101,7 @@ public class StartGui extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startButtonActionPerformed
 
-        new InsertPlayers().setVisible(true);
+        viewPlayer.setVisible(true);
         this.dispose();
     }// GEN-LAST:event_startButtonActionPerformed
 

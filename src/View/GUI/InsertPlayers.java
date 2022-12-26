@@ -4,7 +4,6 @@
  */
 package View.GUI;
 
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -16,6 +15,18 @@ import javax.swing.table.DefaultTableModel;
  * @author Utente
  */
 public class InsertPlayers extends javax.swing.JFrame {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addPlayerButton;
+    private javax.swing.JButton clearPlayerNameButton;
+    private javax.swing.JLabel insertNameLabel;
+    private javax.swing.JPanel insertNamePanel;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable playerNameTable;
+    private javax.swing.JButton quitPlayerButton;
+    private javax.swing.JButton startGamePlayerButton;
+    private javax.swing.JTextField writeNameTextField;
+    // End of variables declaration//GEN-END:variables
 
     List<String> names = new LinkedList<>();
 
@@ -26,6 +37,7 @@ public class InsertPlayers extends javax.swing.JFrame {
         initComponents();
     }
 
+    // getter e setter
     public List<String> getNames() {
         return names;
     }
@@ -36,6 +48,10 @@ public class InsertPlayers extends javax.swing.JFrame {
 
     public javax.swing.JButton getStartGamePlayerButton() {
         return startGamePlayerButton;
+    }
+
+    public javax.swing.JTable getPlayerNameTable() {
+        return playerNameTable;
     }
 
     /**
@@ -181,6 +197,7 @@ public class InsertPlayers extends javax.swing.JFrame {
                 .setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
                         new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
         startGamePlayerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         /*
          * startGamePlayerButton.addActionListener(new java.awt.event.ActionListener() {
          * public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,25 +251,6 @@ public class InsertPlayers extends javax.swing.JFrame {
         return b;
     }
 
-    // aggiuta di un listener al bottone start
-    public void addStartListener(ActionListener listenerNamePlayers) {
-        startGamePlayerButton.addActionListener(listenerNamePlayers);
-    }
-
-    /*
-     * private void startGamePlayerButtonActionPerformed(java.awt.event.ActionEvent
-     * evt) {// GEN-FIRST:event_startGamePlayerButtonActionPerformed
-     * if (playerNameTable.getRowCount() < 2) {
-     * JOptionPane.showMessageDialog(this,
-     * "Player must be at least two!!", "Impossible",
-     * JOptionPane.INFORMATION_MESSAGE);
-     * } else {
-     * setNames(getNamePlayers());
-     * setNamesInBoardGui(getNames()).setVisible(true);
-     * this.dispose();
-     * }
-     * }// GEN-LAST:event_startGamePlayerButtonActionPerformed
-     */
     private void addPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addPlayerButtonActionPerformed
 
         if (writeNameTextField.getText().isEmpty()) {
@@ -333,18 +331,5 @@ public class InsertPlayers extends javax.swing.JFrame {
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addPlayerButton;
-    private javax.swing.JButton clearPlayerNameButton;
-    private javax.swing.JLabel insertNameLabel;
-    private javax.swing.JPanel insertNamePanel;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable playerNameTable;
-    private javax.swing.JButton quitPlayerButton;
-    private javax.swing.JButton startGamePlayerButton;
-    private javax.swing.JTextField writeNameTextField;
-    // End of variables declaration//GEN-END:variables
 
 }

@@ -8,6 +8,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.*;
 
 /**
  *
@@ -369,13 +370,15 @@ public class BoardGui extends javax.swing.JFrame {
                 jLabel65 = new javax.swing.JLabel();
                 jLabel12 = new javax.swing.JLabel();
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setTitle("URBINOPOLY"); // NOI18N
                 setAlwaysOnTop(true);
-                setExtendedState(MAXIMIZED_BOTH);
-                setMinimumSize(new java.awt.Dimension(1370, 768));
+                // setExtendedState(MAXIMIZED_BOTH);
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                setMinimumSize(new java.awt.Dimension(screenSize));
                 setUndecorated(true);
-                setSize(new java.awt.Dimension(1366, 770));
+                setSize(new java.awt.Dimension(screenSize));
+                setMaximumSize(screenSize);
                 getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

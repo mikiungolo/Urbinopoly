@@ -8,12 +8,11 @@ public class Players {
     private List<Player> players;
 
     // Costruttore
-    public Players(List<String> namePlayers) {
+    public Players() {
         this.players = new LinkedList<>();
-        buildPlayers(namePlayers);
     }
 
-    private void buildPlayers(List<String> namePlayers) {
+    public void buildPlayers(List<String> namePlayers) {
         for (String name : namePlayers) {
             players.add(new Player(name));
         }

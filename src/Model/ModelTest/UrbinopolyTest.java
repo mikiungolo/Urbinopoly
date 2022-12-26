@@ -28,8 +28,9 @@ public class UrbinopolyTest {
         return play;
     }
 
-    Players p = new Players(createPlayers());
-    Urbinopoly u = new Urbinopoly(p);
+    Players p = new Players();
+
+    Urbinopoly u = new Urbinopoly();
 
     @Test
     public void testAction1() {

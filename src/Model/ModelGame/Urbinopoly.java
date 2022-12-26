@@ -23,9 +23,9 @@ public class Urbinopoly {
     private boolean inTurn;
     private boolean endGame;
 
-    public Urbinopoly(Players players) {
+    public Urbinopoly() {
         this.board = Board.getSingletonBoard();
-        this.players = players;
+        this.players = new Players();
         this.dice = new Dice();
 
         this.inTurn = true;
@@ -77,7 +77,7 @@ public class Urbinopoly {
     }
 
     /* gestione di un turno generalizzato */
-    private int turn(Player p) {
+    public int turn(Player p) {
 
         setInTurn(true);
         p.setOptionRolled(false);

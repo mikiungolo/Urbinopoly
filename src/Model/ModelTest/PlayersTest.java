@@ -14,6 +14,8 @@ public class PlayersTest {
 
     List<String> play = new LinkedList<>();
 
+    Players p = new Players();
+
     public List<String> createPlayers() {
         play.add(("Gio"));
         play.add(("Va"));
@@ -21,11 +23,10 @@ public class PlayersTest {
         return play;
     }
 
-    Players p = new Players(createPlayers());
-
     // stessa logica applicata poi in Urbinopoly per test
     @Test
     public void testGetNextPlayer() {
+        p.buildPlayers(createPlayers());
         int firstIndex = -1;
         for (int i = 0; i < 100; i++) {
             Player pa = p.getNextPlayer(firstIndex);
