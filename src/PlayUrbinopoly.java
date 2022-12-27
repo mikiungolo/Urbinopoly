@@ -16,6 +16,5 @@ public class PlayUrbinopoly {
                 controller.game();
             }
         });
-
     }
 }

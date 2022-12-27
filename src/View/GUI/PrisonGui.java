@@ -11,6 +11,14 @@ package View.GUI;
  */
 public class PrisonGui extends javax.swing.JFrame {
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton rollPrisonButton;
+    private javax.swing.JButton cautionPrisonButton;
+    private javax.swing.JButton cardPrisonButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form PrisonGui
      */
@@ -29,48 +37,39 @@ public class PrisonGui extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        rollPrisonButton = new javax.swing.JButton();
+        cautionPrisonButton = new javax.swing.JButton();
+        cardPrisonButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(102, 102, 102));
-        jButton1.setText("Roll your luck");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
+        rollPrisonButton.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        rollPrisonButton.setForeground(new java.awt.Color(102, 102, 102));
+        rollPrisonButton.setText("Roll your luck");
+        rollPrisonButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
                 new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 40));
+        rollPrisonButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton2.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 0, 0));
-        jButton2.setText("Pay € 125");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
-                new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 99, 40));
+        jPanel1.add(rollPrisonButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 40));
 
-        jButton3.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 51, 0));
-        jButton3.setText("Use card");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
+        cautionPrisonButton.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        cautionPrisonButton.setForeground(new java.awt.Color(51, 0, 0));
+        cautionPrisonButton.setText("Pay € 125");
+        cautionPrisonButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
                 new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 110, 40));
+        cautionPrisonButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(cautionPrisonButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 99, 40));
+
+        cardPrisonButton.setFont(new java.awt.Font("Cambria Math", 0, 14)); // NOI18N
+        cardPrisonButton.setForeground(new java.awt.Color(255, 51, 0));
+        cardPrisonButton.setText("Use card");
+        cardPrisonButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
+                new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
+        cardPrisonButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(cardPrisonButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 110, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/PrisonGui.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -90,13 +89,30 @@ public class PrisonGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton1ActionPerformed
+    // getter e setter
+    public javax.swing.JButton getRollPrisonButton() {
+        return rollPrisonButton;
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton2ActionPerformed
+    public void setRollPrisonButton(javax.swing.JButton rollPrisonButton) {
+        this.rollPrisonButton = rollPrisonButton;
+    }
+
+    public javax.swing.JButton getCautionPrisonButton() {
+        return cautionPrisonButton;
+    }
+
+    public void setCautionPrisonButton(javax.swing.JButton cautionPrisonButton) {
+        this.cautionPrisonButton = cautionPrisonButton;
+    }
+
+    public javax.swing.JButton getCardPrisonButton() {
+        return cardPrisonButton;
+    }
+
+    public void setCardPrisonButton(javax.swing.JButton cardPrisonButton) {
+        this.cardPrisonButton = cardPrisonButton;
+    }
 
     /**
      * @param args the command line arguments
@@ -137,11 +153,4 @@ public class PrisonGui extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    // End of variables declaration//GEN-END:variables
 }

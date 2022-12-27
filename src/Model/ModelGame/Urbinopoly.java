@@ -61,70 +61,27 @@ public class Urbinopoly {
         this.endGame = endGame;
     }
 
-    // struttura dell'intero gameplay
-    public void gameplay() {
-
-        int indexCurrentPlayer = -1;
-        // esecuzione dei turni
-        while (!endGame()) {
-            indexCurrentPlayer = turn(players.getNextPlayer(indexCurrentPlayer));
-        }
-
-        // il gioco deve terminare!!
-        if (endGame()) {
-            System.out.println("Gioco terminato");
-        }
-    }
-
-    /* gestione di un turno generalizzato */
+    /* gestione dell'ossatura di un turno */
     public int turn(Player p) {
 
-        setInTurn(true);
-        p.setOptionRolled(false);
+        dice.roll();
+        p.move(dice.getTotalValue());
+
+        doAction(p);
+        // controllo sconfitta del Player con eventuale rimozione
+        getPlayers().remove(p);
 
         /*
-         * fin tanto che il player corrente non ha selezionato
-         * il tiro dei dadi e non ha espresso la fine del proprio turno può continuare
-         * le proprie mosse di gioco
+         * fin tanto che il player lanciando i dadi riceve facciate
+         * uguali deve giocare un ulteriore turno, altrimenti toccato
+         * il limite dei massimi turni consecutivi finirà in prigione.
+         * Tale operazione avviene in chiamata ricorsiva.
          */
-        while (isInTurn()) {
-            /*
-             * nel corso del proprio turno il Player corrente può
-             * optare per tutte le opzioni a lui disponibili.
-             */
-            if (!p.isInPrison()) {
-                if (validateCommand(p.getOptionCommand(), p)) {
-                    playerAction(p, p.getOptionCommand());
-                }
-            } else
-                playerAction(p, p.getOptionCommand());
-
-            /*
-             * se indica l'opzione di tiro si esegue il giro
-             * si controlla che il Player non abbia scelto la terminazione
-             * del turno e che non sia in prigione
-             */
-            if (p.isOptionRolled() && !p.isInPrison() && isInTurn()) {
-                dice.roll();
-                p.move(dice.getTotalValue());
-
-                doAction(p);
-                // controllo sconfitta del Player con eventuale rimozione
-                getPlayers().remove(p);
-
-                /*
-                 * fin tanto che il player lanciando i dadi riceve facciate
-                 * uguali deve giocare un ulteriore turno, altrimenti toccato
-                 * il limite dei massimi turni consecutivi finirà in prigione.
-                 * Tale operazione avviene in chiamata ricorsiva.
-                 */
-                if (dice.isDouble() && !p.isInPrison()) {
-                    if (p.goPrisonForTripleTurn())
-                        setInTurn(false);
-                    else
-                        turn(p);
-                }
-            }
+        if (dice.isDouble() && !p.isInPrison()) {
+            if (p.goPrisonForTripleTurn())
+                setInTurn(false);
+            else
+                turn(p);
         }
         /*
          * qui il il turno del player corrente è terminato quindi posso
@@ -155,7 +112,7 @@ public class Urbinopoly {
         return isValid;
     }
 
-    private boolean endGame() {
+    public boolean endGame() {
         if (getPlayers().getInGame().size() == 1) {
             this.endGame = true;
         }

@@ -5,9 +5,9 @@
 package View.GUI;
 
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import java.awt.*;
 
 /**
@@ -16,9 +16,247 @@ import java.awt.*;
  */
 public class BoardGui extends javax.swing.JFrame {
 
+        // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JPanel acciPizza;
+        private javax.swing.JPanel actionPanel;
+        private javax.swing.JPanel adriabus1;
+        private javax.swing.JPanel adriabus30;
+        private javax.swing.JPanel adriabus3d;
+        private javax.swing.JPanel adriabus3m;
+        private javax.swing.JPanel albornoz;
+        private javax.swing.JPanel aquilone;
+        private javax.swing.JPanel belvedere;
+        private javax.swing.JPanel boardPanel;
+        private javax.swing.JButton remHouseButton;
+        private javax.swing.JButton buildButton;
+        private javax.swing.JButton buyButton;
+        private javax.swing.JPanel carloBo;
+        private javax.swing.JPanel casciotta;
+        private javax.swing.JPanel centerPanel;
+        private javax.swing.JPanel crescia;
+        private javax.swing.JTextField die1;
+        private javax.swing.JTextField die2;
+        private javax.swing.JPanel duca;
+        private javax.swing.JPanel ducale;
+        private javax.swing.JPanel eastPanel;
+        private javax.swing.JButton exitButton;
+        private javax.swing.JFormattedTextField fieldBalanceFirst;
+        private javax.swing.JFormattedTextField fieldBalanceFourth;
+        private javax.swing.JFormattedTextField fieldBalanceSecond;
+        private javax.swing.JFormattedTextField fieldBalanceThird;
+        private javax.swing.JTextField firstName;
+        private javax.swing.JPanel firstPlayer;
+        private javax.swing.JPanel fontane;
+        private javax.swing.JTextField fourthName;
+        private javax.swing.JPanel fourthPlayer;
+        private javax.swing.JPanel ghiottone;
+        private javax.swing.JPanel gimnasium;
+        private javax.swing.JPanel go;
+        private javax.swing.JPanel goToPrison;
+        private javax.swing.JPanel highlightsPanel;
+        private javax.swing.JPanel incomeTax;
+        private javax.swing.JButton jButton1;
+        private javax.swing.JLabel jLabel1;
+        private javax.swing.JLabel jLabel10;
+        private javax.swing.JLabel jLabel100;
+        private javax.swing.JLabel jLabel101;
+        private javax.swing.JLabel jLabel102;
+        private javax.swing.JLabel jLabel103;
+        private javax.swing.JLabel jLabel104;
+        private javax.swing.JLabel jLabel107;
+        private javax.swing.JLabel jLabel108;
+        private javax.swing.JLabel jLabel109;
+        private javax.swing.JLabel jLabel11;
+        private javax.swing.JLabel jLabel111;
+        private javax.swing.JLabel jLabel112;
+        private javax.swing.JLabel jLabel113;
+        private javax.swing.JLabel jLabel114;
+        private javax.swing.JLabel jLabel115;
+        private javax.swing.JLabel jLabel116;
+        private javax.swing.JLabel jLabel117;
+        private javax.swing.JLabel jLabel118;
+        private javax.swing.JLabel jLabel119;
+        private javax.swing.JLabel jLabel12;
+        private javax.swing.JLabel jLabel120;
+        private javax.swing.JLabel jLabel121;
+        private javax.swing.JLabel jLabel122;
+        private javax.swing.JLabel jLabel123;
+        private javax.swing.JLabel jLabel124;
+        private javax.swing.JLabel jLabel125;
+        private javax.swing.JLabel jLabel126;
+        private javax.swing.JLabel jLabel127;
+        private javax.swing.JLabel jLabel128;
+        private javax.swing.JLabel jLabel13;
+        private javax.swing.JLabel jLabel130;
+        private javax.swing.JLabel jLabel131;
+        private javax.swing.JLabel jLabel132;
+        private javax.swing.JLabel jLabel133;
+        private javax.swing.JLabel jLabel134;
+        private javax.swing.JLabel jLabel135;
+        private javax.swing.JLabel jLabel136;
+        private javax.swing.JLabel jLabel137;
+        private javax.swing.JLabel jLabel138;
+        private javax.swing.JLabel jLabel14;
+        private javax.swing.JLabel jLabel140;
+        private javax.swing.JLabel jLabel141;
+        private javax.swing.JLabel jLabel142;
+        private javax.swing.JLabel jLabel143;
+        private javax.swing.JLabel jLabel144;
+        private javax.swing.JLabel jLabel145;
+        private javax.swing.JLabel jLabel146;
+        private javax.swing.JLabel jLabel147;
+        private javax.swing.JLabel jLabel15;
+        private javax.swing.JLabel jLabel16;
+        private javax.swing.JLabel jLabel17;
+        private javax.swing.JLabel jLabel18;
+        private javax.swing.JLabel jLabel19;
+        private javax.swing.JLabel jLabel2;
+        private javax.swing.JLabel jLabel20;
+        private javax.swing.JLabel jLabel21;
+        private javax.swing.JLabel jLabel22;
+        private javax.swing.JLabel jLabel23;
+        private javax.swing.JLabel jLabel24;
+        private javax.swing.JLabel jLabel25;
+        private javax.swing.JLabel jLabel26;
+        private javax.swing.JLabel jLabel27;
+        private javax.swing.JLabel jLabel28;
+        private javax.swing.JLabel jLabel29;
+        private javax.swing.JLabel jLabel3;
+        private javax.swing.JLabel jLabel30;
+        private javax.swing.JLabel jLabel31;
+        private javax.swing.JLabel jLabel32;
+        private javax.swing.JLabel jLabel33;
+        private javax.swing.JLabel jLabel34;
+        private javax.swing.JLabel jLabel35;
+        private javax.swing.JLabel jLabel36;
+        private javax.swing.JLabel jLabel37;
+        private javax.swing.JLabel jLabel38;
+        private javax.swing.JLabel jLabel39;
+        private javax.swing.JLabel jLabel4;
+        private javax.swing.JLabel jLabel40;
+        private javax.swing.JLabel jLabel41;
+        private javax.swing.JLabel jLabel42;
+        private javax.swing.JLabel jLabel43;
+        private javax.swing.JLabel jLabel44;
+        private javax.swing.JLabel jLabel45;
+        private javax.swing.JLabel jLabel46;
+        private javax.swing.JLabel jLabel47;
+        private javax.swing.JLabel jLabel48;
+        private javax.swing.JLabel jLabel49;
+        private javax.swing.JLabel jLabel5;
+        private javax.swing.JLabel jLabel50;
+        private javax.swing.JLabel jLabel51;
+        private javax.swing.JLabel jLabel52;
+        private javax.swing.JLabel jLabel53;
+        private javax.swing.JLabel jLabel54;
+        private javax.swing.JLabel jLabel55;
+        private javax.swing.JLabel jLabel56;
+        private javax.swing.JLabel jLabel57;
+        private javax.swing.JLabel jLabel58;
+        private javax.swing.JLabel jLabel59;
+        private javax.swing.JLabel jLabel6;
+        private javax.swing.JLabel jLabel60;
+        private javax.swing.JLabel jLabel61;
+        private javax.swing.JLabel jLabel62;
+        private javax.swing.JLabel jLabel63;
+        private javax.swing.JLabel jLabel64;
+        private javax.swing.JLabel jLabel65;
+        private javax.swing.JLabel jLabel66;
+        private javax.swing.JLabel jLabel67;
+        private javax.swing.JLabel jLabel68;
+        private javax.swing.JLabel jLabel69;
+        private javax.swing.JLabel jLabel7;
+        private javax.swing.JLabel jLabel70;
+        private javax.swing.JLabel jLabel71;
+        private javax.swing.JLabel jLabel72;
+        private javax.swing.JLabel jLabel73;
+        private javax.swing.JLabel jLabel74;
+        private javax.swing.JLabel jLabel75;
+        private javax.swing.JLabel jLabel76;
+        private javax.swing.JLabel jLabel77;
+        private javax.swing.JLabel jLabel78;
+        private javax.swing.JLabel jLabel79;
+        private javax.swing.JLabel jLabel8;
+        private javax.swing.JLabel jLabel80;
+        private javax.swing.JLabel jLabel81;
+        private javax.swing.JLabel jLabel82;
+        private javax.swing.JLabel jLabel83;
+        private javax.swing.JLabel jLabel85;
+        private javax.swing.JLabel jLabel86;
+        private javax.swing.JLabel jLabel87;
+        private javax.swing.JLabel jLabel89;
+        private javax.swing.JLabel jLabel9;
+        private javax.swing.JLabel jLabel91;
+        private javax.swing.JLabel jLabel92;
+        private javax.swing.JLabel jLabel93;
+        private javax.swing.JLabel jLabel94;
+        private javax.swing.JLabel jLabel95;
+        private javax.swing.JLabel jLabel96;
+        private javax.swing.JLabel jLabel97;
+        private javax.swing.JLabel jLabel98;
+        private javax.swing.JLabel jLabel99;
+        private javax.swing.JPanel jPanel19;
+        private javax.swing.JPanel jPanel20;
+        private javax.swing.JPanel jPanel23;
+        private javax.swing.JPanel jPanel3;
+        private javax.swing.JPanel jPanel4;
+        private javax.swing.JPanel jPanel8;
+        private javax.swing.JScrollPane jScrollPane1;
+        private javax.swing.JScrollPane jScrollPane14;
+        private javax.swing.JScrollPane jScrollPane2;
+        private javax.swing.JTextArea jTextArea1;
+        private javax.swing.JTextArea Highlight;
+        private javax.swing.JTextArea jTextArea2;
+        private javax.swing.JLabel label;
+        private javax.swing.JLabel label25;
+        private javax.swing.JPanel luxuryTax;
+        private javax.swing.JPanel madplanet;
+        private javax.swing.JButton mortageButton;
+        private javax.swing.JPanel neumann;
+        private javax.swing.JPanel northPanel;
+        private javax.swing.JPanel nuovaLuce;
+        private javax.swing.JPanel olivetti;
+        private javax.swing.JPanel optionPanel;
+        private javax.swing.JPanel park;
+        private javax.swing.JPanel playerPanel;
+        private javax.swing.JTextField position1;
+        private javax.swing.JTextField position2;
+        private javax.swing.JTextField position3;
+        private javax.swing.JTextField position4;
+        private javax.swing.JPanel prison;
+        private javax.swing.JPanel prob0;
+        private javax.swing.JPanel prob1;
+        private javax.swing.JPanel prob2;
+        private javax.swing.JPanel probPanel;
+        private javax.swing.JPanel propertyPanel;
+        private javax.swing.JPanel raffaello;
+        private javax.swing.JPanel reactive;
+        private javax.swing.JButton removeMortButton;
+        private javax.swing.JPanel repubblica;
+        private javax.swing.JPanel resistenza;
+        private javax.swing.JPanel rimembranza;
+        private javax.swing.JButton endTurn;
+        private javax.swing.JButton rollButton;
+        private javax.swing.JPanel salame;
+        private javax.swing.JTextField secondName;
+        private javax.swing.JPanel secondPlayer;
+        private javax.swing.JPanel società;
+        private javax.swing.JPanel southPanel;
+        private javax.swing.JTextField thirdName;
+        private javax.swing.JPanel thirdPlayer;
+        private javax.swing.JPanel turing;
+        private javax.swing.JPanel unex0;
+        private javax.swing.JPanel unex1;
+        private javax.swing.JPanel unex2;
+        private javax.swing.JPanel unexPanel;
+        private javax.swing.JPanel westPanel;
+        // End of variables declaration//GEN-END:variables
+
         private static final int N_SQUARES = 40;
 
         JPanel[] board = new JPanel[N_SQUARES];
+        JTextField[] balance = new JTextField[4];
+        JTextField[] pos = new JTextField[4];
 
         /**
          * Creates new form BoardGui
@@ -26,12 +264,98 @@ public class BoardGui extends javax.swing.JFrame {
         public BoardGui() {
                 initComponents();
                 createBoard(board);
+                createBalance(balance);
+                createPos(pos);
         }
 
         // getter e setter
 
         public JTextField getFirstName() {
                 return firstName;
+        }
+
+        public javax.swing.JPanel getPropertyPanel() {
+                return propertyPanel;
+        }
+
+        public javax.swing.JTextField getPosition1() {
+                return position1;
+        }
+
+        public javax.swing.JTextField getPosition2() {
+                return position2;
+        }
+
+        public javax.swing.JTextField getPosition3() {
+                return position3;
+        }
+
+        public javax.swing.JTextField getPosition4() {
+                return position4;
+        }
+
+        public void setPosition1(javax.swing.JTextField position1) {
+                this.position1 = position1;
+        }
+
+        public void setPosition2(javax.swing.JTextField position2) {
+                this.position2 = position2;
+        }
+
+        public void setPosition3(javax.swing.JTextField position3) {
+                this.position3 = position3;
+        }
+
+        public void setPosition4(javax.swing.JTextField position4) {
+                this.position4 = position4;
+        }
+
+        public void setBalance(int bal, int index) {
+                this.balance[index].setText(Integer.toString(bal));
+        }
+
+        public void setPos(int pos, int index) {
+                this.pos[index].setText(Integer.toString(pos));
+        }
+
+        public JTextField[] getBalance() {
+                return balance;
+        }
+
+        public JTextField[] getPos() {
+                return pos;
+        }
+
+        public JPanel[] getBoard() {
+                return board;
+        }
+
+        public javax.swing.JButton getRemHouseButton() {
+                return remHouseButton;
+        }
+
+        public javax.swing.JButton getBuildButton() {
+                return buildButton;
+        }
+
+        public javax.swing.JButton getBuyButton() {
+                return buyButton;
+        }
+
+        public javax.swing.JButton getMortageButton() {
+                return mortageButton;
+        }
+
+        public javax.swing.JButton getRemoveMortButton() {
+                return removeMortButton;
+        }
+
+        public javax.swing.JButton getEndTurn() {
+                return endTurn;
+        }
+
+        public javax.swing.JButton getRollButton() {
+                return rollButton;
         }
 
         public void setFirstName(JTextField firstName) {
@@ -124,6 +448,14 @@ public class BoardGui extends javax.swing.JFrame {
 
         public void setFieldBalanceThird(JFormattedTextField fieldBalanceThird) {
                 this.fieldBalanceThird = fieldBalanceThird;
+        }
+
+        public javax.swing.JTextArea getHighlight() {
+                return Highlight;
+        }
+
+        public void setHighlight(javax.swing.JTextArea highlight) {
+                Highlight = highlight;
         }
 
         /**
@@ -355,18 +687,18 @@ public class BoardGui extends javax.swing.JFrame {
                 propertyPanel = new javax.swing.JPanel();
                 jButton1 = new javax.swing.JButton();
                 actionPanel = new javax.swing.JPanel();
-                rollButton = new javax.swing.JButton();
+                endTurn = new javax.swing.JButton();
                 buyButton = new javax.swing.JButton();
-                buildButton = new javax.swing.JButton();
+                remHouseButton = new javax.swing.JButton();
                 mortageButton = new javax.swing.JButton();
-                reomoveMortButton = new javax.swing.JButton();
-                rollButton1 = new javax.swing.JButton();
-                buildButton1 = new javax.swing.JButton();
+                removeMortButton = new javax.swing.JButton();
+                rollButton = new javax.swing.JButton();
+                buildButton = new javax.swing.JButton();
                 die1 = new javax.swing.JTextField();
                 die2 = new javax.swing.JTextField();
                 highlightsPanel = new javax.swing.JPanel();
                 jScrollPane14 = new javax.swing.JScrollPane();
-                jTextArea14 = new javax.swing.JTextArea();
+                Highlight = new javax.swing.JTextArea();
                 jLabel65 = new javax.swing.JLabel();
                 jLabel12 = new javax.swing.JLabel();
 
@@ -1626,11 +1958,6 @@ public class BoardGui extends javax.swing.JFrame {
                 jLabel5.setPreferredSize(new java.awt.Dimension(20, 20));
 
                 fieldBalanceFirst.setEditable(false);
-                fieldBalanceFirst.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                fieldBalanceFirstActionPerformed(evt);
-                        }
-                });
 
                 position1.setEditable(false);
                 position1.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
@@ -1746,20 +2073,10 @@ public class BoardGui extends javax.swing.JFrame {
                 jLabel7.setPreferredSize(new java.awt.Dimension(20, 20));
 
                 fieldBalanceSecond.setEditable(false);
-                fieldBalanceSecond.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                fieldBalanceSecondActionPerformed(evt);
-                        }
-                });
 
                 position2.setEditable(false);
                 position2.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
                 position2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-                position2.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                position2ActionPerformed(evt);
-                        }
-                });
 
                 jLabel67.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
                 jLabel67.setText("Position");
@@ -1877,11 +2194,6 @@ public class BoardGui extends javax.swing.JFrame {
                 jLabel9.setPreferredSize(new java.awt.Dimension(20, 20));
 
                 fieldBalanceThird.setEditable(false);
-                fieldBalanceThird.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                fieldBalanceThirdActionPerformed(evt);
-                        }
-                });
 
                 position3.setEditable(false);
                 position3.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
@@ -1998,11 +2310,6 @@ public class BoardGui extends javax.swing.JFrame {
                 jLabel11.setPreferredSize(new java.awt.Dimension(20, 20));
 
                 fieldBalanceFourth.setEditable(false);
-                fieldBalanceFourth.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                fieldBalanceFourthActionPerformed(evt);
-                        }
-                });
 
                 position4.setEditable(false);
                 position4.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
@@ -2149,96 +2456,62 @@ public class BoardGui extends javax.swing.JFrame {
                 actionPanel.setOpaque(false);
                 actionPanel.setLayout(null);
 
-                rollButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-                rollButton.setIcon(
+                endTurn.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+                endTurn.setIcon(
                                 new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/stop-button.png"))); // NOI18N
-                rollButton.setText("END TURN");
-                rollButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                rollButtonActionPerformed(evt);
-                        }
-                });
-                actionPanel.add(rollButton);
-                rollButton.setBounds(120, 0, 110, 42);
+                endTurn.setText("END TURN");
+
+                actionPanel.add(endTurn);
+                endTurn.setBounds(120, 0, 110, 42);
 
                 buyButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
                 buyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/add-cart.png"))); // NOI18N
                 buyButton.setText("BUY");
-                buyButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                buyButtonActionPerformed(evt);
-                        }
-                });
                 actionPanel.add(buyButton);
                 buyButton.setBounds(140, 80, 90, 30);
 
-                buildButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-                buildButton.setIcon(
+                remHouseButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+                remHouseButton.setIcon(
                                 new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/remove house.png"))); // NOI18N
-                buildButton.setText("REMOVE");
-                buildButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                buildButtonActionPerformed(evt);
-                        }
-                });
-                actionPanel.add(buildButton);
-                buildButton.setBounds(130, 130, 100, 30);
+                remHouseButton.setText("REMOVE");
+
+                actionPanel.add(remHouseButton);
+                remHouseButton.setBounds(130, 130, 100, 30);
 
                 mortageButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
                 mortageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/paste.png"))); // NOI18N
                 mortageButton.setText("MORTGAGE");
-                mortageButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                mortageButtonActionPerformed(evt);
-                        }
-                });
+
                 actionPanel.add(mortageButton);
                 mortageButton.setBounds(40, 190, 160, 30);
 
-                reomoveMortButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-                reomoveMortButton.setIcon(
+                removeMortButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+                removeMortButton.setIcon(
                                 new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/remove.png"))); // NOI18N
-                reomoveMortButton.setText("REMOVE MORTGAGE");
-                reomoveMortButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                reomoveMortButtonActionPerformed(evt);
-                        }
-                });
-                actionPanel.add(reomoveMortButton);
-                reomoveMortButton.setBounds(40, 230, 160, 30);
+                removeMortButton.setText("REMOVE MORTGAGE");
 
-                rollButton1.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-                rollButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/dice.png"))); // NOI18N
-                rollButton1.setText("ROLL");
-                rollButton1.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                rollButton1ActionPerformed(evt);
-                        }
-                });
-                actionPanel.add(rollButton1);
-                rollButton1.setBounds(10, 0, 85, 42);
+                actionPanel.add(removeMortButton);
+                removeMortButton.setBounds(40, 230, 160, 30);
 
-                buildButton1.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-                buildButton1.setIcon(
+                rollButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+                rollButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/dice.png"))); // NOI18N
+                rollButton.setText("ROLL");
+                actionPanel.add(rollButton);
+                rollButton.setBounds(10, 0, 85, 42);
+
+                buildButton.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+                buildButton.setIcon(
                                 new javax.swing.ImageIcon(getClass().getResource("/View/GUI/image/home-page.png"))); // NOI18N
-                buildButton1.setText("BUILD");
-                buildButton1.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                buildButton1ActionPerformed(evt);
-                        }
-                });
-                actionPanel.add(buildButton1);
-                buildButton1.setBounds(10, 130, 90, 30);
+                buildButton.setText("BUILD");
+
+                actionPanel.add(buildButton);
+                buildButton.setBounds(10, 130, 90, 30);
 
                 die1.setEditable(false);
                 die1.setFont(new java.awt.Font("Cambria Math", 0, 18)); // NOI18N
                 die1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
                 die1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-                die1.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                die1ActionPerformed(evt);
-                        }
-                });
+
                 actionPanel.add(die1);
                 die1.setBounds(20, 50, 50, 30);
 
@@ -2246,11 +2519,7 @@ public class BoardGui extends javax.swing.JFrame {
                 die2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
                 die2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
                 die2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-                die2.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                die2ActionPerformed(evt);
-                        }
-                });
+
                 actionPanel.add(die2);
                 die2.setBounds(20, 80, 50, 30);
 
@@ -2262,14 +2531,14 @@ public class BoardGui extends javax.swing.JFrame {
                                 javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2,
                                                 new java.awt.Color(255, 255, 255)));
 
-                jTextArea14.setEditable(false);
-                jTextArea14.setColumns(20);
-                jTextArea14.setLineWrap(true);
-                jTextArea14.setRows(5);
-                jTextArea14.setWrapStyleWord(true);
-                jTextArea14.setBorder(
+                Highlight.setEditable(false);
+                Highlight.setColumns(20);
+                Highlight.setLineWrap(true);
+                Highlight.setRows(5);
+                Highlight.setWrapStyleWord(true);
+                Highlight.setBorder(
                                 javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-                jScrollPane14.setViewportView(jTextArea14);
+                jScrollPane14.setViewportView(Highlight);
 
                 jLabel65.setFont(new java.awt.Font("Cambria Math", 1, 12)); // NOI18N
                 jLabel65.setForeground(new java.awt.Color(255, 255, 255));
@@ -2368,70 +2637,25 @@ public class BoardGui extends javax.swing.JFrame {
                 board[39] = repubblica;
         }
 
-        private void fieldBalanceFirstActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldBalanceFirstActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_fieldBalanceFirstActionPerformed
+        // creazione array per gestione bilancio
+        private void createPos(JTextField[] pos) {
+                pos[0] = getPosition1();
+                pos[1] = getPosition2();
+                pos[2] = getPosition3();
+                pos[3] = getPosition4();
+        }
 
-        private void fieldBalanceSecondActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldBalanceSecondActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_fieldBalanceSecondActionPerformed
-
-        private void fieldBalanceThirdActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldBalanceThirdActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_fieldBalanceThirdActionPerformed
-
-        private void fieldBalanceFourthActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldBalanceFourthActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_fieldBalanceFourthActionPerformed
+        // creazione array per gestione delle posizioni
+        private void createBalance(JTextField[] balance) {
+                balance[0] = getFieldBalanceFirst();
+                balance[1] = getFieldBalanceSecond();
+                balance[2] = getFieldBalanceThird();
+                balance[3] = getFieldBalanceFourth();
+        }
 
         private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_exitButtonActionPerformed
                 System.exit(0);
         }// GEN-LAST:event_exitButtonActionPerformed
-
-        private void rollButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_rollButtonActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_rollButtonActionPerformed
-
-        private void rollButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_rollButton1ActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_rollButton1ActionPerformed
-
-        private void buildButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buildButtonActionPerformed
-                new PropertyAction().setVisible(true);
-        }// GEN-LAST:event_buildButtonActionPerformed
-
-        private void mortageButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_mortageButtonActionPerformed
-                new PropertyAction().setVisible(true);
-        }// GEN-LAST:event_mortageButtonActionPerformed
-
-        private void reomoveMortButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_reomoveMortButtonActionPerformed
-                new PropertyAction().setVisible(true);
-        }// GEN-LAST:event_reomoveMortButtonActionPerformed
-
-        private void buildButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buildButton1ActionPerformed
-                JFrame prop = new PropertyAction();
-                prop.setLocation(300, 250);
-                prop.setVisible(true);
-        }// GEN-LAST:event_buildButton1ActionPerformed
-
-        private void position2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_position2ActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_position2ActionPerformed
-
-        private void die1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_die1ActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_die1ActionPerformed
-
-        private void die2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_die2ActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_die2ActionPerformed
-
-        private void buyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buyButtonActionPerformed
-                // testo la posizione della proprietà nel suo label... da eliminare
-                JFrame landCard = new LandCard();
-                landCard.setLocation(propertyPanel.getLocationOnScreen());
-                landCard.setVisible(true);
-        }// GEN-LAST:event_buyButtonActionPerformed
 
         /**
          * @param args the command line arguments
@@ -2476,241 +2700,4 @@ public class BoardGui extends javax.swing.JFrame {
                         }
                 });
         }
-
-        // Variables declaration - do not modify//GEN-BEGIN:variables
-        private javax.swing.JPanel acciPizza;
-        private javax.swing.JPanel actionPanel;
-        private javax.swing.JPanel adriabus1;
-        private javax.swing.JPanel adriabus30;
-        private javax.swing.JPanel adriabus3d;
-        private javax.swing.JPanel adriabus3m;
-        private javax.swing.JPanel albornoz;
-        private javax.swing.JPanel aquilone;
-        private javax.swing.JPanel belvedere;
-        private javax.swing.JPanel boardPanel;
-        private javax.swing.JButton buildButton;
-        private javax.swing.JButton buildButton1;
-        private javax.swing.JButton buyButton;
-        private javax.swing.JPanel carloBo;
-        private javax.swing.JPanel casciotta;
-        private javax.swing.JPanel centerPanel;
-        private javax.swing.JPanel crescia;
-        private javax.swing.JTextField die1;
-        private javax.swing.JTextField die2;
-        private javax.swing.JPanel duca;
-        private javax.swing.JPanel ducale;
-        private javax.swing.JPanel eastPanel;
-        private javax.swing.JButton exitButton;
-        private javax.swing.JFormattedTextField fieldBalanceFirst;
-        private javax.swing.JFormattedTextField fieldBalanceFourth;
-        private javax.swing.JFormattedTextField fieldBalanceSecond;
-        private javax.swing.JFormattedTextField fieldBalanceThird;
-        private javax.swing.JTextField firstName;
-        private javax.swing.JPanel firstPlayer;
-        private javax.swing.JPanel fontane;
-        private javax.swing.JTextField fourthName;
-        private javax.swing.JPanel fourthPlayer;
-        private javax.swing.JPanel ghiottone;
-        private javax.swing.JPanel gimnasium;
-        private javax.swing.JPanel go;
-        private javax.swing.JPanel goToPrison;
-        private javax.swing.JPanel highlightsPanel;
-        private javax.swing.JPanel incomeTax;
-        private javax.swing.JButton jButton1;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel10;
-        private javax.swing.JLabel jLabel100;
-        private javax.swing.JLabel jLabel101;
-        private javax.swing.JLabel jLabel102;
-        private javax.swing.JLabel jLabel103;
-        private javax.swing.JLabel jLabel104;
-        private javax.swing.JLabel jLabel107;
-        private javax.swing.JLabel jLabel108;
-        private javax.swing.JLabel jLabel109;
-        private javax.swing.JLabel jLabel11;
-        private javax.swing.JLabel jLabel111;
-        private javax.swing.JLabel jLabel112;
-        private javax.swing.JLabel jLabel113;
-        private javax.swing.JLabel jLabel114;
-        private javax.swing.JLabel jLabel115;
-        private javax.swing.JLabel jLabel116;
-        private javax.swing.JLabel jLabel117;
-        private javax.swing.JLabel jLabel118;
-        private javax.swing.JLabel jLabel119;
-        private javax.swing.JLabel jLabel12;
-        private javax.swing.JLabel jLabel120;
-        private javax.swing.JLabel jLabel121;
-        private javax.swing.JLabel jLabel122;
-        private javax.swing.JLabel jLabel123;
-        private javax.swing.JLabel jLabel124;
-        private javax.swing.JLabel jLabel125;
-        private javax.swing.JLabel jLabel126;
-        private javax.swing.JLabel jLabel127;
-        private javax.swing.JLabel jLabel128;
-        private javax.swing.JLabel jLabel13;
-        private javax.swing.JLabel jLabel130;
-        private javax.swing.JLabel jLabel131;
-        private javax.swing.JLabel jLabel132;
-        private javax.swing.JLabel jLabel133;
-        private javax.swing.JLabel jLabel134;
-        private javax.swing.JLabel jLabel135;
-        private javax.swing.JLabel jLabel136;
-        private javax.swing.JLabel jLabel137;
-        private javax.swing.JLabel jLabel138;
-        private javax.swing.JLabel jLabel14;
-        private javax.swing.JLabel jLabel140;
-        private javax.swing.JLabel jLabel141;
-        private javax.swing.JLabel jLabel142;
-        private javax.swing.JLabel jLabel143;
-        private javax.swing.JLabel jLabel144;
-        private javax.swing.JLabel jLabel145;
-        private javax.swing.JLabel jLabel146;
-        private javax.swing.JLabel jLabel147;
-        private javax.swing.JLabel jLabel15;
-        private javax.swing.JLabel jLabel16;
-        private javax.swing.JLabel jLabel17;
-        private javax.swing.JLabel jLabel18;
-        private javax.swing.JLabel jLabel19;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel20;
-        private javax.swing.JLabel jLabel21;
-        private javax.swing.JLabel jLabel22;
-        private javax.swing.JLabel jLabel23;
-        private javax.swing.JLabel jLabel24;
-        private javax.swing.JLabel jLabel25;
-        private javax.swing.JLabel jLabel26;
-        private javax.swing.JLabel jLabel27;
-        private javax.swing.JLabel jLabel28;
-        private javax.swing.JLabel jLabel29;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel30;
-        private javax.swing.JLabel jLabel31;
-        private javax.swing.JLabel jLabel32;
-        private javax.swing.JLabel jLabel33;
-        private javax.swing.JLabel jLabel34;
-        private javax.swing.JLabel jLabel35;
-        private javax.swing.JLabel jLabel36;
-        private javax.swing.JLabel jLabel37;
-        private javax.swing.JLabel jLabel38;
-        private javax.swing.JLabel jLabel39;
-        private javax.swing.JLabel jLabel4;
-        private javax.swing.JLabel jLabel40;
-        private javax.swing.JLabel jLabel41;
-        private javax.swing.JLabel jLabel42;
-        private javax.swing.JLabel jLabel43;
-        private javax.swing.JLabel jLabel44;
-        private javax.swing.JLabel jLabel45;
-        private javax.swing.JLabel jLabel46;
-        private javax.swing.JLabel jLabel47;
-        private javax.swing.JLabel jLabel48;
-        private javax.swing.JLabel jLabel49;
-        private javax.swing.JLabel jLabel5;
-        private javax.swing.JLabel jLabel50;
-        private javax.swing.JLabel jLabel51;
-        private javax.swing.JLabel jLabel52;
-        private javax.swing.JLabel jLabel53;
-        private javax.swing.JLabel jLabel54;
-        private javax.swing.JLabel jLabel55;
-        private javax.swing.JLabel jLabel56;
-        private javax.swing.JLabel jLabel57;
-        private javax.swing.JLabel jLabel58;
-        private javax.swing.JLabel jLabel59;
-        private javax.swing.JLabel jLabel6;
-        private javax.swing.JLabel jLabel60;
-        private javax.swing.JLabel jLabel61;
-        private javax.swing.JLabel jLabel62;
-        private javax.swing.JLabel jLabel63;
-        private javax.swing.JLabel jLabel64;
-        private javax.swing.JLabel jLabel65;
-        private javax.swing.JLabel jLabel66;
-        private javax.swing.JLabel jLabel67;
-        private javax.swing.JLabel jLabel68;
-        private javax.swing.JLabel jLabel69;
-        private javax.swing.JLabel jLabel7;
-        private javax.swing.JLabel jLabel70;
-        private javax.swing.JLabel jLabel71;
-        private javax.swing.JLabel jLabel72;
-        private javax.swing.JLabel jLabel73;
-        private javax.swing.JLabel jLabel74;
-        private javax.swing.JLabel jLabel75;
-        private javax.swing.JLabel jLabel76;
-        private javax.swing.JLabel jLabel77;
-        private javax.swing.JLabel jLabel78;
-        private javax.swing.JLabel jLabel79;
-        private javax.swing.JLabel jLabel8;
-        private javax.swing.JLabel jLabel80;
-        private javax.swing.JLabel jLabel81;
-        private javax.swing.JLabel jLabel82;
-        private javax.swing.JLabel jLabel83;
-        private javax.swing.JLabel jLabel85;
-        private javax.swing.JLabel jLabel86;
-        private javax.swing.JLabel jLabel87;
-        private javax.swing.JLabel jLabel89;
-        private javax.swing.JLabel jLabel9;
-        private javax.swing.JLabel jLabel91;
-        private javax.swing.JLabel jLabel92;
-        private javax.swing.JLabel jLabel93;
-        private javax.swing.JLabel jLabel94;
-        private javax.swing.JLabel jLabel95;
-        private javax.swing.JLabel jLabel96;
-        private javax.swing.JLabel jLabel97;
-        private javax.swing.JLabel jLabel98;
-        private javax.swing.JLabel jLabel99;
-        private javax.swing.JPanel jPanel19;
-        private javax.swing.JPanel jPanel20;
-        private javax.swing.JPanel jPanel23;
-        private javax.swing.JPanel jPanel3;
-        private javax.swing.JPanel jPanel4;
-        private javax.swing.JPanel jPanel8;
-        private javax.swing.JScrollPane jScrollPane1;
-        private javax.swing.JScrollPane jScrollPane14;
-        private javax.swing.JScrollPane jScrollPane2;
-        private javax.swing.JTextArea jTextArea1;
-        private javax.swing.JTextArea jTextArea14;
-        private javax.swing.JTextArea jTextArea2;
-        private javax.swing.JLabel label;
-        private javax.swing.JLabel label25;
-        private javax.swing.JPanel luxuryTax;
-        private javax.swing.JPanel madplanet;
-        private javax.swing.JButton mortageButton;
-        private javax.swing.JPanel neumann;
-        private javax.swing.JPanel northPanel;
-        private javax.swing.JPanel nuovaLuce;
-        private javax.swing.JPanel olivetti;
-        private javax.swing.JPanel optionPanel;
-        private javax.swing.JPanel park;
-        private javax.swing.JPanel playerPanel;
-        private javax.swing.JTextField position1;
-        private javax.swing.JTextField position2;
-        private javax.swing.JTextField position3;
-        private javax.swing.JTextField position4;
-        private javax.swing.JPanel prison;
-        private javax.swing.JPanel prob0;
-        private javax.swing.JPanel prob1;
-        private javax.swing.JPanel prob2;
-        private javax.swing.JPanel probPanel;
-        private javax.swing.JPanel propertyPanel;
-        private javax.swing.JPanel raffaello;
-        private javax.swing.JPanel reactive;
-        private javax.swing.JButton reomoveMortButton;
-        private javax.swing.JPanel repubblica;
-        private javax.swing.JPanel resistenza;
-        private javax.swing.JPanel rimembranza;
-        private javax.swing.JButton rollButton;
-        private javax.swing.JButton rollButton1;
-        private javax.swing.JPanel salame;
-        private javax.swing.JTextField secondName;
-        private javax.swing.JPanel secondPlayer;
-        private javax.swing.JPanel società;
-        private javax.swing.JPanel southPanel;
-        private javax.swing.JTextField thirdName;
-        private javax.swing.JPanel thirdPlayer;
-        private javax.swing.JPanel turing;
-        private javax.swing.JPanel unex0;
-        private javax.swing.JPanel unex1;
-        private javax.swing.JPanel unex2;
-        private javax.swing.JPanel unexPanel;
-        private javax.swing.JPanel westPanel;
-        // End of variables declaration//GEN-END:variables
-
 }
