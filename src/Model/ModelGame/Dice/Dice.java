@@ -18,6 +18,7 @@ public class Dice implements DiceApi {
         this.totalValue = 0;
     }
 
+    @Override
     public int[] getDice() {
         return dice;
     }

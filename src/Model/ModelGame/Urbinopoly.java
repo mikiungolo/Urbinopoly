@@ -2,6 +2,7 @@ package Model.ModelGame;
 
 import java.util.Optional;
 
+import Controller.ControllerGame;
 import Model.ModelGame.Board.Board;
 import Model.ModelGame.Board.Pieces.Square;
 import Model.ModelGame.Board.Pieces.Deck.Card;
@@ -23,6 +24,7 @@ public class Urbinopoly {
     private boolean inTurn;
     private boolean endGame;
 
+    // costruttore
     public Urbinopoly() {
         this.board = Board.getSingletonBoard();
         this.players = new Players();
@@ -62,26 +64,66 @@ public class Urbinopoly {
     }
 
     /* gestione dell'ossatura di un turno */
-    public int turn(Player p) {
+    public int turn(Player p, ControllerGame c) {
+        boolean isValid;
 
-        dice.roll();
-        p.move(dice.getTotalValue());
-
-        doAction(p);
-        // controllo sconfitta del Player con eventuale rimozione
-        getPlayers().remove(p);
-
+        // settaggio dei comandi
+        p.setOptionRolled(false);
+        c.getMutex().lock();
         /*
-         * fin tanto che il player lanciando i dadi riceve facciate
-         * uguali deve giocare un ulteriore turno, altrimenti toccato
-         * il limite dei massimi turni consecutivi finirà in prigione.
-         * Tale operazione avviene in chiamata ricorsiva.
+         * fin tanto che il player corrente non ha selezionato
+         * il tiro dei dadi e non ha espresso la fine del proprio turno può continuare
+         * le proprie mosse di gioco
          */
-        if (dice.isDouble() && !p.isInPrison()) {
-            if (p.goPrisonForTripleTurn())
-                setInTurn(false);
-            else
-                turn(p);
+        while (isInTurn()) {
+            /*
+             * nel corso del proprio turno il Player corrente può
+             * optare per tutte le opzioni a lui disponibili.
+             */
+
+            do {
+                isValid = validateCommand(p.getOptionCommand(), p);
+                if (isValid) {
+                    playerAction(p, p.getOptionCommand());
+                } else {
+                    try {
+                        c.getCond().await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } while (!isValid);
+
+            /*
+             * se indica l'opzione di tiro si esegue il giro
+             * si controlla che il Player non abbia scelto la terminazione
+             * del turno e che non sia in prigione
+             */
+            if (p.isOptionRolled() && !p.isInPrison() && isInTurn()) {
+                // azione di roll
+                dice.roll();
+                p.move(dice.getTotalValue());
+
+                doAction(p);
+                // controllo sconfitta del Player con eventuale rimozione
+                getPlayers().remove(p);
+
+                /*
+                 * fin tanto che il player lanciando i dadi riceve facciate
+                 * uguali deve giocare un ulteriore turno, altrimenti toccato
+                 * il limite dei massimi turni consecutivi finirà in prigione.
+                 * Tale operazione avviene in chiamata ricorsiva.
+                 */
+                if (dice.isDouble() && !p.isInPrison()) {
+                    if (p.goPrisonForTripleTurn())
+                        setInTurn(false);
+                    else
+                        turn(p, c);
+                }
+            }
+            c.getCond().signal();
+            c.getMutex().unlock();
         }
         /*
          * qui il il turno del player corrente è terminato quindi posso
@@ -97,17 +139,24 @@ public class Urbinopoly {
      */
     public boolean validateCommand(int optionCommand, Player p) {
         boolean isValid;
-        switch (optionCommand) {
-            case 1 -> isValid = (getBoard().getSquare(p.getPosition()) instanceof Property) ? true : false;
-            case 2,
-                    3 ->
-                isValid = (p.getProperties().isEmpty()) ? false : true;
-            case 4,
-                    5 ->
-                isValid = (p.getProperties().stream().filter(x -> x instanceof Land).count() > 0) ? true : false;
-            case 6 -> isValid = (!p.isOptionRolled()) ? true : false;
-            case 7 -> isValid = (p.isOptionRolled()) ? true : false;
-            default -> isValid = false;
+        if (!p.isInPrison()) {
+            switch (optionCommand) {
+                case 1 -> isValid = (getBoard().getSquare(p.getPosition()) instanceof Property) ? true : false;
+                case 2,
+                        3 ->
+                    isValid = (p.getProperties().isEmpty()) ? false : true;
+                case 4,
+                        5 ->
+                    isValid = (p.getProperties().stream().filter(x -> x instanceof Land).count() > 0) ? true : false;
+                case 6 -> isValid = (p.isOptionRolled()) ? false : true;
+                case 7 -> isValid = (p.isOptionRolled()) ? true : false;
+                default -> isValid = false;
+            }
+        } else {
+            switch (optionCommand) {
+                case 1, 2, 3 -> isValid = true;
+                default -> isValid = false;
+            }
         }
         return isValid;
     }

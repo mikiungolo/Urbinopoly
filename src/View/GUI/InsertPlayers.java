@@ -7,7 +7,6 @@ package View.GUI;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -197,14 +196,6 @@ public class InsertPlayers extends javax.swing.JFrame {
                 .setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
                         new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
         startGamePlayerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        /*
-         * startGamePlayerButton.addActionListener(new java.awt.event.ActionListener() {
-         * public void actionPerformed(java.awt.event.ActionEvent evt) {
-         * startGamePlayerButtonActionPerformed(evt);
-         * }
-         * });
-         */
         getContentPane().add(startGamePlayerButton);
         startGamePlayerButton.setBounds(570, 440, 140, 30);
 
@@ -224,31 +215,10 @@ public class InsertPlayers extends javax.swing.JFrame {
     public List<String> getNamePlayers() {
 
         for (int i = 0; i < playerNameTable.getRowCount(); i++) {
-            getNames().add((String) playerNameTable.getValueAt(i, 0));
+            this.names.add((String) playerNameTable.getValueAt(i, 0));
         }
 
-        return getNames();
-    }
-
-    public BoardGui setNamesInBoardGui(List<String> name) {
-        BoardGui b = new BoardGui();
-
-        JTextField[] a = new JTextField[4];
-
-        a[0] = b.getFirstName();
-        a[1] = b.getSecondName();
-        a[2] = b.getThirdName();
-        a[3] = b.getFourthName();
-
-        for (int i = 0; i < name.size(); i++) {
-            a[i].setText(name.get(i));
-        }
-
-        for (int i = name.size(); i < 4; i++) {
-            a[i].getParent().setVisible(false);
-        }
-
-        return b;
+        return names;
     }
 
     private void addPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addPlayerButtonActionPerformed

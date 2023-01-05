@@ -52,11 +52,7 @@ public class StartGui extends javax.swing.JFrame {
                 new java.awt.Color(204, 204, 204), new java.awt.Color(0, 0, 0), null, null));
         startButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         startButton.setOpaque(true);
-        startButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startButtonActionPerformed(evt);
-            }
-        });
+
         jPanel1.add(startButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 120, 30));
 
         exitButton.setBackground(new java.awt.Color(211, 64, 64));
@@ -95,15 +91,13 @@ public class StartGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public javax.swing.JButton getStartButton() {
+        return startButton;
+    }
+
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }// GEN-LAST:event_exitButtonActionPerformed
-
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startButtonActionPerformed
-
-        viewPlayer.setVisible(true);
-        this.dispose();
-    }// GEN-LAST:event_startButtonActionPerformed
 
     /**
      * @param args the command line arguments

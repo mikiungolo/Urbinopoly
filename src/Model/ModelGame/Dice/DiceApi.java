@@ -8,4 +8,6 @@ public interface DiceApi {
     public boolean isDouble();
 
     public int getTotalValue();
+
+    public int[] getDice();
 }

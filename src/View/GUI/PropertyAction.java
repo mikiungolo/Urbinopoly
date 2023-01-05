@@ -104,6 +104,15 @@ public class PropertyAction extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // getter
+    public javax.swing.JButton getDoActButton() {
+        return doActButton;
+    }
+
+    public javax.swing.JTable getPlayerPropertyTable() {
+        return playerPropertyTable;
+    }
+
     private void doActButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_doActButtonActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_doActButtonActionPerformed
