@@ -51,4 +51,9 @@ public class Cards implements CardsApi {
         m.setnCardTaken(m.getnCardTaken() + 1);
         return m.getDeck().get(m.getnCardTaken() - 1);
     }
+
+    @Override
+    public Card getCurrentCard(Cards m) {
+        return m.getDeck().get(m.getnCardTaken() - 1);
+    }
 }

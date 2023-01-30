@@ -7,20 +7,20 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import Model.ModelGame.Urbinopoly;
-import Model.ModelGame.Board.Pieces.Property.Property;
 import Model.ModelGame.Player.Player;
 import View.GUI.BoardGui;
-import View.GUI.LandCard;
 import View.GUI.PrisonGui;
 import View.GUI.PropertyAction;
-import View.GUI.SocietyCard;
-import View.GUI.StationCard;
 
 public class ControllerGame {
+
     // riferimenti alla View del board e al modello
     private BoardGui board;
     private PrisonGui prison;
     private Urbinopoly model;
+
+    // riferimenti al controller del Player
+    private ControllerPlayer ctrlP;
 
     // controllo per il player
     private int indexCurrentPlayer;
@@ -33,6 +33,7 @@ public class ControllerGame {
         this.indexCurrentPlayer = -1;
         this.board = board;
         this.current = new Player();
+        this.ctrlP = new ControllerPlayer(model, board, this.prison);
     }
 
     // getter
@@ -43,6 +44,10 @@ public class ControllerGame {
 
     public Urbinopoly getModel() {
         return model;
+    }
+
+    public ControllerPlayer getCtrlP() {
+        return ctrlP;
     }
 
     public void game() {
@@ -93,16 +98,6 @@ public class ControllerGame {
         }
     }
 
-    private void updateViewBalance(Player p) {
-        getBoard().setBalance(p.getBalance(), indexCurrentPlayer);
-    }
-
-    private void updateViewPosition(Player p) {
-        getBoard().getDie1().setText(Integer.toString(model.getDice().getDice()[0]));
-        getBoard().getDie2().setText(Integer.toString(model.getDice().getDice()[1]));
-        getBoard().setPos(p.getPosition(), indexCurrentPlayer);
-    }
-
     // Creazione listener pulsanti del board game
     private void addListener() {
         addBuyListener();
@@ -125,8 +120,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(1);
+                current.setOptionCommand(1);
+                getModel().playerAction(current);
             }
         });
     }
@@ -137,8 +132,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(3);
+                current.setOptionCommand(3);
+                getModel().playerAction(current);
             }
         });
     }
@@ -150,8 +145,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(2);
+                current.setOptionCommand(2);
+                getModel().playerAction(current);
             }
         });
     }
@@ -171,6 +166,7 @@ public class ControllerGame {
                 getBoard().getHighlight().append("\nTurno del Player: " + current.getName());
 
                 validateBoard(board, current);
+                getCtrlP().updateAction(current);
             }
         });
     }
@@ -184,9 +180,11 @@ public class ControllerGame {
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(6);
 
+                int oldPos = current.getPosition();
                 getModel().getDice().roll();
                 current.move(getModel().getDice().getTotalValue());
-                updateViewPosition(current);
+                getCtrlP().updateViewPosition(current, indexCurrentPlayer, oldPos);
+                getCtrlP().updateAction(current);
 
                 getModel().doAction(current);
                 // controllo sconfitta del Player con eventuale rimozione
@@ -205,7 +203,7 @@ public class ControllerGame {
                                 "truccato i dadi per ben tre volte!\n");
                     }
                 }
-                updateViewBalance(current);
+                getCtrlP().updateViewBalance(current, indexCurrentPlayer);
                 current.setOptionRolled(true);
                 validateBoard(board, current);
             }
@@ -216,7 +214,7 @@ public class ControllerGame {
         PropertyAction prop = showListProperty(current);
         buttonDoAct(prop);
         model.playerAction(current);
-        updateViewBalance(current);
+        getCtrlP().updateViewBalance(current, indexCurrentPlayer);
     }
 
     private void addRemBuildListener() {
@@ -279,15 +277,9 @@ public class ControllerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(1);
-                switch (model.getBoard().getSquare(current.getPosition()).getNature()) {
-                    case LAND -> showLand();
-                    case SERVICE -> showService();
-                    case STATION -> showStation();
-                    default -> {
-                    }
-                }
+
                 model.playerAction(current);
-                updateViewBalance(current);
+                getCtrlP().updateViewBalance(current, indexCurrentPlayer);
             }
         });
     }
@@ -323,43 +315,5 @@ public class ControllerGame {
                 }
             }
         });
-    }
-
-    private void showLand() {
-        LandCard landCard = new LandCard();
-        landCard.setNameLand(((Property) model.getBoard().getSquare(current.getPosition())).getName());
-        landCard.setOneHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[1]);
-        landCard.setTwoHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[2]);
-        landCard.setThreeHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[3]);
-        landCard.setFourHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[4]);
-        landCard.setHomePrice(((Property) model.getBoard().getSquare(current.getPosition())).getPrice());
-        landCard.setZeroPrice(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
-        landCard.setHotel(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[5]);
-        landCard.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
-        landCard.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
-        landCard.setVisible(true);
-    }
-
-    private void showService() {
-        SocietyCard service = new SocietyCard();
-        service.setAnniuties(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
-        service.setWithDoubleService(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
-        service.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
-        service.setNameSociety(((Property) model.getBoard().getSquare(current.getPosition())).getName() +
-                ". Si moltiplica per il valore ottenuto dai dadi");
-        service.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
-        service.setVisible(true);
-    }
-
-    private void showStation() {
-        StationCard station = new StationCard();
-        station.setOneStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
-        station.setTwoStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[1]);
-        station.setThreeStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[2]);
-        station.setFourStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[3]);
-        station.setPrice(((Property) model.getBoard().getSquare(current.getPosition())).getPrice());
-        station.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
-        station.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
-        station.setVisible(true);
     }
 }

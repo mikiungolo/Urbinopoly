@@ -10,4 +10,7 @@ public interface CardsApi {
 
     // aggiunge una carta al mazzo
     public void add(Card c);
+
+    // ritorna la carta pescata
+    public Card getCurrentCard(Cards m);
 }
