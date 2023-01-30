@@ -45,6 +45,10 @@ public class Player {
     ExitPrisonStrategy prisonStrategy;
 
     // Costruttore classe
+    public Player() {
+        this.name = "Controll";
+    }
+
     public Player(String name) {
         this.name = name;
         this.position = Board.GO;

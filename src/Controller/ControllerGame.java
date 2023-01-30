@@ -2,14 +2,12 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import Model.ModelGame.Urbinopoly;
+import Model.ModelGame.Board.Pieces.Property.Property;
 import Model.ModelGame.Player.Player;
 import View.GUI.BoardGui;
 import View.GUI.LandCard;
@@ -24,15 +22,9 @@ public class ControllerGame {
     private PrisonGui prison;
     private Urbinopoly model;
 
-    // variabili di controllo per il board
+    // controllo per il player
     private int indexCurrentPlayer;
-    private int opt;
-    private int bal;
-    private int pos;
-
-    // attributi di sincronizzazione Thread
-    private final ReentrantLock mutex;
-    private final Condition cond;
+    private Player current;
 
     // cosrtuttore del ControllerGrame
     public ControllerGame(Urbinopoly model, BoardGui board) {
@@ -40,33 +32,17 @@ public class ControllerGame {
         this.prison = new PrisonGui();
         this.indexCurrentPlayer = -1;
         this.board = board;
-        this.mutex = new ReentrantLock();
-        this.cond = mutex.newCondition();
+        this.current = new Player();
     }
 
     // getter
-    public int getOpt() {
-        return opt;
-    }
-
-    public ReentrantLock getMutex() {
-        return mutex;
-    }
-
-    public Condition getCond() {
-        return cond;
-    }
 
     public BoardGui getBoard() {
         return this.board;
     }
 
-    public int getBal() {
-        return bal;
-    }
-
-    public int getPos() {
-        return pos;
+    public Urbinopoly getModel() {
+        return model;
     }
 
     public void game() {
@@ -75,86 +51,34 @@ public class ControllerGame {
 
         addListener();
         board.setVisible(true);
+
         // avvio gameplay
         new Thread() {
+
             @Override
             public void run() {
                 gameplay();
             }
         }.start();
+
     }
 
     // struttura dell'intero gameplay
     public void gameplay() {
-        Thread turn;
-        Thread view;
-        ControllerGame c = this;
 
-        // esecuzione dei turni. Sincronizzazione del modello e controller per il
-        // gameplay
+        // ottenimento del prossimo player in gioco
+        current = model.getPlayers().getNextPlayer(indexCurrentPlayer);
+
+        model.setInTurn(true);
+        validateBoard(board, current);
+        getBoard().getHighlight().append("Turno del Player: " + current.getName() + "\n");
+        indexCurrentPlayer++;
+
         while (!model.isEndGame()) {
 
-            mutex.lock();
-
-            // ottenimento del prossimo player in gioco
-            Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-            this.opt = currentP.getOptionCommand();
-            this.bal = currentP.getBalance();
-            this.pos = currentP.getPosition();
-
-            model.setInTurn(true);
-
-            // gestione dell'input in view
-            view = new Thread() {
-                @Override
-                public void run() {
-
-                    // messaggio in Highlights
-                    getBoard().getHighlight().append("Turno del Player: " + currentP.getName() + "\n");
-
-                    updateView(currentP, c);
-                }
-            };
-            view.start();
-
-            // gestione del turno/modello
-            turn = new Thread() {
-                @Override
-                public void run() {
-
-                    indexCurrentPlayer = model.turn(currentP, c);
-                }
-            };
-            turn.start();
-
-            while (model.isInTurn()) {
-                try {
-                    Thread.sleep(30);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mutex.lock();
-                do {
-                    if (opt != currentP.getOptionCommand()) {
-                        mutex.unlock();
-                        cond.signal();
-                    }
-                } while (opt == currentP.getOptionCommand() || mutex.isLocked());
-
+            if (model.isEndGame()) {
+                getBoard().getHighlight().append("\n Urbinopoly temrinato.\nSviluppatori: Ungolo, Sette");
             }
-            // attesa terminazione thread per il turno corrente
-            try {
-                turn.join();
-                view.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // il gioco deve terminare!!
-        if (model.isEndGame()) {
-            getBoard().getHighlight()
-                    .append("\n Il gioco è terminato. Sviluppatori:\n Ungolo Michelangelo, Sette Miriana " + "\n");
         }
     }
 
@@ -169,35 +93,14 @@ public class ControllerGame {
         }
     }
 
-    private void updateView(Player p, ControllerGame c) {
-        // aggiornamento della view
+    private void updateViewBalance(Player p) {
+        getBoard().setBalance(p.getBalance(), indexCurrentPlayer);
+    }
 
-        while (model.isInTurn()) {
-            validateBoard(board, p);
-            c.getMutex().lock();
-
-            while (c.getBal() == p.getBalance() && c.getPos() == p.getPosition()) {
-                try {
-                    validateBoard(board, p);
-                    c.getCond().await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            switch (p.getOptionCommand()) {
-
-                case 1, 2, 3, 4, 5 -> {
-                    getBoard().setBalance(p.getBalance(), indexCurrentPlayer);
-                }
-                case 6 -> {
-                    getBoard().getDie1().setText(Integer.toString(model.getDice().getDice()[0]));
-                    getBoard().getDie2().setText(Integer.toString(model.getDice().getDice()[1]));
-                    getBoard().setPos(p.getPosition(), indexCurrentPlayer);
-                }
-            }
-            c.getMutex().unlock();
-        }
+    private void updateViewPosition(Player p) {
+        getBoard().getDie1().setText(Integer.toString(model.getDice().getDice()[0]));
+        getBoard().getDie2().setText(Integer.toString(model.getDice().getDice()[1]));
+        getBoard().setPos(p.getPosition(), indexCurrentPlayer);
     }
 
     // Creazione listener pulsanti del board game
@@ -260,8 +163,14 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(7);
+                getBoard().getHighlight().append("Turno terminato per il Player: " + current.getName() + "\n");
+                current.setOptionCommand(7);
+                current.setOptionRolled(false);
+                current = model.getPlayers().getNextPlayer(indexCurrentPlayer);
+                indexCurrentPlayer++;
+                getBoard().getHighlight().append("\nTurno del Player: " + current.getName());
+
+                validateBoard(board, current);
             }
         });
     }
@@ -273,10 +182,41 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(6);
+                current.setOptionCommand(6);
+
+                getModel().getDice().roll();
+                current.move(getModel().getDice().getTotalValue());
+                updateViewPosition(current);
+
+                getModel().doAction(current);
+                // controllo sconfitta del Player con eventuale rimozione
+                getModel().getPlayers().remove(current);
+
+                getModel().playerAction(current);
+                /*
+                 * fin tanto che il player lanciando i dadi riceve facciate
+                 * uguali deve giocare un ulteriore turno, altrimenti toccato
+                 * il limite dei massimi turni consecutivi finirà in prigione.
+                 * Tale operazione avviene in chiamata ricorsiva.
+                 */
+                if (getModel().getDice().isDouble() && !current.isInPrison()) {
+                    if (current.goPrisonForTripleTurn()) {
+                        getBoard().getHighlight().append(current.getName() + " finisce in prigione per aver " +
+                                "truccato i dadi per ben tre volte!\n");
+                    }
+                }
+                updateViewBalance(current);
+                current.setOptionRolled(true);
+                validateBoard(board, current);
             }
         });
+    }
+
+    private void actionProperty() {
+        PropertyAction prop = showListProperty(current);
+        buttonDoAct(prop);
+        model.playerAction(current);
+        updateViewBalance(current);
     }
 
     private void addRemBuildListener() {
@@ -286,10 +226,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(5);
-                PropertyAction prop = showListProperty(currentP);
-                buttonDoAct(prop);
+                current.setOptionCommand(5);
+                actionProperty();
             }
         });
     }
@@ -301,10 +239,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(4);
-                PropertyAction prop = showListProperty(currentP);
-                buttonDoAct(prop);
+                current.setOptionCommand(4);
+                actionProperty();
             }
         });
     }
@@ -316,10 +252,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(3);
-                PropertyAction prop = showListProperty(currentP);
-                buttonDoAct(prop);
+                current.setOptionCommand(3);
+                actionProperty();
             }
         });
     }
@@ -331,10 +265,8 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(2);
-                PropertyAction prop = showListProperty(currentP);
-                buttonDoAct(prop);
+                current.setOptionCommand(2);
+                actionProperty();
             }
         });
     }
@@ -346,15 +278,16 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
-                currentP.setOptionCommand(1);
-                switch (model.getBoard().getSquare(currentP.getPosition()).getNature()) {
+                current.setOptionCommand(1);
+                switch (model.getBoard().getSquare(current.getPosition()).getNature()) {
                     case LAND -> showLand();
                     case SERVICE -> showService();
                     case STATION -> showStation();
                     default -> {
                     }
                 }
+                model.playerAction(current);
+                updateViewBalance(current);
             }
         });
     }
@@ -379,7 +312,6 @@ public class ControllerGame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player currentP = model.getPlayers().getNextPlayer(indexCurrentPlayer);
                 int row = prop.getPlayerPropertyTable().getSelectedRow();
 
                 if (row < 0) {
@@ -387,30 +319,47 @@ public class ControllerGame {
                             "No row is selected. Please select one row!",
                             "Select row", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    currentP.setPropertySelected(row);
+                    current.setPropertySelected(row);
                 }
             }
         });
     }
 
-    private JFrame showLand() {
-        JFrame landCard = new LandCard();
+    private void showLand() {
+        LandCard landCard = new LandCard();
+        landCard.setNameLand(((Property) model.getBoard().getSquare(current.getPosition())).getName());
+        landCard.setOneHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[1]);
+        landCard.setTwoHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[2]);
+        landCard.setThreeHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[3]);
+        landCard.setFourHouse(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[4]);
+        landCard.setHomePrice(((Property) model.getBoard().getSquare(current.getPosition())).getPrice());
+        landCard.setZeroPrice(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
+        landCard.setHotel(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[5]);
+        landCard.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
         landCard.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
         landCard.setVisible(true);
-        return landCard;
     }
 
-    private JFrame showService() {
-        JFrame service = new SocietyCard();
+    private void showService() {
+        SocietyCard service = new SocietyCard();
+        service.setAnniuties(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
+        service.setWithDoubleService(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
+        service.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
+        service.setNameSociety(((Property) model.getBoard().getSquare(current.getPosition())).getName() +
+                ". Si moltiplica per il valore ottenuto dai dadi");
         service.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
         service.setVisible(true);
-        return service;
     }
 
-    private JFrame showStation() {
-        JFrame station = new StationCard();
+    private void showStation() {
+        StationCard station = new StationCard();
+        station.setOneStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[0]);
+        station.setTwoStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[1]);
+        station.setThreeStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[2]);
+        station.setFourStation(((Property) model.getBoard().getSquare(current.getPosition())).getGain()[3]);
+        station.setPrice(((Property) model.getBoard().getSquare(current.getPosition())).getPrice());
+        station.setMortgageValue(((Property) model.getBoard().getSquare(current.getPosition())).getPrice() / 2);
         station.setLocation(getBoard().getPropertyPanel().getLocationOnScreen());
         station.setVisible(true);
-        return station;
     }
 }

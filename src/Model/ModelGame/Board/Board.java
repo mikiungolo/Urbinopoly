@@ -49,7 +49,7 @@ public class Board {
                 squares[12] = new Service("Societa' Elettrica", 150, new int[] { 4, 10 });
                 squares[13] = new Land("Via della Casciotta", 140, new int[] { 10, 50, 150, 450, 625, 750 },
                                 Land.ColorUrbinopoly.ROSA, 100);
-                squares[14] = new Land("Via dell Crescia", 160, new int[] { 12, 60, 180, 500, 700, 900 },
+                squares[14] = new Land("Via della Crescia", 160, new int[] { 12, 60, 180, 500, 700, 900 },
                                 Land.ColorUrbinopoly.ROSA, 100);
                 squares[15] = new Station("Adriabus 3m", 200, new int[] { 25, 50, 100, 200 });
                 squares[16] = new Land("Parco della Rimembranza", 180, new int[] { 14, 70, 200, 550, 750, 950 },

@@ -23,32 +23,32 @@ public class SocietyCard extends javax.swing.JFrame {
         return anniuties;
     }
 
-    public void setAnniuties(JTextField anniuties) {
-        this.anniuties = anniuties;
+    public void setAnniuties(int anniuties) {
+        this.anniuties.setText(Integer.toString(anniuties));
     }
 
     public JTextField getMortgageValue() {
         return mortgageValue;
     }
 
-    public void setMortgageValue(JTextField mortgageValue) {
-        this.mortgageValue = mortgageValue;
+    public void setMortgageValue(int mortgageValue) {
+        this.mortgageValue.setText(Integer.toString(mortgageValue));
     }
 
     public JTextField getNameSociety() {
         return nameSociety;
     }
 
-    public void setNameSociety(JTextField nameSociety) {
-        this.nameSociety = nameSociety;
+    public void setNameSociety(String nameSociety) {
+        this.nameSociety.setText(nameSociety);
     }
 
     public JTextField getWithDoubleService() {
         return withDoubleService;
     }
 
-    public void setWithDoubleService(JTextField withDoubleService) {
-        this.withDoubleService = withDoubleService;
+    public void setWithDoubleService(int withDoubleService) {
+        this.withDoubleService.setText(Integer.toString(withDoubleService));
     }
 
     /**

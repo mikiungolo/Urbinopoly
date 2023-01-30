@@ -23,72 +23,72 @@ public class LandCard extends javax.swing.JFrame {
         return fourHouse;
     }
 
-    public void setFourHouse(JTextField fourHouse) {
-        this.fourHouse = fourHouse;
+    public void setFourHouse(int fourHouse) {
+        this.fourHouse.setText(Integer.toString(fourHouse));
     }
 
     public JTextField getHomePrice() {
         return homePrice;
     }
 
-    public void setHomePrice(JTextField homePrice) {
-        this.homePrice = homePrice;
+    public void setHomePrice(int homePrice) {
+        this.homePrice.setText(Integer.toString(homePrice));
     }
 
     public JTextField getHotel() {
         return hotel;
     }
 
-    public void setHotel(JTextField hotel) {
-        this.hotel = hotel;
+    public void setHotel(int hotel) {
+        this.hotel.setText(Integer.toString(hotel));
     }
 
-    public JTextField getHotelPrice() {
-        return hotelPrice;
+    public JTextField getZeroPrice() {
+        return zeroHome;
     }
 
-    public void setHotelPrice(JTextField hotelPrice) {
-        this.hotelPrice = hotelPrice;
+    public void setZeroPrice(int price) {
+        this.zeroHome.setText(Integer.toString(price));
     }
 
     public JTextField getMortgageValue() {
         return mortgageValue;
     }
 
-    public void setMortgageValue(JTextField mortgageValue) {
-        this.mortgageValue = mortgageValue;
+    public void setMortgageValue(int mortgageValue) {
+        this.mortgageValue.setText(Integer.toString(mortgageValue));
     }
 
     public JTextField getNameLand() {
         return nameLand;
     }
 
-    public void setNameLand(JTextField nameLand) {
-        this.nameLand = nameLand;
+    public void setNameLand(String nameLand) {
+        this.nameLand.setText(nameLand);
     }
 
     public JTextField getOneHouse() {
         return oneHouse;
     }
 
-    public void setOneHouse(JTextField oneHouse) {
-        this.oneHouse = oneHouse;
+    public void setOneHouse(int oneHouse) {
+        this.oneHouse.setText(Integer.toString(oneHouse));
     }
 
     public JTextField getThreeHouse() {
         return threeHouse;
     }
 
-    public void setThreeHouse(JTextField threeHouse) {
-        this.threeHouse = threeHouse;
+    public void setThreeHouse(int threeHouse) {
+        this.threeHouse.setText(Integer.toString(threeHouse));
     }
 
     public JTextField getTwoHouse() {
         return twoHouse;
     }
 
-    public void setTwoHouse(JTextField twoHouse) {
-        this.twoHouse = twoHouse;
+    public void setTwoHouse(int twoHouse) {
+        this.twoHouse.setText(Integer.toString(twoHouse));
     }
 
     /**
@@ -129,7 +129,7 @@ public class LandCard extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         homePrice = new javax.swing.JTextField();
-        hotelPrice = new javax.swing.JTextField();
+        zeroHome = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -168,7 +168,7 @@ public class LandCard extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nameLand.setEditable(false);
-        nameLand.setFont(new java.awt.Font("Cambria Math", 1, 14)); // NOI18N
+        nameLand.setFont(new java.awt.Font("Cambria Math", 1, 10)); // NOI18N
         nameLand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nameLand.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(nameLand, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 41));
@@ -205,22 +205,22 @@ public class LandCard extends javax.swing.JFrame {
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 32, -1));
 
         threeHouse.setEditable(false);
-        threeHouse.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        threeHouse.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         threeHouse.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(threeHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 60, 16));
 
         twoHouse.setEditable(false);
-        twoHouse.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        twoHouse.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         twoHouse.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(twoHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 60, 16));
 
         oneHouse.setEditable(false);
-        oneHouse.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        oneHouse.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         oneHouse.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(oneHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 60, 16));
 
         hotel.setEditable(false);
-        hotel.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        hotel.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         hotel.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(hotel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 60, 16));
 
@@ -228,7 +228,7 @@ public class LandCard extends javax.swing.JFrame {
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         fourHouse.setEditable(false);
-        fourHouse.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        fourHouse.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         fourHouse.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(fourHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 60, 16));
 
@@ -254,26 +254,26 @@ public class LandCard extends javax.swing.JFrame {
         getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 20, 40));
 
         homePrice.setEditable(false);
-        homePrice.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        homePrice.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         homePrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(homePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 241, 60, 20));
 
-        hotelPrice.setEditable(false);
-        hotelPrice.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-        hotelPrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        hotelPrice.addActionListener(new java.awt.event.ActionListener() {
+        zeroHome.setEditable(false);
+        zeroHome.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
+        zeroHome.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        zeroHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hotelPriceActionPerformed(evt);
+                zeroHomeActionPerformed(evt);
             }
         });
-        getContentPane().add(hotelPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 261, 60, 20));
+        getContentPane().add(zeroHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 261, 60, 20));
 
         jLabel6.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
         jLabel6.setText("Home price");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 60, -1));
 
         jLabel7.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-        jLabel7.setText("Hotel price");
+        jLabel7.setText("Income");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 60, -1));
 
         jLabel22.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
@@ -284,7 +284,7 @@ public class LandCard extends javax.swing.JFrame {
         getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, -1, -1));
 
         mortgageValue.setEditable(false);
-        mortgageValue.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        mortgageValue.setFont(new java.awt.Font("Cambria Math", 0, 10)); // NOI18N
         mortgageValue.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         getContentPane().add(mortgageValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 60, 20));
 
@@ -299,9 +299,9 @@ public class LandCard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jTextField2ActionPerformed
 
-    private void hotelPriceActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_hotelPriceActionPerformed
+    private void zeroHomeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_zeroHomeActionPerformed
         // TODO add your handling code here:
-    }// GEN-LAST:event_hotelPriceActionPerformed
+    }// GEN-LAST:event_zeroHomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,7 +346,7 @@ public class LandCard extends javax.swing.JFrame {
     private javax.swing.JTextField fourHouse;
     private javax.swing.JTextField homePrice;
     private javax.swing.JTextField hotel;
-    private javax.swing.JTextField hotelPrice;
+    private javax.swing.JTextField zeroHome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

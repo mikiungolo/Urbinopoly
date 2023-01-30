@@ -23,48 +23,56 @@ public class StationCard extends javax.swing.JFrame {
         return fourStation;
     }
 
-    public void setFourStation(JTextField fourStation) {
-        this.fourStation = fourStation;
+    public void setFourStation(int fourStation) {
+        this.fourStation.setText(Integer.toString(fourStation));
     }
 
     public JTextField getMortgageValue() {
         return mortgageValue;
     }
 
-    public void setMortgageValue(JTextField mortgageValue) {
-        this.mortgageValue = mortgageValue;
+    public void setMortgageValue(int mortgageValue) {
+        this.mortgageValue.setText(Integer.toString(mortgageValue));
     }
 
     public JTextField getNameStation() {
         return nameStation;
     }
 
-    public void setNameStation(JTextField nameStation) {
-        this.nameStation = nameStation;
+    public void setNameStation(String nameStation) {
+        this.nameStation.setText(nameStation);
     }
 
     public JTextField getOneStation() {
         return oneStation;
     }
 
-    public void setOneStation(JTextField oneStation) {
-        this.oneStation = oneStation;
+    public void setOneStation(int oneStation) {
+        this.oneStation.setText(Integer.toString(oneStation));
     }
 
     public JTextField getThreeStation() {
         return threeStation;
     }
 
-    public void setThreeStation(JTextField threeStation) {
-        this.threeStation = threeStation;
+    public void setThreeStation(int threeStation) {
+        this.threeStation.setText(Integer.toString(threeStation));
     }
 
     public JTextField getTwoStation() {
         return twoStation;
     }
 
-    public void setTwoStation(JTextField twoStation) {
-        this.twoStation = twoStation;
+    public void setTwoStation(int twoStation) {
+        this.twoStation.setText(Integer.toString(twoStation));
+    }
+
+    public JTextField getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price.setText(Integer.toString(price));
     }
 
     /**
@@ -93,7 +101,7 @@ public class StationCard extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        price = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         mortgageValue = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -179,10 +187,10 @@ public class StationCard extends javax.swing.JFrame {
         jLabel11.setText("Station's price:");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
-        jTextField6.setEditable(false);
-        jTextField6.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
-        jTextField6.setOpaque(true);
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 40, -1));
+        price.setEditable(false);
+        price.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
+        price.setOpaque(true);
+        getContentPane().add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 40, -1));
 
         jLabel12.setFont(new java.awt.Font("Cambria Math", 0, 12)); // NOI18N
         jLabel12.setText("Mortgage value");
@@ -285,7 +293,7 @@ public class StationCard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField price;
     private javax.swing.JTextField mortgageValue;
     private javax.swing.JTextField nameStation;
     private javax.swing.JTextField oneStation;
