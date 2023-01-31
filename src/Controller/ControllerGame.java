@@ -25,6 +25,7 @@ public class ControllerGame {
     // controllo per il player
     private int indexCurrentPlayer;
     private Player current;
+    PropertyAction prop = new PropertyAction();
 
     // cosrtuttore del ControllerGrame
     public ControllerGame(Urbinopoly model, BoardGui board) {
@@ -33,7 +34,7 @@ public class ControllerGame {
         this.indexCurrentPlayer = -1;
         this.board = board;
         this.current = new Player();
-        this.ctrlP = new ControllerPlayer(model, board, this.prison);
+        this.ctrlP = new ControllerPlayer(model, board, prison);
     }
 
     // getter
@@ -48,6 +49,18 @@ public class ControllerGame {
 
     public ControllerPlayer getCtrlP() {
         return ctrlP;
+    }
+
+    public PropertyAction getProp() {
+        return prop;
+    }
+
+    public void setProp(PropertyAction prop) {
+        this.prop = prop;
+    }
+
+    public PrisonGui getPrison() {
+        return prison;
     }
 
     public void game() {
@@ -90,10 +103,18 @@ public class ControllerGame {
     // calcola i Jbutton che possono essere utilizzati al momento i-esimo
     private void validateBoard(BoardGui board, Player p) {
         for (int i = 0; i < 7; i++) {
-            if (model.validateCommand(i + 1, p)) {
-                board.getOption()[i].setEnabled(true);
+            if (current.isInPrison()) {
+                if (i < 6) {
+                    board.getOption()[i].setEnabled(false);
+                } else {
+                    board.getOption()[i].setEnabled(true);
+                }
             } else {
-                board.getOption()[i].setEnabled(false);
+                if (model.validateCommand(i + 1, p)) {
+                    board.getOption()[i].setEnabled(true);
+                } else {
+                    board.getOption()[i].setEnabled(false);
+                }
             }
         }
     }
@@ -110,6 +131,7 @@ public class ControllerGame {
         addCardPrison();
         addLuckPrison();
         addCautionPrison();
+        buttonDoAct();
     }
 
     // definizione di tutti gli ascoltatori
@@ -161,10 +183,16 @@ public class ControllerGame {
                 getBoard().getHighlight().append("Turno terminato per il Player: " + current.getName() + "\n");
                 current.setOptionCommand(7);
                 current.setOptionRolled(false);
+                getBoard().getProbTextArea().append("");
+                getBoard().getUnexpTextArea().append("");
+
                 current = model.getPlayers().getNextPlayer(indexCurrentPlayer);
                 indexCurrentPlayer++;
                 getBoard().getHighlight().append("\nTurno del Player: " + current.getName());
 
+                if (current.isInPrison()) {
+                    getPrison().setVisible(true);
+                }
                 validateBoard(board, current);
                 getCtrlP().updateAction(current);
             }
@@ -183,14 +211,18 @@ public class ControllerGame {
                 int oldPos = current.getPosition();
                 getModel().getDice().roll();
                 current.move(getModel().getDice().getTotalValue());
-                getCtrlP().updateViewPosition(current, indexCurrentPlayer, oldPos);
-                getCtrlP().updateAction(current);
 
                 getModel().doAction(current);
+                getCtrlP().updateAction(current);
+                getCtrlP().updateViewPosition(current, indexCurrentPlayer % model.getPlayers().getInGame().size(),
+                        oldPos);
+
                 // controllo sconfitta del Player con eventuale rimozione
                 getModel().getPlayers().remove(current);
+                if (!current.isInPrison()) {
+                    getModel().playerAction(current);
+                }
 
-                getModel().playerAction(current);
                 /*
                  * fin tanto che il player lanciando i dadi riceve facciate
                  * uguali deve giocare un ulteriore turno, altrimenti toccato
@@ -203,18 +235,11 @@ public class ControllerGame {
                                 "truccato i dadi per ben tre volte!\n");
                     }
                 }
-                getCtrlP().updateViewBalance(current, indexCurrentPlayer);
+                getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
                 current.setOptionRolled(true);
                 validateBoard(board, current);
             }
         });
-    }
-
-    private void actionProperty() {
-        PropertyAction prop = showListProperty(current);
-        buttonDoAct(prop);
-        model.playerAction(current);
-        getCtrlP().updateViewBalance(current, indexCurrentPlayer);
     }
 
     private void addRemBuildListener() {
@@ -225,7 +250,8 @@ public class ControllerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(5);
-                actionProperty();
+                setProp(showListProperty(current));
+                getBoard().getHighlight().append("\n" + current.getName() + " rimuove una casa!");
             }
         });
     }
@@ -238,7 +264,8 @@ public class ControllerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(4);
-                actionProperty();
+                setProp(showListProperty(current));
+                getBoard().getHighlight().append("\n" + current.getName() + " costruisce una casa!");
             }
         });
     }
@@ -251,7 +278,8 @@ public class ControllerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(3);
-                actionProperty();
+                setProp(showListProperty(current));
+                getBoard().getHighlight().append("\n" + current.getName() + " rimuove un'ipoteca!");
             }
         });
     }
@@ -264,7 +292,8 @@ public class ControllerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(2);
-                actionProperty();
+                setProp(showListProperty(current));
+                getBoard().getHighlight().append("\n" + current.getName() + " ipoteca!");
             }
         });
     }
@@ -279,26 +308,31 @@ public class ControllerGame {
                 current.setOptionCommand(1);
 
                 model.playerAction(current);
-                getCtrlP().updateViewBalance(current, indexCurrentPlayer);
+                getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
+                validateBoard(board, current);
+                // getBoard().getHighlight().append(current.getName() + " compra la proprietà
+                // per " +);
             }
         });
     }
 
     private PropertyAction showListProperty(Player p) {
-        PropertyAction prop = new PropertyAction();
-        prop.setLocation(300, 250);
-        prop.setVisible(true);
 
         if (!p.getProperties().isEmpty()) {
             DefaultTableModel model = (DefaultTableModel) prop.getPlayerPropertyTable().getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                model.removeRow(i);
+            }
             for (int i = 0; i < p.getProperties().size(); i++) {
                 model.addRow(new Object[] { p.getProperties().get(i).getName() });
             }
         }
+        prop.setLocation(300, 250);
+        prop.setVisible(true);
         return prop;
     }
 
-    private void buttonDoAct(PropertyAction prop) {
+    private void buttonDoAct() {
 
         prop.getDoActButton().addActionListener(new ActionListener() {
 
@@ -312,6 +346,8 @@ public class ControllerGame {
                             "Select row", JOptionPane.ERROR_MESSAGE);
                 } else {
                     current.setPropertySelected(row);
+                    model.playerAction(current);
+                    getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
                 }
             }
         });

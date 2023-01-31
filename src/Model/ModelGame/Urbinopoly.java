@@ -70,7 +70,8 @@ public class Urbinopoly {
         boolean isValid;
         if (!p.isInPrison()) {
             switch (optionCommand) {
-                case 1 -> isValid = (getBoard().getSquare(p.getPosition()) instanceof Property) ? true : false;
+                case 1 -> isValid = (getBoard().getSquare(p.getPosition()) instanceof Property &&
+                        !((Property) getBoard().getSquare(p.getPosition())).isOwner()) ? true : false;
                 case 2,
                         3 ->
                     isValid = (p.getProperties().isEmpty()) ? false : true;

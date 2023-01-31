@@ -109,7 +109,6 @@ public class ControllerPlayer {
                     model.getBoard().getProb().getCurrentCard().getMessage());
             case UNEXPECTED -> getBoard().getUnexpTextArea().append(
                     model.getBoard().getUnex().getCurrentCard().getMessage());
-            case PRISON -> getPrison().setVisible(true);
             default -> {
             }
         }
