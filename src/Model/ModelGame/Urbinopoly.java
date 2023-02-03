@@ -77,7 +77,8 @@ public class Urbinopoly {
                     isValid = (p.getProperties().isEmpty()) ? false : true;
                 case 4,
                         5 ->
-                    isValid = (p.getProperties().stream().filter(x -> x instanceof Land).count() > 0) ? true : false;
+                    isValid = ((p.getProperties().stream().filter(x -> x instanceof Land &&
+                            ((Land) x).isUrbinopoly()).count() > 0)) ? true : false;
                 case 6 -> isValid = (p.isOptionRolled()) ? false : true;
                 case 7 -> isValid = (p.isOptionRolled()) ? true : false;
                 default -> isValid = false;

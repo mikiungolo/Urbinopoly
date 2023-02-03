@@ -91,19 +91,12 @@ public class ControllerGame {
         validateBoard(board, current);
         getBoard().getHighlight().append("Turno del Player: " + current.getName() + "\n");
         indexCurrentPlayer++;
-
-        while (!model.isEndGame()) {
-
-            if (model.isEndGame()) {
-                getBoard().getHighlight().append("\n Urbinopoly temrinato.\nSviluppatori: Ungolo, Sette");
-            }
-        }
     }
 
     // calcola i Jbutton che possono essere utilizzati al momento i-esimo
     private void validateBoard(BoardGui board, Player p) {
         for (int i = 0; i < 7; i++) {
-            if (current.isInPrison()) {
+            if (current.isInPrison() || getModel().isEndGame()) {
                 if (i < 6) {
                     board.getOption()[i].setEnabled(false);
                 } else {
@@ -144,6 +137,12 @@ public class ControllerGame {
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(1);
                 getModel().playerAction(current);
+                if (!current.isInPrison()) {
+                    getBoard().getHighlight()
+                            .append("\n" + current.getName() + " esce dalla prigione tramite cauzione!");
+                    getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
+                }
+                getPrison().setVisible(false);
             }
         });
     }
@@ -156,7 +155,16 @@ public class ControllerGame {
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(3);
                 getModel().playerAction(current);
+                getBoard().getDie1().setText(Integer.toString(model.getDice().getDice()[0]));
+                getBoard().getDie2().setText(Integer.toString(model.getDice().getDice()[1]));
+                if (!current.isInPrison()) {
+                    getBoard().getHighlight().append("\n" + current.getName() + " evade dalla prigione per anzianità!");
+                } else {
+                    getBoard().getHighlight().append("\n" + current.getName() + " continuerà a scontare la pena!");
+                }
+                getPrison().setVisible(false);
             }
+
         });
     }
 
@@ -169,6 +177,11 @@ public class ControllerGame {
             public void actionPerformed(ActionEvent e) {
                 current.setOptionCommand(2);
                 getModel().playerAction(current);
+                if (!current.isInPrison()) {
+                    getBoard().getHighlight()
+                            .append("\n" + current.getName() + " esce dalla prigione tramite carta segreta!");
+                    getPrison().setVisible(false);
+                }
             }
         });
     }
@@ -183,8 +196,11 @@ public class ControllerGame {
                 getBoard().getHighlight().append("Turno terminato per il Player: " + current.getName() + "\n");
                 current.setOptionCommand(7);
                 current.setOptionRolled(false);
-                getBoard().getProbTextArea().append("");
-                getBoard().getUnexpTextArea().append("");
+                getBoard().getProbTextArea().setText("");
+                getBoard().getUnexpTextArea().setText("");
+
+                // controllo sconfitta del Player con eventuale rimozione
+                getModel().getPlayers().remove(current);
 
                 current = model.getPlayers().getNextPlayer(indexCurrentPlayer);
                 indexCurrentPlayer++;
@@ -193,10 +209,20 @@ public class ControllerGame {
                 if (current.isInPrison()) {
                     getPrison().setVisible(true);
                 }
+
+                validateEnded();
+
                 validateBoard(board, current);
-                getCtrlP().updateAction(current);
             }
+
         });
+    }
+
+    private void validateEnded() {
+        // controllo terminazione gioco
+        if (getModel().endGame()) {
+            getBoard().getHighlight().append("\nGioco Terminato.\n\n Sviluppatori: Ungolo, Sette. =)");
+        }
     }
 
     private void addRollListener() {
@@ -217,8 +243,6 @@ public class ControllerGame {
                 getCtrlP().updateViewPosition(current, indexCurrentPlayer % model.getPlayers().getInGame().size(),
                         oldPos);
 
-                // controllo sconfitta del Player con eventuale rimozione
-                getModel().getPlayers().remove(current);
                 if (!current.isInPrison()) {
                     getModel().playerAction(current);
                 }
@@ -230,13 +254,16 @@ public class ControllerGame {
                  * Tale operazione avviene in chiamata ricorsiva.
                  */
                 if (getModel().getDice().isDouble() && !current.isInPrison()) {
+                    current.setOptionRolled(false);
                     if (current.goPrisonForTripleTurn()) {
-                        getBoard().getHighlight().append(current.getName() + " finisce in prigione per aver " +
+                        getBoard().getHighlight().append("\n" + current.getName() + " finisce in prigione per aver " +
                                 "truccato i dadi per ben tre volte!\n");
                     }
+                } else {
+                    current.setConsecutiveRound(0);
                 }
                 getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
-                current.setOptionRolled(true);
+
                 validateBoard(board, current);
             }
         });
@@ -310,25 +337,23 @@ public class ControllerGame {
                 model.playerAction(current);
                 getCtrlP().updateViewBalance(current, indexCurrentPlayer % model.getPlayers().getInGame().size());
                 validateBoard(board, current);
-                // getBoard().getHighlight().append(current.getName() + " compra la proprietà
-                // per " +);
             }
         });
     }
 
     private PropertyAction showListProperty(Player p) {
 
+        DefaultTableModel model = (DefaultTableModel) prop.getPlayerPropertyTable().getModel();
+        model.setRowCount(0);
+
         if (!p.getProperties().isEmpty()) {
-            DefaultTableModel model = (DefaultTableModel) prop.getPlayerPropertyTable().getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                model.removeRow(i);
-            }
+
             for (int i = 0; i < p.getProperties().size(); i++) {
                 model.addRow(new Object[] { p.getProperties().get(i).getName() });
             }
+            prop.setLocation(300, 250);
+            prop.setVisible(true);
         }
-        prop.setLocation(300, 250);
-        prop.setVisible(true);
         return prop;
     }
 

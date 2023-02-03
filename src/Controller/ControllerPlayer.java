@@ -93,7 +93,7 @@ public class ControllerPlayer {
     public void updateViewPosition(Player p, int index, int old) {
         getBoard().getDie1().setText(Integer.toString(model.getDice().getDice()[0]));
         getBoard().getDie2().setText(Integer.toString(model.getDice().getDice()[1]));
-        getBoard().getHighlight().append(p.getName() + " vola dalla posizione " + old +
+        getBoard().getHighlight().append("\n" + p.getName() + " vola dalla posizione " + old +
                 " alla posizione " + p.getPosition() + "\n");
         getBoard().setPos(p.getPosition(), index);
     }
@@ -105,9 +105,9 @@ public class ControllerPlayer {
             case LAND -> showLand(p);
             case SERVICE -> showService(p);
             case STATION -> showStation(p);
-            case PROBABILITY -> getBoard().getProbTextArea().append(
+            case PROBABILITY -> getBoard().getProbTextArea().setText(
                     model.getBoard().getProb().getCurrentCard().getMessage());
-            case UNEXPECTED -> getBoard().getUnexpTextArea().append(
+            case UNEXPECTED -> getBoard().getUnexpTextArea().setText(
                     model.getBoard().getUnex().getCurrentCard().getMessage());
             default -> {
             }
