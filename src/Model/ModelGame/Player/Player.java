@@ -9,7 +9,7 @@ import Model.ModelGame.Board.Pieces.Deck.Card;
 import Model.ModelGame.Board.Pieces.Property.*;
 import Model.ModelGame.Player.PrisonStrategy.ExitPrisonStrategy;
 
-public class Player {
+public class Player implements PlayerApi {
     // Budget assegnato inizialmente ad ogni singolo giocatore
     private final static int INITIAL_BUDGET = 2000;
     // Somma riscossa tutte le volte che un giocatore passa dal via
@@ -101,6 +101,7 @@ public class Player {
     }
 
     // Permette di far muovere il giocatore dalla posizione corrente
+    @Override
     public void move(int addition) {
         this.position += addition;
         if (this.position >= Board.N_SQAURES) {
@@ -111,6 +112,7 @@ public class Player {
     }
 
     // Permette di spostarti direttamente nella casella indicata
+    @Override
     public void moveTo(int pos) {
         this.position = pos;
     }
@@ -139,6 +141,7 @@ public class Player {
         this.consecutiveRound++;
     }
 
+    @Override
     public boolean goPrisonForTripleTurn() {
         countConsecutiveRound();
         if (getConsecutiveRound() == ROUND_GO_PRISON) {
@@ -227,15 +230,12 @@ public class Player {
     }
 
     /*
-     * Aggiunge o rimuove, a seconda della condition
-     * data in input, case o hotel controllando che
-     * il PLayer sia l'effettivo proprietario
+     * Aggiunge o rimuove, controlla l'ipoteca,
+     * a seconda della condition data in input,
+     * case o hotel controllando che
+     * il Player sia l'effettivo proprietario
      */
-    // codition add = l.isUrbinopoly();
-    // condition remove = l.getNHouse>0;
-    // condition mortage = !p.isMortage();
-    // condition dis-mortage = p.isMortage
-    // l'amount è il corrispettivo delle azioni in Land, e Property
+    @Override
     public void manipulateProperty(Property p, boolean condition, int amount) {
         if (controlOwned(p) && condition) {
             manageBalance(amount);
@@ -263,6 +263,7 @@ public class Player {
     }
 
     // Aggiorna il bilancio di ciascun giocatore
+    @Override
     public void manageBalance(int amount) {
         this.balance += amount;
         if (this.balance <= 0) {

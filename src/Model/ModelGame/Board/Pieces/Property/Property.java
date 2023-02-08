@@ -6,7 +6,7 @@ import Model.ModelGame.Board.Pieces.Square;
 import Model.ModelGame.Player.Player;
 
 // modellazione di una proprietà
-public class Property extends Square {
+public class Property extends Square implements Management {
 
     // moltiplicatore tassa per disipotecare
     private static final double FEE = 1.1;
@@ -49,6 +49,7 @@ public class Property extends Square {
     }
 
     // si rilascia una proprietà quando un Player perde
+    @Override
     public void releaseProperty() {
         this.owner = Optional.empty();
         this.isOwner = false;
@@ -65,6 +66,7 @@ public class Property extends Square {
         return gain;
     }
 
+    @Override
     public int buyProperty(Player p) {
         setOwner(p);
         setOwner(true);
@@ -80,11 +82,13 @@ public class Property extends Square {
         this.isMortaged = isMortaged;
     }
 
+    @Override
     public int mortage() {
         this.setMortaged(true);
         return (int) (getPrice() / 2);
     }
 
+    @Override
     public int removeMortage() {
         this.setMortaged(false);
         return -((int) (getPrice() / 2 * FEE));

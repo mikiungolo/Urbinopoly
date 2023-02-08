@@ -2,6 +2,7 @@ package Model.ModelGame.Board.Pieces.Deck;
 
 import Model.ModelGame.Board.Board;
 
+// Creazione del mazzo Imprevisti 
 public class UnexpectedDeck extends Cards {
 
     // costruttore classe

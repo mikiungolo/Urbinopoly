@@ -60,8 +60,8 @@ public class ControllerInitialize {
         });
     }
 
+    // aggiunge ascoltatore al bottone start
     private void addStartListener() {
-        // Creazione istener pulasante start
 
         getViewStart().getViewPlayer().getStartGamePlayerButton().addActionListener(new ActionListener() {
 

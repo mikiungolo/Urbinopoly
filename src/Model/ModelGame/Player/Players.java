@@ -3,6 +3,7 @@ package Model.ModelGame.Player;
 import java.util.LinkedList;
 import java.util.List;
 
+// modellazione dell'insieme dei giocatori
 public class Players {
 
     private List<Player> players;
