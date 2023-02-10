@@ -239,7 +239,7 @@ public class ControllerGame {
                 current.move(getModel().getDice().getTotalValue());
 
                 getModel().doAction(current);
-                getCtrlP().updateAction(current);
+                getCtrlP().updateAction(current, oldPos);
                 getCtrlP().updateViewPosition(current, indexCurrentPlayer % model.getPlayers().getInGame().size(),
                         oldPos);
 

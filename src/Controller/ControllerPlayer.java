@@ -82,6 +82,18 @@ public class ControllerPlayer {
         station.setVisible(true);
     }
 
+    // mostra carta
+    private void showCard(Player p, int old) {
+        switch (model.getBoard().getSquare(old + model.getDice().getTotalValue()).getNature()) {
+            case PROBABILITY -> getBoard().getProbTextArea().setText(
+                    model.getBoard().getProb().getCurrentCard().getMessage());
+            case UNEXPECTED -> getBoard().getUnexpTextArea().setText(
+                    model.getBoard().getUnex().getCurrentCard().getMessage());
+            default -> {
+            }
+        }
+    }
+
     // metodi relativi all' aggiornamento dei valori del Player
 
     // aggiorna Bilancio
@@ -99,19 +111,16 @@ public class ControllerPlayer {
     }
 
     // mostra aggiornamenti a seconda delle azioni effettuate
-    public void updateAction(Player p) {
+    public void updateAction(Player p, int old) {
         switch (model.getBoard().getSquare(p.getPosition()).getNature()) {
 
             case LAND -> showLand(p);
             case SERVICE -> showService(p);
             case STATION -> showStation(p);
-            case PROBABILITY -> getBoard().getProbTextArea().setText(
-                    model.getBoard().getProb().getCurrentCard().getMessage());
-            case UNEXPECTED -> getBoard().getUnexpTextArea().setText(
-                    model.getBoard().getUnex().getCurrentCard().getMessage());
             default -> {
             }
         }
+        showCard(p, old);
     }
 
 }
