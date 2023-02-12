@@ -16,9 +16,6 @@ public class ControllerInitialize {
     private BoardGui board;
     private ControllerGame game;
 
-    // variabili di controllo
-    int indexCurrentPlayer;
-
     // costruttore
     public ControllerInitialize(Urbinopoly model, StartGui viewStart) {
         this.model = model;
