@@ -92,6 +92,7 @@ public class Urbinopoly {
         return isValid;
     }
 
+    // controlla temrinazione del gioco
     public boolean endGame() {
         if (getPlayers().getInGame().size() == 1) {
             this.endGame = true;

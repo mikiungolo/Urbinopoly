@@ -20,6 +20,7 @@ public class Card {
         this.action = act;
     }
 
+    // getter
     public String getMessage() {
         return message;
     }
